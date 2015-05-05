@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link id="easyuiTheme" rel="stylesheet" type="text/css" href="../static/easyui/themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/default.css">
+    <script type="text/javascript" src="../static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../static/js/common.js"></script>
+</head>
+<body>
+<label for="custom-theme">切换皮肤</label>
+<select id="custom-theme" name="custom-theme" style="width:160px;">
+    <option value="default">默认皮肤</option>
+    <option value="bootstrap">Bootstrap</option>
+    <option value="gray">灰色皮肤</option>
+    <option value="metro">Metro</option>
+    <option value="black">黑色皮肤</option>
+    <option value="metro-blue">metro-blue</option>
+    <option value="metro-gray">metro-gray</option>
+    <option value="metro-green">metro-green</option>
+    <option value="metro-orange">metro-orange</option>
+    <option value="metro-red">metro-red</option>
+    <option value="ui-cupertino">ui-cupertino</option>
+    <option value="ui-pepper-grinder">ui-pepper-grinder</option>
+    <option value="ui-sunny">ui-sunny</option>
+</select>
+<script type="text/javascript">
+    $(function () {
+        $("select[id='custom-theme']").change(function () {
+            changeTheme($(this).val());
+        });
+    });
+
+    /* 修改主题 */
+    function changeTheme(themeName) {
+        var $easyuiTheme = $("#easyuiTheme");
+        var url = $easyuiTheme.attr("href");
+        var href = url.substring(0, url.indexOf('themes')) + 'themes/' + themeName + '/easyui.css';
+        $easyuiTheme.attr("href", href);
+
+        //父HTML
+        $("#easyuiTheme", parent.document).attr("href", href.substring(3));
+
+        //同级iframe
+        var iframes = parent.document.getElementsByTagName("iframe");
+        if (iframes.length > 0) {
+            for (var i = 0; i < iframes.length; i++) {
+                var iframe = iframes[i];
+                $(iframe).contents().find('#easyuiTheme').attr('href', href);
+            }
+        }
+
+        /*$.cookie('easyuiThemeName', themeName, {expires : 7});
+         if ($.cookie('easyuiThemeName')) {
+         changeTheme($.cookie('easyuiThemeName'));
+         }*/
+    }
+</script>
+</body>
+</html>

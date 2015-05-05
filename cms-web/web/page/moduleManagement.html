@@ -1,0 +1,55 @@
+<div class="easyui-layout" id="moduleManagement" style="overflow: visible" split="true" fit="true">
+    <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
+        <label for="textbox-module-name">模块名称：</label>
+        <input id="textbox-module-name" class="easyui-textbox" style="width:120px"/>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+    </div>
+    <div region="center" border="false" style="overflow: visible;">
+        <table id="moduleDatagrid" fit="true">
+        </table>
+
+        <div id="deleteModuleDialog">
+            <p style="margin-left:25px;margin-top:25px">真的要删除该模块吗?</p>
+        </div>
+        <!-- Edit module dialog #################### Begin #################### -->
+        <div id="editModuleDialog">
+            <form class="form" method="post" id="editModuleFrom">
+                <div class="form-title">模块信息</div>
+                <div class="form-content">
+                    <div class="form-item">
+                        <div style="width:80px;">模块名称：</div>
+                        <div><input type="text" class="easyui-textbox" name="name" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">资源列表：</div>
+                        <div><input type="text" class="easyui-textbox" name="resources" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">模块描述：</div>
+                        <div>
+                            <input type="text" class="easyui-textbox" name="description"
+                                   data-options="multiline:true" style="height: 60px;width: 200px;"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="moduleId"/>
+            </form>
+        </div>
+        <div id="moduleDialogButtons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="saveModule()"
+               style="width:90px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="$('#editModuleDialog').dialog('close')" style="width:90px">取消</a>
+        </div>
+        <!-- Edit module dialog #################### End   #################### -->
+
+        <div id="dd" class="easyui-dialog" title="删除模块" style="width:320px;height:150px;"
+             data-options="iconCls:'icon-custom-exit',resizable:true,modal:true,closed:true,
+                 buttons:[
+                 {text:'是的',iconCls:'icon-ok',handler:function(){alert('YES')}},
+                 {text:'不是',iconCls:'icon-no',handler:function(){alert('NO')}}
+                 ]">
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/moduleManagement.js"></script>

@@ -1,0 +1,63 @@
+<div class="easyui-layout" id="permissionManagement" style="overflow: visible" split="true" fit="true">
+    <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
+        <label for="textbox-permission-name">权限名称：</label>
+        <input id="textbox-permission-name" class="easyui-textbox" style="width:120px"/>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+    </div>
+    <div region="center" border="false" style="overflow: visible;">
+        <table id="permissionDatagrid" fit="true">
+        </table>
+
+        <div id="deletePermissionDialog">
+            <p style="margin-left:25px;margin-top:25px">真的要删除该权限吗?</p>
+        </div>
+        <!-- Edit permission dialog #################### Begin #################### -->
+        <div id="editPermissionDialog">
+            <form class="form" method="post" id="editPermissionFrom">
+                <div class="form-title">权限信息</div>
+                <div class="form-content">
+                    <div class="form-item">
+                        <div style="width:80px;">权限名称：</div>
+                        <div><input type="text" class="easyui-textbox" name="name" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">系统模块：</div>
+                        <div><input type="text" class="easyui-textbox" name="module" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">系统资源：</div>
+                        <div><input type="text" class="easyui-textbox" name="resource" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">功能：</div>
+                        <div><input type="text" class="easyui-textbox" name="function" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">权限描述：</div>
+                        <div>
+                            <input type="text" class="easyui-textbox" name="description"
+                                   data-options="multiline:true" style="height: 60px;width: 200px;"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="permissionId"/>
+            </form>
+        </div>
+        <div id="permissionDialogButtons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="savePermission()"
+               style="width:90px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="$('#editPermissionDialog').dialog('close')" style="width:90px">取消</a>
+        </div>
+        <!-- Edit permission dialog #################### End   #################### -->
+
+        <div id="dd" class="easyui-dialog" title="删除权限" style="width:320px;height:150px;"
+             data-options="iconCls:'icon-custom-exit',resizable:true,modal:true,closed:true,
+                 buttons:[
+                 {text:'是的',iconCls:'icon-ok',handler:function(){alert('YES')}},
+                 {text:'不是',iconCls:'icon-no',handler:function(){alert('NO')}}
+                 ]">
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/permissionManagement.js"></script>

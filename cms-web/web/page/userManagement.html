@@ -1,0 +1,102 @@
+<div class="easyui-layout" id="userManagement" style="overflow: visible" split="true" fit="true">
+    <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
+        <label for="textbox-user-name">姓名：</label>
+        <input id="textbox-user-name" class="easyui-textbox" style="width:100px"/>
+        <label for="textbox-user-code">编号：</label>
+        <input id="textbox-user-code" class="easyui-textbox" style="width:100px"/>
+        <label for="textbox-login-name">登录名：</label>
+        <input id="textbox-login-name" class="easyui-textbox" style="width:100px"/>
+        <label for="textbox-user-gender">性别：</label>
+        <input id="textbox-user-gender" class="easyui-textbox" style="width:100px"/>
+        <label for="user-role-select">角色：</label>
+        <select id="user-role-select" class="easyui-combobox" panelHeight="auto" style="width:100px">
+            <option value="1">角色1</option>
+            <option value="2">角色2</option>
+            <option value="3">角色3</option>
+            <option value="4">角色4</option>
+            <option value="5">角色5</option>
+            <option value="6">角色6</option>
+            <option value="7">角色7</option>
+            <option value="8">角色8</option>
+        </select>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+    </div>
+    <div region="center" border="false" style="overflow: visible;">
+        <table id="userDatagrid" fit="true">
+        </table>
+
+        <div id="deleteUserDialog">
+            <p style="margin-left:25px;margin-top:25px">真的要删除该用户吗?</p>
+        </div>
+
+        <!-- Edit user dialog #################### Begin #################### -->
+        <div id="editUserDialog">
+            <form class="form" method="post" id="editUserFrom">
+                <div class="form-title">用户信息</div>
+                <div class="form-content">
+                    <div class="form-item">
+                        <div style="width:80px;">姓名：</div>
+                        <div><input type="text" class="easyui-textbox" name="name" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">性别：</div>
+                        <div><input type="text" class="easyui-textbox" name="gender" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">登录名：</div>
+                        <div><input type="text" class="easyui-textbox" name="loginName" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">移动电话：</div>
+                        <div><input type="text" class="easyui-textbox" name="mobilephone" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">办公电话：</div>
+                        <div><input type="text" class="easyui-textbox" name="telephone" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">邮箱：</div>
+                        <div><input type="text" class="easyui-textbox" name="email" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">用户类型</div>
+                        <div>
+                            <select class="easyui-combobox" name="roles" style="width:200px;">
+                                <option value="admin">系统管理员</option>
+                                <option value="operator">系统操作员</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">指定角色：</div>
+                        <div><input type="text" class="easyui-textbox" name="roles" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">用户描述：</div>
+                        <div>
+                            <input type="text" class="easyui-textbox" name="description"
+                                   data-options="multiline:true" style="height: 60px;width: 200px;"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="userId" value="-1"/>
+            </form>
+        </div>
+        <div id="userDialogButtons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="saveUser()"
+               style="width:90px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="$('#editUserDialog').dialog('close')" style="width:90px">取消</a>
+        </div>
+        <!-- Edit user dialog #################### End   #################### -->
+
+        <div id="du" class="easyui-dialog" title="删除用户" style="width:320px;height:150px;"
+             data-options="iconCls:'icon-custom-exit',resizable:true,modal:true,closed:true,
+                 buttons:[
+                 {text:'是的',iconCls:'icon-ok',handler:function(){alert('YES')}},
+                 {text:'不是',iconCls:'icon-no',handler:function(){alert('NO')}}
+                 ]">
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/userManagement.js"></script>

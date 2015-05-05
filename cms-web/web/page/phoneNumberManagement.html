@@ -1,0 +1,123 @@
+<div class="easyui-layout" id="phoneNumberManagement" style="overflow: visible" split="true" fit="true">
+    <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
+        <label for="textbox-phoneNumber-name">电话号码：</label>
+        <input id="textbox-phoneNumber-name" class="easyui-textbox" style="width:120px"/>
+        <label for="textbox-phoneNumber-code">运营商：</label>
+        <input id="textbox-phoneNumber-code" class="easyui-textbox" style="width:120px"/>
+        <label for="phoneNumber-select">归属地：</label>
+        <select id="phoneNumber-select" class="easyui-combobox" panelHeight="auto" style="width:120px">
+            <option value="1">北京</option>
+            <option value="2">上海</option>
+            <option value="3">广州</option>
+            <option value="4">深圳</option>
+            <option value="5">福州</option>
+        </select>
+        <label for="textbox-phoneNumber-manager">部门经理：</label>
+        <input id="textbox-phoneNumber-manager" class="easyui-textbox" style="width:120px"/>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+    </div>
+    <div region="center" border="false" style="overflow: visible;">
+        <table id="phoneNumberDatagrid" fit="true">
+        </table>
+
+        <div id="deletePhoneNumberDialog">
+            <p style="margin-left:25px;margin-top:25px">真的要删除该部门吗?</p>
+        </div>
+        <!-- Edit phoneNumber dialog #################### Begin #################### -->
+        <div id="editPhoneNumberDialog">
+            <form class="form" method="post" id="editPhoneNumberFrom">
+                <div class="form-title">部门信息</div>
+                <div class="form-content">
+                    <div class="form-item">
+                        <div style="width:80px;">中文名称：</div>
+                        <div><input type="text" class="easyui-textbox" name="cnName" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">英文名称：</div>
+                        <div><input type="text" class="easyui-textbox" name="enName" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">上级部门：</div>
+                        <div>
+                            <select class="easyui-combobox" name="parent" style="width:200px;">
+                                <option value="1">财务部</option>
+                                <option value="2">信息技术部</option>
+                                <option value="3">产品部</option>
+                                <option value="4">客户服务部</option>
+                                <option value="5">设计部</option>
+                                <option value="6">运营部</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">部门经理：</div>
+                        <div>
+                            <select class="easyui-combobox" name="phoneNumberManager" style="width:100px;" value="">
+                                <option value="1">张三</option>
+                                <option value="2">李四</option>
+                                <option value="3">王五</option>
+                                <option value="4">钱多多</option>
+                                <option value="5">张无忌</option>
+                                <option value="6">王麻子</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">办公地址：</div>
+                        <div><input type="text" class="easyui-textbox" name="location" style="width:200px;"/></div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width: 80px;">成立日期：</div>
+                        <input class="easyui-datebox" name="establishedDate" style="width:100px;"/>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">备注信息：</div>
+                        <div>
+                            <input type="text" class="easyui-textbox" name="remark"
+                                   data-options="multiline:true" style="height: 60px;width: 200px;"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="phoneNumberId"/>
+            </form>
+        </div>
+        <div id="phoneNumberDialogButtons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="savePhoneNumber()"
+               style="width:90px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="$('#editPhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
+        </div>
+        <!-- Edit phoneNumber dialog #################### End   #################### -->
+
+        <!-- Batch upload phone number dialog #################### Begin #################### -->
+        <div id="batchUploadPhoneNumberDialog">
+            <form class="form" method="post" id="batchUploadPhoneNumberFrom" enctype="multipart/form-data">
+                <div class="form-title">批量导入电话号码</div>
+                <div class="form-content">
+                    <div class="form-item">
+                        <div style="width:80px;">选择文件：</div>
+                        <div><input class="easyui-filebox" id="phoneNumberExcel" name="phoneNumberExcel"
+                                    data-options="prompt:'选择Excel文件...',buttonText:'选择...'"  style="width:200px;"/></div>
+                    </div>
+                </div>
+                <input type="hidden" name="phoneNumberId"/>
+            </form>
+        </div>
+        <div id="batchUploadPhoneNumberButtons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="uploadExcelFile()"
+               style="width:90px">导入</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="$('#editPhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
+        </div>
+        <!-- Batch upload phone number dialog #################### End   #################### -->
+
+        <div id="dd" class="easyui-dialog" title="删除部门" style="width:320px;height:150px;"
+             data-options="iconCls:'icon-custom-exit',resizable:true,modal:true,closed:true,
+                 buttons:[
+                 {text:'是的',iconCls:'icon-ok',handler:function(){alert('YES')}},
+                 {text:'不是',iconCls:'icon-no',handler:function(){alert('NO')}}
+                 ]">
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/phoneNumberManagement.js"></script>

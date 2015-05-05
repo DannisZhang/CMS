@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    overflow-y: hidden;
+    height: 100%;
+}
+
+.header {
+    height:64px;
+    overflow:hidden;
+    background: #000 url("../../static/images/header_bg.png") repeat-x;
+    color: #ffffff;
+}
+
+.logo {
+    width:70%;
+    height:100%;
+    font-size:38px;
+    float:left;
+}
+
+.btn-area {
+    height:100%;
+    text-align:right;
+    float:right;
+}
+
+.top-btn-group {
+    margin-top: 20px;
+}
+
+.top-btn-group .top-btn {
+    margin: 0;
+    padding: 0;
+    height: 16px;
+    display: inline-block;
+}
+
+.top-btn-group .top-btn a {
+    display: inline;
+    margin-left: -5px;
+    vertical-align: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    color: #000;
+}
+
+.top-btn-group .top-btn a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.easyui-accordion ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.easyui-accordion ul li {
+    padding: 0;
+}
+
+.easyui-accordion ul li a {
+    padding: 0 0 0 20px;
+    line-height: 24px;
+    text-decoration: none;
+    display: block;
+    color: #000;
+}
+
+.easyui-accordion ul li:hover {
+    background-color: #D4D4D4;
+}
+
+.easyui-accordion ul li .selected {
+    background-color: #ABAFB8;
+}
+
+.form{
+    margin:20px;
+}
+
+.form .form-title {
+    margin: 0;
+    font-size: 14px;
+    text-align: left;
+    padding-bottom: 8px;
+    border-bottom: solid 1px #D4D4D4;
+}
+
+.form .form-content {
+    margin: 20px 0;
+}
+
+.form .form-content .form-item {
+    margin: 0 auto 16px 24px;
+    text-align: left;
+}
+.form .form-content .form-item div {
+    display: inline-block;
+}
