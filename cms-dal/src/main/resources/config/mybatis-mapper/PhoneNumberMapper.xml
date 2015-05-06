@@ -29,10 +29,10 @@
 	<insert id="batchSave">
 		INSERT INTO t_phone_number(type,number,operator,attribution,wholesale_price,floor_price,priority,description,created_by)
 		VALUES
-		<foreach collection="list" item="phoneNumber" separator=",">
-			(#{phoneNumber.type},#{phoneNumber.number},#{phoneNumber.operator},#{phoneNumber.attribution},
-			#{phoneNumber.wholesalePrice},#{phoneNumber.floorPrice},#{phoneNumber.priority},#{phoneNumber.description},
-			#{phoneNumber.createdBy})
+		<foreach collection="list" item="mobilePhone" separator=",">
+			(#{mobilePhone.type},#{mobilePhone.number},#{mobilePhone.operator},#{mobilePhone.attribution},
+			#{mobilePhone.wholesalePrice},#{mobilePhone.floorPrice},#{mobilePhone.priority},#{mobilePhone.description},
+			#{mobilePhone.createdBy})
 		</foreach>
 	</insert>
 

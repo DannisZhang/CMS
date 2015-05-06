@@ -1,19 +1,19 @@
 <div class="easyui-layout" id="phoneNumberManagement" style="overflow: visible" split="true" fit="true">
     <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
-        <label for="textbox-phoneNumber-name">电话号码：</label>
-        <input id="textbox-phoneNumber-name" class="easyui-textbox" style="width:120px"/>
-        <label for="textbox-phoneNumber-code">运营商：</label>
-        <input id="textbox-phoneNumber-code" class="easyui-textbox" style="width:120px"/>
-        <label for="phoneNumber-select">归属地：</label>
-        <select id="phoneNumber-select" class="easyui-combobox" panelHeight="auto" style="width:120px">
+        <label for="textbox-mobilePhone-name">电话号码：</label>
+        <input id="textbox-mobilePhone-name" class="easyui-textbox" style="width:120px"/>
+        <label for="textbox-mobilePhone-code">运营商：</label>
+        <input id="textbox-mobilePhone-code" class="easyui-textbox" style="width:120px"/>
+        <label for="mobilePhone-select">归属地：</label>
+        <select id="mobilePhone-select" class="easyui-combobox" panelHeight="auto" style="width:120px">
             <option value="1">北京</option>
             <option value="2">上海</option>
             <option value="3">广州</option>
             <option value="4">深圳</option>
             <option value="5">福州</option>
         </select>
-        <label for="textbox-phoneNumber-manager">部门经理：</label>
-        <input id="textbox-phoneNumber-manager" class="easyui-textbox" style="width:120px"/>
+        <label for="textbox-mobilePhone-manager">部门经理：</label>
+        <input id="textbox-mobilePhone-manager" class="easyui-textbox" style="width:120px"/>
         <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
     </div>
     <div region="center" border="false" style="overflow: visible;">
@@ -23,7 +23,7 @@
         <div id="deletePhoneNumberDialog">
             <p style="margin-left:25px;margin-top:25px">真的要删除该部门吗?</p>
         </div>
-        <!-- Edit phoneNumber dialog #################### Begin #################### -->
+        <!-- Edit mobilePhone dialog #################### Begin #################### -->
         <div id="editPhoneNumberDialog">
             <form class="form" method="post" id="editPhoneNumberFrom">
                 <div class="form-title">部门信息</div>
@@ -87,7 +87,7 @@
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
                onclick="$('#editPhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
         </div>
-        <!-- Edit phoneNumber dialog #################### End   #################### -->
+        <!-- Edit mobilePhone dialog #################### End   #################### -->
 
         <!-- Batch upload phone number dialog #################### Begin #################### -->
         <div id="batchUploadPhoneNumberDialog">
