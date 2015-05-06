@@ -63,7 +63,7 @@ function initLeftMenu() {
             {
                 "menuId": 1, "menuName": "基础数据", "icon": "icon-dannis-setting",
                 "menus": [
-                    {"menuId": 1, "menuName": "号码管理", "icon": "", "url": "page/phoneNumberManagement.html"},
+                    {"menuId": 1, "menuName": "号码管理", "icon": "", "url": "page/mobilePhoneNumberManagement.html"},
                     {"menuId": 1, "menuName": "部门管理", "icon": "", "url": "page/departmentManagement.html"},
                     {"menuId": 1, "menuName": "客户管理", "icon": "", "url": "page/default.html"},
                     {"menuId": 1, "menuName": "货品类别", "icon": "", "url": "page/default.html"},
