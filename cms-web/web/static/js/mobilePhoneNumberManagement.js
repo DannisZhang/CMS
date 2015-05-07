@@ -74,7 +74,7 @@ function initPhoneNumberDatagrid() {
     }];
 
     $("#phoneNumberDatagrid").datagrid({
-        url: "phoneNumber/queryByPage.json",
+        url: "mobilePhoneNumber/queryByPage.json",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -129,7 +129,7 @@ function initPhoneNumberDialog() {
             {
                 text: '是的', iconCls: 'icon-ok', handler: function () {
                 $.ajax({
-                    url: "../phoneNumber/deletePhoneNumberById.json",
+                    url: "../mobilePhoneNumber/deletePhoneNumberById.json",
                     data: {deptId: deletingDeptId},
                     type: "post",
                     dataType: "json",
@@ -180,9 +180,9 @@ function savePhoneNumber() {
     var $editPhoneNumberDialog = $("#editPhoneNumberDialog");
 
     var phoneNumberId = $editPhoneNumberDialog.find("input[name='phoneNumberId']").val();
-    var url = "phoneNumber/add.json";
+    var url = "mobilePhoneNumber/add.json";
     if (phoneNumberId != '') {
-        url = "phoneNumber/update.json";
+        url = "mobilePhoneNumber/update.json";
     }
 
     $editPhoneNumberDialog.find("#editPhoneNumberFrom").form("submit",{
@@ -207,14 +207,15 @@ function savePhoneNumber() {
 }
 
 function uploadExcelFile() {
-    var $batchUploadPhoneNumberFrom = $("#batchUploadPhoneNumberDialog").find("#batchUploadPhoneNumberFrom");
-    $batchUploadPhoneNumberFrom.form("submit",{
-        url:"phoneNumber/upload.json",
+    var $batchUploadPhoneNumberDialog = $("#batchUploadPhoneNumberDialog");
+    $batchUploadPhoneNumberDialog.find("#batchUploadPhoneNumberFrom").form("submit",{
+        url:"mobilePhoneNumber/upload.json",
         onSubmit: function(){
             checkFile();
         },
         success: function (data) {
-            alert(data)
+            $.messager.alert("提示信息",data.message);
+            $batchUploadPhoneNumberDialog.dialog("close");
         }
     });
 }
@@ -234,7 +235,7 @@ function editPhoneNumber(event, deptId) {
     clearEditPhoneNumberForm();
     var $editPhoneNumberDialog = $("#editPhoneNumberDialog").dialog({title:"修改号码"});
     $.ajax({
-        url:"phoneNumber/queryById.json",
+        url:"mobilePhoneNumber/queryById.json",
         method:"get",
         data:{deptId:deptId},
         dataType:"json",

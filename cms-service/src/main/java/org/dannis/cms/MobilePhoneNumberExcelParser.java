@@ -4,7 +4,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.dannis.cms.model.MobilePhone;
+import org.dannis.cms.model.MobilePhoneNumber;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,9 +19,9 @@ import java.util.List;
  * @version 1.0.0
  * @date 2015-05-04 21:56
  */
-public class MobilePhoneExcelParser {
-    public static List<MobilePhone> parseExcel(String filePath) throws IOException {
-        List<MobilePhone> mobilePhones = new ArrayList<MobilePhone>();
+public class MobilePhoneNumberExcelParser {
+    public static List<MobilePhoneNumber> parseExcel(String filePath) throws IOException {
+        List<MobilePhoneNumber> mobilePhoneNumbers = new ArrayList<MobilePhoneNumber>();
         InputStream inputStream = new FileInputStream(filePath);
         HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
         //Read the sheets of workbook
@@ -36,7 +36,7 @@ public class MobilePhoneExcelParser {
                 if (row != null) {
                     String mobilePhoneNumber = getCellData(row.getCell(0));
                     if (mobilePhoneNumber != null && !"".equals(mobilePhoneNumber.trim())) {
-                        MobilePhone mobilePhone = new MobilePhone();
+                        MobilePhoneNumber mobilePhone = new MobilePhoneNumber();
                         mobilePhone.setNumber(getCellData(row.getCell(0)));
                         mobilePhone.setOperator(getCellData(row.getCell(1)));
                         mobilePhone.setAttribution(getCellData(row.getCell(2)));
@@ -58,14 +58,61 @@ public class MobilePhoneExcelParser {
                         } else {
                             mobilePhone.setBalance(0.00);
                         }
-                        mobilePhone.setDescription(getCellData(row.getCell(6)));
+                        mobilePhone.setRemark(getCellData(row.getCell(6)));
 
-                        mobilePhones.add(mobilePhone);
+                        mobilePhoneNumbers.add(mobilePhone);
                     }
                 }
             }
         }
-        return mobilePhones;
+        return mobilePhoneNumbers;
+    }
+
+    public static List<MobilePhoneNumber> parseExcel(InputStream inputStream) throws IOException {
+        List<MobilePhoneNumber> mobilePhoneNumbers = new ArrayList<MobilePhoneNumber>();
+        HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+        //Read the sheets of workbook
+        for (int sheetIndex = 0;sheetIndex < workbook.getNumberOfSheets();sheetIndex++) {
+            HSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+            if (sheet == null) {
+                continue;
+            }
+            //Read the rows of sheet
+            for (int rowIndex = 1;rowIndex <= sheet.getLastRowNum();rowIndex++) {
+                HSSFRow row = sheet.getRow(rowIndex);
+                if (row != null) {
+                    String mobilePhoneNumber = getCellData(row.getCell(0));
+                    if (mobilePhoneNumber != null && !"".equals(mobilePhoneNumber.trim())) {
+                        MobilePhoneNumber mobilePhone = new MobilePhoneNumber();
+                        mobilePhone.setNumber(getCellData(row.getCell(0)));
+                        mobilePhone.setOperator(getCellData(row.getCell(1)));
+                        mobilePhone.setAttribution(getCellData(row.getCell(2)));
+                        String wholesalePriceStr = getCellData(row.getCell(3));
+                        if (wholesalePriceStr != null && !"".equals(wholesalePriceStr.trim())) {
+                            mobilePhone.setWholesalePrice(Double.parseDouble(wholesalePriceStr));
+                        } else {
+                            mobilePhone.setWholesalePrice(0.00);
+                        }
+                        String floorPriceStr = getCellData(row.getCell(4));
+                        if (floorPriceStr != null && !"".equals(floorPriceStr.trim())) {
+                            mobilePhone.setFloorPrice(Double.parseDouble(floorPriceStr));
+                        } else {
+                            mobilePhone.setFloorPrice(0.00);
+                        }
+                        String balanceStr = getCellData(row.getCell(5));
+                        if (balanceStr != null && !"".equals(balanceStr.trim())) {
+                            mobilePhone.setBalance(Double.parseDouble(balanceStr));
+                        } else {
+                            mobilePhone.setBalance(0.00);
+                        }
+                        mobilePhone.setRemark(getCellData(row.getCell(6)));
+
+                        mobilePhoneNumbers.add(mobilePhone);
+                    }
+                }
+            }
+        }
+        return mobilePhoneNumbers;
     }
 
     /**
@@ -91,7 +138,7 @@ public class MobilePhoneExcelParser {
     }
 
     public static void main(String[] args) throws IOException {
-        List<MobilePhone> mobilePhones = parseExcel("E:\\模板-批量导入手机号码.xls");
-        System.out.println(mobilePhones);
+        List<MobilePhoneNumber> mobilePhoneNumbers = parseExcel("E:\\模板-批量导入手机号码.xls");
+        System.out.println(mobilePhoneNumbers);
     }
 }
