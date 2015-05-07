@@ -108,14 +108,14 @@ function initPhoneNumberDialog() {
         buttons:"#phoneNumberDialogButtons"
     });
 
-    $("#batchUploadPhoneNumberDialog").dialog({
-        title:"批量导入电话号码",
+    $("#importMobilePhoneNumberDialog").dialog({
+        title:"批量导入手机号码",
         width:500,
         height:300,
         closed:true,
         cache:false,
         modal:true,
-        buttons:"#batchUploadPhoneNumberButtons"
+        buttons:"#importMobilePhoneNumberButtons"
     });
 
     $("#deletePhoneNumberDialog").dialog({
@@ -163,7 +163,7 @@ function viewPhoneNumberDetail(event, deptId) {
 }
 
 function batchUploadPhoneNumber() {
-    $("#batchUploadPhoneNumberDialog").dialog({title:"批量导入电话号码"}).dialog("open");
+    $("#importMobilePhoneNumberDialog").dialog({title:"批量导入电话号码"}).dialog("open");
 }
 
 function clearEditPhoneNumberForm() {
@@ -207,8 +207,8 @@ function savePhoneNumber() {
 }
 
 function uploadExcelFile() {
-    var $batchUploadPhoneNumberDialog = $("#batchUploadPhoneNumberDialog");
-    $batchUploadPhoneNumberDialog.find("#batchUploadPhoneNumberFrom").form("submit",{
+    var $batchUploadPhoneNumberDialog = $("#importMobilePhoneNumberDialog");
+    $batchUploadPhoneNumberDialog.find("#importMobilePhoneNumberFrom").form("submit",{
         url:"mobilePhoneNumber/upload.json",
         onSubmit: function(){
             checkFile();

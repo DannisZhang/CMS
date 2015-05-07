@@ -89,27 +89,34 @@
         </div>
         <!-- Edit mobilePhone dialog #################### End   #################### -->
 
-        <!-- Batch upload phone number dialog #################### Begin #################### -->
-        <div id="batchUploadPhoneNumberDialog">
-            <form class="form" method="post" id="batchUploadPhoneNumberFrom" enctype="multipart/form-data">
-                <div class="form-title">批量导入电话号码</div>
+        <!-- Batch import mobile phone number dialog #################### Begin #################### -->
+        <div id="importMobilePhoneNumberDialog">
+            <form class="form" method="post" id="importMobilePhoneNumberFrom" enctype="multipart/form-data">
+                <div class="form-title">批量导入手机号码</div>
                 <div class="form-content">
                     <div class="form-item">
-                        <div style="width:80px;">选择文件：</div>
+                        <div style="width:120px;">注意：</div>
+                        <div>
+                            <p>1.导入数据时请认真填写表格中的每一项数据，并严格按照指定的格式录入。</p>
+                            <p>2.一次性导入的数据不宜过大，对于的数据量建议分多次导入。</p>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:120px;">选择Excel文件：</div>
                         <div><input class="easyui-filebox" id="mobilePhoneNumberExcel" name="mobilePhoneNumberExcel"
-                                    data-options="prompt:'选择Excel文件...',buttonText:'选择...'"  style="width:200px;"/></div>
+                                    data-options="prompt:'选择Excel文件...',buttonText:'选择...'"  style="width:150px;"/></div>
                     </div>
                 </div>
                 <input type="hidden" name="phoneNumberId"/>
             </form>
         </div>
-        <div id="batchUploadPhoneNumberButtons">
+        <div id="importMobilePhoneNumberButtons">
             <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="uploadExcelFile()"
                style="width:90px">导入</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-               onclick="$('#editPhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
+               onclick="$('#importMobilePhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
         </div>
-        <!-- Batch upload phone number dialog #################### End   #################### -->
+        <!-- Batch import mobile phone number dialog #################### End   #################### -->
 
         <div id="dd" class="easyui-dialog" title="删除部门" style="width:320px;height:150px;"
              data-options="iconCls:'icon-custom-exit',resizable:true,modal:true,closed:true,
