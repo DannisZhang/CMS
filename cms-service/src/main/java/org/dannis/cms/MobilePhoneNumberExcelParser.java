@@ -59,6 +59,7 @@ public class MobilePhoneNumberExcelParser {
                             mobilePhone.setBalance(0.00);
                         }
                         mobilePhone.setRemark(getCellData(row.getCell(6)));
+                        mobilePhone.setPriority(9999);
 
                         mobilePhoneNumbers.add(mobilePhone);
                     }
@@ -106,6 +107,7 @@ public class MobilePhoneNumberExcelParser {
                             mobilePhone.setBalance(0.00);
                         }
                         mobilePhone.setRemark(getCellData(row.getCell(6)));
+                        mobilePhone.setPriority(9999);
 
                         mobilePhoneNumbers.add(mobilePhone);
                     }

@@ -3,7 +3,7 @@ package org.dannis.cms.dal.entity;
 import java.util.Date;
 
 /**
- * ³éÏóÊµÌåÀà
+ * åŸºæœ¬å®ä½“ç±»
  *
  * @author deng.zhang
  * @version 1.0.0
@@ -15,19 +15,23 @@ public abstract class AbstractEntity {
      */
     private Integer id;
     /**
-     * ´´½¨Ê±¼ä
+     * çŠ¶æ€
+     */
+    private String status;
+    /**
+     * åˆ›å»ºæ—¶é—´
      */
     private Date createdOn;
     /**
-     * ´´½¨ÈË
+     * åˆ›å»ºäºº
      */
     private Integer createdBy;
     /**
-     * ×îºóĞŞ¸ÄÊ±¼ä
+     * æœ€è¿‘ä¿®æ”¹æ—¶é—´
      */
     private Date lastModifiedOn;
     /**
-     * ×îºóĞŞ¸ÄÈË
+     * æœ€è¿‘ä¿®æ”¹äºº
      */
     private Integer lastModifiedBy;
 
@@ -37,6 +41,14 @@ public abstract class AbstractEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getCreatedOn() {

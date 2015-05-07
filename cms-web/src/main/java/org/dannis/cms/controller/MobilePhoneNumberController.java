@@ -4,7 +4,9 @@ import org.apache.commons.io.FileUtils;
 import org.dannis.cms.MobilePhoneNumberExcelParser;
 import org.dannis.cms.model.MobilePhoneNumber;
 import org.dannis.cms.result.BaseResult;
-import org.dannis.cms.service.MobilePhoneService;
+import org.dannis.cms.service.MobilePhoneNumberService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
+ * 手机号码控制器
+ *
  * @author deng.zhang
  * @version 1.0.0
  * @date 2015-04-26 12:03
@@ -29,30 +33,46 @@ import java.util.List;
 @RequestMapping(value = "/mobilePhoneNumber")
 public class MobilePhoneNumberController {
     /**
-     *
+     * Logger
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(MobilePhoneNumberController.class);
+    /**
+     * 手机号码服务
      */
     @Autowired
-    private MobilePhoneService mobilePhoneService;
+    private MobilePhoneNumberService mobilePhoneNumberService;
 
     @RequestMapping(value = "/save.json")
     @ResponseBody
-    public void save() {
-        mobilePhoneService.save(null);
+    public BaseResult saveMobilePhoneNumber(MobilePhoneNumber mobilePhoneNumber) {
+        LOGGER.info("保存电话号码");
+        BaseResult result = new BaseResult();
+        if (null != mobilePhoneNumber) {
+            try {
+                mobilePhoneNumberService.saveMobilePhoneNumber(mobilePhoneNumber);
+                result.setSuccess(true);
+                result.setMessage("保存手机号码成功！");
+                LOGGER.info("保存手机号码成功");
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage("保存手机号码失败，服务器异常！");
+                LOGGER.error("保存手机号码失败，发生异常",e);
+            }
+        } else {
+            result.setSuccess(false);
+            result.setMessage("手机号码为空！");
+            LOGGER.info("保存手机号码失败，原因： 手机号码为空");
+        }
+        return result;
     }
 
     @RequestMapping(value = "/upload.json", method = RequestMethod.POST)
     @ResponseBody
-    public BaseResult upload(@RequestParam("phoneNumberExcel") MultipartFile file,HttpServletRequest request) throws IOException {
+    public BaseResult uploadMobilePhoneNumbers(@RequestParam("mobilePhoneNumberExcel") MultipartFile file,HttpServletRequest request) throws IOException {
         BaseResult baseResult = new BaseResult();
         if (!file.isEmpty()) {
-            ServletContext sc = request.getSession().getServletContext();
-            String dir = sc.getRealPath("/upload");    //设定文件保存的目录
-
             List<MobilePhoneNumber> mobilePhoneNumbers = MobilePhoneNumberExcelParser.parseExcel(file.getInputStream());
-
-            String filename = file.getOriginalFilename();    //得到上传时的文件名
-            FileUtils.writeByteArrayToFile(new File(dir, filename), file.getBytes());
-
+            mobilePhoneNumberService.saveMobilePhoneNumbers(mobilePhoneNumbers);
             baseResult.setSuccess(true);
             baseResult.setMessage("导入成功，共导入" + mobilePhoneNumbers.size() + "条手机号码");
         }

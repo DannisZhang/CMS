@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dannis.cms.dal.db.MobilePhoneNumberMapper">
+	<resultMap id="phoneNumberMap" type="org.dannis.cms.dal.entity.MobilePhoneNumberEntity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result property="number" column="number" jdbcType="VARCHAR"/>
+		<result property="operator" column="operator" jdbcType="VARCHAR"/>
+		<result property="attribution" column="attribution" jdbcType="VARCHAR"/>
+		<result property="wholesalePrice" column="wholesale_price" jdbcType="DOUBLE"/>
+		<result property="floorPrice" column="floor_price" jdbcType="DOUBLE"/>
+		<result property="balance" column="balance" jdbcType="DOUBLE"/>
+		<result property="priority" column="priority" jdbcType="INTEGER" />
+		<result property="remark" column="remark" jdbcType="VARCHAR" />
+		<result property="status" column="status" jdbcType="VARCHAR" />
+		<result property="createdOn" column="created_on" jdbcType="TIMESTAMP"/>
+		<result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+		<result property="lastModifiedOn" column="last_modified_on" jdbcType="TIMESTAMP"/>
+		<result property="lastModifiedBy" column="last_modified_by" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="allColumns">
+		id,number,operator,attribution,wholesale_price,floor_price,balance,priority,remark,status,created_on,created_by,last_modified_on,last_modified_by
+	</sql>
+
+	<sql id="insertColumns">
+		number,operator,attribution,wholesale_price,floor_price,balance,priority,remark,created_by
+	</sql>
+
+	<insert id="saveMobilePhoneNumber" parameterType="org.dannis.cms.dal.entity.MobilePhoneNumberEntity">
+		INSERT INTO t_cms_mobile_phone_number(<include refid="insertColumns"/>)
+		VALUES (#{number},#{operator},#{attribution},#{wholesalePrice},#{floorPrice},#{balance},#{priority},#{remark},#{createdBy})
+	</insert>
+
+	<insert id="saveMobilePhoneNumbers">
+		INSERT INTO t_cms_mobile_phone_number(<include refid="insertColumns"/>)
+		VALUES
+		<foreach collection="list" item="mobilePhone" separator=",">
+			(#{mobilePhone.number},#{mobilePhone.operator},#{mobilePhone.attribution},#{mobilePhone.wholesalePrice},
+			#{mobilePhone.floorPrice},#{mobilePhone.balance},#{mobilePhone.priority},#{mobilePhone.remark},
+			#{mobilePhone.createdBy})
+		</foreach>
+	</insert>
+
+	<delete id="deleteMobilePhoneNumberById" parameterType="java.lang.Integer">
+		DELETE FROM t_cms_mobile_phone_number
+		WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteMobilePhoneNumberByNumber" parameterType="java.lang.String">
+		DELETE FROM t_cms_mobile_phone_number
+		WHERE number = #{number}
+	</delete>
+
+	<select id="findMobilePhoneNumberById" parameterType="java.lang.Integer">
+		SELECT <include refid="allColumns"/>
+		FROM t_cms_mobile_phone_number
+		WHERE id = #{id}
+	</select>
+
+	<select id="findMobilePhoneNumberByNumber" parameterType="java.lang.String">
+		SELECT <include refid="allColumns"/>
+		FROM t_cms_mobile_phone_number
+		WHERE number = #{number}
+	</select>
+
+	<select id="findMobilePhoneNumberByPage">
+		SELECT <include refid="allColumns"/>
+		FROM t_cms_mobile_phone_number
+		WHEN status = 'active'
+		ORDER BY priority ASC ,created_on DESC
+		LIMIT #{offset},#{limit}
+	</select>
+</mapper>

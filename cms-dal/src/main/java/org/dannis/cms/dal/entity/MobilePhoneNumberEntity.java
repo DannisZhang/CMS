@@ -1,13 +1,13 @@
-package org.dannis.cms.model;
+package org.dannis.cms.dal.entity;
 
 /**
- * 手机业务模型
+ * 手机号码实体类
  *
  * @author deng.zhang
  * @version 1.0.0
- * @date 2015-05-04 21:56
+ * @date 2015-05-07 19:37
  */
-public class MobilePhoneNumber {
+public class MobilePhoneNumberEntity extends AbstractEntity {
     /**
      * 号码
      */

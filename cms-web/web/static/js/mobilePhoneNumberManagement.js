@@ -221,7 +221,7 @@ function uploadExcelFile() {
 }
 
 function checkFile() {
-    var file = $("#phoneNumberExcel").filebox("getValue");
+    var file = $("#mobilePhoneNumberExcel").filebox("getValue");
     var fileName = file.substring(0,file.lastIndexOf("."));
     var fileType = file.substring(file.lastIndexOf(".") + 1,file.length);
     console.log(file);
