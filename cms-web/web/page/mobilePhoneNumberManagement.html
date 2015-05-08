@@ -92,19 +92,21 @@
         <!-- Batch import mobile phone number dialog #################### Begin #################### -->
         <div id="importMobilePhoneNumberDialog">
             <form class="form" method="post" id="importMobilePhoneNumberFrom" enctype="multipart/form-data">
-                <div class="form-title">批量导入手机号码</div>
+                <div class="form-title">导入步骤</div>
                 <div class="form-content">
                     <div class="form-item">
-                        <div style="width:120px;">注意：</div>
+                        <div style="width:100px;font-weight: bold;margin-top: 10px;vertical-align: top">注意事项：</div>
                         <div>
-                            <p>1.导入数据时请认真填写表格中的每一项数据，并严格按照指定的格式录入。</p>
+                            <p>1.导入数据时请认真填写Excel表格中的每一项数据，并严格按照<br>指定的格式录入；</p>
                             <p>2.一次性导入的数据不宜过大，对于的数据量建议分多次导入。</p>
                         </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:120px;">选择Excel文件：</div>
+                        <div style="width:100px;font-weight: bold">选择Excel文件：</div>
                         <div><input class="easyui-filebox" id="mobilePhoneNumberExcel" name="mobilePhoneNumberExcel"
-                                    data-options="prompt:'选择Excel文件...',buttonText:'选择...'"  style="width:150px;"/></div>
+                                    data-options="prompt:'选择Excel文件...',buttonText:'选择文件'"
+                                    style="width:240px;"/>
+                        </div>
                     </div>
                 </div>
                 <input type="hidden" name="phoneNumberId"/>

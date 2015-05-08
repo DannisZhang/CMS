@@ -69,13 +69,22 @@ public class MobilePhoneNumberController {
     @RequestMapping(value = "/upload.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult uploadMobilePhoneNumbers(@RequestParam("mobilePhoneNumberExcel") MultipartFile file,HttpServletRequest request) throws IOException {
-        BaseResult baseResult = new BaseResult();
+        LOGGER.info("批量导入手机号码开始......");
+        BaseResult result = new BaseResult();
         if (!file.isEmpty()) {
             List<MobilePhoneNumber> mobilePhoneNumbers = MobilePhoneNumberExcelParser.parseExcel(file.getInputStream());
-            mobilePhoneNumberService.saveMobilePhoneNumbers(mobilePhoneNumbers);
-            baseResult.setSuccess(true);
-            baseResult.setMessage("导入成功，共导入" + mobilePhoneNumbers.size() + "条手机号码");
+            try {
+                mobilePhoneNumberService.saveMobilePhoneNumbers(mobilePhoneNumbers);
+                result.setSuccess(true);
+                result.setMessage("导入成功，共导入" + mobilePhoneNumbers.size() + "条手机号码");
+                LOGGER.info("批量导入手机号码成功");
+            } catch (Exception e) {
+                result.setSuccess(false);
+                result.setMessage("批量导入手机号码失败");
+                LOGGER.error("批量导入手机号码失败",e);
+            }
         }
-        return baseResult;
+        LOGGER.info("批量导入手机号码结束......");
+        return result;
     }
 }

@@ -100,6 +100,12 @@ function initLeftMenu() {
                 ]
             },
             {
+                "menuId": 1, "menuName": "资源管理", "icon": "icon-dannis-report",
+                "menus": [
+                    {"menuId": 1, "menuName": "模板下载", "icon": "", "url": "page/default.html"}
+                ]
+            },
+            {
                 "menuId": 1, "menuName": "关于系统", "icon": "icon-dannis-about",
                 "menus": [
                     {"menuId": 1, "menuName": "关于本系统", "icon": "", "url": "page/default.html"},
