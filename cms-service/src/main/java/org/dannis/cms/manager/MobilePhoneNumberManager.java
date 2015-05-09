@@ -48,17 +48,8 @@ public class MobilePhoneNumberManager {
      *
      * @param id 手机号码ID
      */
-    public void deleteMobilePhoneNumberById(Integer id) {
-        mobilePhoneNumberMapper.deleteMobilePhoneNumberById(id);
-    }
-
-    /**
-     * 根据号码删除手机号码信息
-     *
-     * @param number 号码
-     */
-    public void deleteMobilePhoneNumberByNumber(String number) {
-        mobilePhoneNumberMapper.deleteMobilePhoneNumberByNumber(number);
+    public void deleteById(Integer id) {
+        mobilePhoneNumberMapper.deleteById(id);
     }
 
     /**
@@ -87,8 +78,70 @@ public class MobilePhoneNumberManager {
      * @param queryParams 分页查询参数
      * @return 手机号码实体对象列表
      */
-    public List<MobilePhoneNumber> findMobilePhoneNumberByPage(Map<String,Object> queryParams) {
-        return mobilePhoneNumberMapper.findMobilePhoneNumberByPage(queryParams);
+    public List<MobilePhoneNumber> queryByPage(Map<String, Object> queryParams) {
+        return convertToModels(mobilePhoneNumberMapper.queryByPage(queryParams));
+    }
+
+    /**
+     * 查询符合条件的手机号码总数
+     *
+     * @param queryParams 查询参数
+     * @return 符合条件的手机号码总数
+     */
+    public long queryTotal(Map<String, Object> queryParams) {
+        return mobilePhoneNumberMapper.queryTotal(queryParams);
+    }
+
+    private List<MobilePhoneNumber> convertToModels(List<MobilePhoneNumberEntity> entities) {
+        List<MobilePhoneNumber> mobilePhoneNumbers = new ArrayList<>();
+        if (null != entities && entities.size() > 0) {
+            for (MobilePhoneNumberEntity entity : entities) {
+                mobilePhoneNumbers.add(convertToModel(entity));
+            }
+        }
+        return mobilePhoneNumbers;
+    }
+
+    private MobilePhoneNumber convertToModel(MobilePhoneNumberEntity entity) {
+        MobilePhoneNumber mobilePhoneNumber = null;
+        if (null != entity) {
+            mobilePhoneNumber = new MobilePhoneNumber();
+            mobilePhoneNumber.setId(entity.getId());
+            mobilePhoneNumber.setNumber(entity.getNumber());
+            mobilePhoneNumber.setOperator(entity.getOperator());
+            mobilePhoneNumber.setAttribution(entity.getAttribution());
+            mobilePhoneNumber.setWholesalePrice(entity.getWholesalePrice());
+            mobilePhoneNumber.setFloorPrice(entity.getFloorPrice());
+            mobilePhoneNumber.setBalance(entity.getBalance());
+            mobilePhoneNumber.setPriority(entity.getPriority());
+            mobilePhoneNumber.setRemark(entity.getRemark());
+            mobilePhoneNumber.setCreatedOn(entity.getCreatedOn());
+            mobilePhoneNumber.setCreatedBy(entity.getCreatedBy());
+            mobilePhoneNumber.setLastModifiedOn(entity.getLastModifiedOn());
+            mobilePhoneNumber.setLastModifiedBy(entity.getLastModifiedBy());
+        }
+
+        return mobilePhoneNumber;
+    }
+
+
+    private MobilePhoneNumberEntity convertToEntity(MobilePhoneNumber mobilePhoneNumber) {
+        MobilePhoneNumberEntity entity = null;
+        if (null != mobilePhoneNumber) {
+            entity = new MobilePhoneNumberEntity();
+            entity.setId(mobilePhoneNumber.getId());
+            entity.setNumber(mobilePhoneNumber.getNumber());
+            entity.setOperator(mobilePhoneNumber.getOperator());
+            entity.setAttribution(mobilePhoneNumber.getAttribution());
+            entity.setWholesalePrice(mobilePhoneNumber.getWholesalePrice());
+            entity.setFloorPrice(mobilePhoneNumber.getFloorPrice());
+            entity.setBalance(mobilePhoneNumber.getBalance());
+            entity.setPriority(mobilePhoneNumber.getPriority());
+            entity.setRemark(mobilePhoneNumber.getRemark());
+            entity.setCreatedBy(mobilePhoneNumber.getCreatedBy());
+            entity.setLastModifiedBy(mobilePhoneNumber.getLastModifiedBy());
+        }
+        return entity;
     }
 
     private List<MobilePhoneNumberEntity> convertToEntities(List<MobilePhoneNumber> mobilePhoneNumbers) {
@@ -99,22 +152,5 @@ public class MobilePhoneNumberManager {
             }
         }
         return entities;
-    }
-
-    private MobilePhoneNumberEntity convertToEntity(MobilePhoneNumber mobilePhoneNumber) {
-        MobilePhoneNumberEntity entity = null;
-        if (null != mobilePhoneNumber) {
-            entity = new MobilePhoneNumberEntity();
-            entity.setNumber(mobilePhoneNumber.getNumber());
-            entity.setOperator(mobilePhoneNumber.getOperator());
-            entity.setAttribution(mobilePhoneNumber.getAttribution());
-            entity.setWholesalePrice(mobilePhoneNumber.getWholesalePrice());
-            entity.setFloorPrice(mobilePhoneNumber.getFloorPrice());
-            entity.setBalance(mobilePhoneNumber.getBalance());
-            entity.setPriority(mobilePhoneNumber.getPriority());
-            entity.setRemark(mobilePhoneNumber.getRemark());
-            entity.setCreatedBy(0);
-        }
-        return entity;
     }
 }

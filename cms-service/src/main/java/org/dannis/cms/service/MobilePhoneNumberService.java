@@ -2,6 +2,8 @@ package org.dannis.cms.service;
 
 import org.dannis.cms.dal.entity.MobilePhoneNumberEntity;
 import org.dannis.cms.model.MobilePhoneNumber;
+import org.dannis.cms.query.QueryParams;
+import org.dannis.cms.query.result.PaginationQueryResult;
 
 import java.util.List;
 import java.util.Map;
@@ -33,14 +35,7 @@ public interface MobilePhoneNumberService {
      *
      * @param id 手机号码ID
      */
-    void deleteMobilePhoneNumberById(Integer id);
-
-    /**
-     * 根据号码删除手机号码信息
-     *
-     * @param number 号码
-     */
-    void deleteMobilePhoneNumberByNumber(String number);
+    void deleteById(Integer id);
 
     /**
      * 根据ID查找手机号码信息
@@ -59,10 +54,10 @@ public interface MobilePhoneNumberService {
     MobilePhoneNumberEntity findMobilePhoneNumberByNumber(String number);
 
     /**
-     * 分页查询手机号码信息
+     * 分页查询手机号码
      *
-     * @param queryParams 分页查询参数
-     * @return 手机号码实体对象列表
+     * @param queryParams 查询参数
+     * @return 查询结果
      */
-    List<MobilePhoneNumber> findMobilePhoneNumberByPage(Map<String,Object> queryParams);
+    PaginationQueryResult<MobilePhoneNumber> queryByPage(QueryParams queryParams);
 }

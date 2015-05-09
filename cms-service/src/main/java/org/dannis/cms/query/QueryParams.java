@@ -1,5 +1,6 @@
 package org.dannis.cms.query;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +31,7 @@ public class QueryParams {
     /**
      * parameters
      */
-    private Map<String, String> params;
+    private Map<String, Object> params;
 
     public int getPage() {
         return page;
@@ -48,16 +49,16 @@ public class QueryParams {
         this.rows = rows;
     }
 
-    public Map<String, String> getParams() {
+    public Map<String, Object> getParams() {
         if (params == null) {
             params = new HashMap<>();
         }
-        params.put("offset", String.valueOf(getOffset()));
-        params.put("limit", String.valueOf(getLimit()));
+        params.put("offset", getOffset());
+        params.put("limit", getLimit());
         return params;
     }
 
-    public void setParams(Map<String, String> params) {
+    public void setParams(Map<String, Object> params) {
         this.params = params;
     }
 
@@ -68,7 +69,7 @@ public class QueryParams {
     public String getString(String key, String defaultValue) {
         if (params != null) {
             Object obj = params.get(key);
-            if (obj != null && obj instanceof String) {
+            if (obj != null) {
                 return (String) obj;
             }
         }
@@ -84,7 +85,7 @@ public class QueryParams {
     public int getInt(String key, int defaultValue) {
         if (params != null) {
             Object obj = params.get(key);
-            if (obj != null && obj instanceof String && !"".equals(((String) obj).trim())) {
+            if (obj != null && !"".equals(((String) obj).trim())) {
                 return Integer.valueOf((String) obj);
             }
         }

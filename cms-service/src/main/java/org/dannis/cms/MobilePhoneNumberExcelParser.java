@@ -108,6 +108,7 @@ public class MobilePhoneNumberExcelParser {
                         }
                         mobilePhone.setRemark(getCellData(row.getCell(6)));
                         mobilePhone.setPriority(9999);
+                        mobilePhone.setCreatedBy(0);//0表示系统导入
 
                         mobilePhoneNumbers.add(mobilePhone);
                     }

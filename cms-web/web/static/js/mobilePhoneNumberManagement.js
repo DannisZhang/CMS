@@ -2,14 +2,13 @@
  * @author deng.zhang
  * @date 2014/11/19.
  */
-var deletingDeptId = -1;
 var maxFileSize = 2048;//最大文件大小，单位：KB
 $(function () {
-    initPhoneNumberDatagrid();
-    initPhoneNumberDialog();
+    initMobilePhoneNumberDatagrid();
+    initMobilePhoneNumberDialog();
 
     $("#deleteDeptBtn").click(function () {
-        var rows = $('#phoneNumberDatagrid').datagrid('getChecked');
+        var rows = $('#mobilePhoneNumberDatagrid').datagrid('getChecked');
         if (rows.length == 0) {
             return;
         }
@@ -19,12 +18,12 @@ $(function () {
         });
         $.post('../phoneNumber/deletePhoneNumbersByIds.json', {ids: ids.join(",")}, function (result) {
             alert(result.message);
-            $('#phoneNumberDatagrid').datagrid('reload');
+            $('#mobilePhoneNumberDatagrid').datagrid('reload');
         });
     });
 });
 
-function initPhoneNumberDatagrid() {
+function initMobilePhoneNumberDatagrid() {
     var columns = [
         [
             {field: 'ck', checkbox: true},
@@ -43,7 +42,7 @@ function initPhoneNumberDatagrid() {
                         + ' style="height:20px;width:34px;text-align: center" href="javascript:void(0);">详情</a>';
                     var edit = '<a class="datagrid-edit-button" onclick="editPhoneNumber(event,' + row.id + ')"'
                         + ' style="height:20px;width:34px;text-align: center;margin-left:5px" href="javascript:void(0);">修改</a>';
-                    var del = '<a class="datagrid-delete-button" onclick="deleteDeptById(event,' + row.id + ')"'
+                    var del = '<a class="datagrid-delete-button" onclick="deleteMobilePhoneNumberById(event,' + row.id + ')"'
                         + ' style="height:20px;width:34px;text-align: center;margin-left:5px;" href="javascript:void(0);">删除</a>';
                     return detail + edit + del;
                 }
@@ -75,8 +74,8 @@ function initPhoneNumberDatagrid() {
         }
     }];
 
-    $("#phoneNumberDatagrid").datagrid({
-        url: "mobilePhoneNumber/findByPage.json",
+    $("#mobilePhoneNumberDatagrid").datagrid({
+        url: "mobilePhoneNumber/queryByPage.json",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -98,16 +97,17 @@ function initPhoneNumberDatagrid() {
     });
 }
 
-function initPhoneNumberDialog() {
+function initMobilePhoneNumberDialog() {
     $.parser.parse("#phoneNumberManagement");
-    $("#editPhoneNumberDialog").dialog({
-        title:"添加号码",
+    $("#editMobilePhoneNumberDialog").dialog({
+        iconCls:"icon-edit",
+        title:"添加手机号码",
         width:500,
-        height:450,
+        height:480,
         closed:true,
         cache:false,
         modal:true,
-        buttons:"#phoneNumberDialogButtons"
+        buttons:"#mobilePhoneNumberDialogButtons"
     });
 
     $("#importMobilePhoneNumberDialog").dialog({
@@ -120,44 +120,11 @@ function initPhoneNumberDialog() {
         modal:true,
         buttons:"#importMobilePhoneNumberButtons"
     });
-
-    $("#deletePhoneNumberDialog").dialog({
-        title: "删除号码",
-        width: 320,
-        height: 150,
-        modal: true,
-        closed: true,
-        resizable: false,
-        buttons: [
-            {
-                text: '是的', iconCls: 'icon-ok', handler: function () {
-                $.ajax({
-                    url: "../mobilePhoneNumber/deletePhoneNumberById.json",
-                    data: {deptId: deletingDeptId},
-                    type: "post",
-                    dataType: "json",
-                    success: function (result) {
-                        $("#phoneNumberDatagrid").datagrid("reload");
-                    },
-                    error: function (result) {
-                        alert("删除失败");
-                    }
-                });
-                $("#deletePhoneNumberDialog").dialog("close");
-            }
-            },
-            {
-                text: '不是', iconCls: 'icon-no', handler: function () {
-                $("#deletePhoneNumberDialog").dialog("close");
-            }
-            }
-        ]
-    });
 }
 
 function addPhoneNumber() {
     clearEditPhoneNumberForm();
-    $("#editPhoneNumberDialog").dialog({title:"添加号码"}).dialog("open");
+    $("#editMobilePhoneNumberDialog").dialog({title:"添加号码"}).dialog("open");
 }
 
 function viewPhoneNumberDetail(event, deptId) {
@@ -170,32 +137,50 @@ function importMobilePhoneNumber() {
 }
 
 function clearEditPhoneNumberForm() {
-    $("#editPhoneNumberDialog").find("#editPhoneNumberFrom").form("clear");
+    $("#editMobilePhoneNumberDialog").find("#editPhoneNumberFrom").form("clear");
 }
 
-function deleteDeptById(event, deptId) {
+function deleteMobilePhoneNumberById(event, mobilePhoneNumberId) {
     event.stopPropagation();
-    deletingDeptId = deptId;
-    $("#deletePhoneNumberDialog").dialog("open");
+    $.messager.confirm("确认删除","请确认是否删除手机号码？", function (r) {
+        if (r) {
+            $.ajax({
+                url:"mobilePhoneNumber/deleteById.json",
+                method:"post",
+                data:{"id" : mobilePhoneNumberId},
+                success: function (result) {
+                    if (result.success) {
+                        $.messager.alert("删除成功",result.message);
+                        $('#mobilePhoneNumberDatagrid').datagrid('reload');
+                    } else {
+                        $.messager.alert("删除失败",result.message,"error");
+                    }
+                }
+            })
+        }
+    });
 }
 
-function savePhoneNumber() {
-    var $editPhoneNumberDialog = $("#editPhoneNumberDialog");
+function saveMobilePhoneNumber() {
+    var $editMobilePhoneNumberDialog = $("#editMobilePhoneNumberDialog");
 
-    var phoneNumberId = $editPhoneNumberDialog.find("input[name='phoneNumberId']").val();
+    var phoneNumberId = $editMobilePhoneNumberDialog.find("input[name='mobilePhoneNumberId']").val();
     var url = "mobilePhoneNumber/add.json";
     if (phoneNumberId != '') {
         url = "mobilePhoneNumber/update.json";
     }
 
-    $editPhoneNumberDialog.find("#editPhoneNumberFrom").form("submit",{
+    $editMobilePhoneNumberDialog.find("#editMobilePhoneNumberFrom").form("submit",{
         url:url,
+        onSubmit: function() {
+            //校验数据
+        },
         success: function (result) {
             try {
                 var jsonResult = $.parseJSON(result);
                 if (jsonResult.status = 0) {
                     $.messager.alert("提示信息",jsonResult.message);
-                    $('#phoneNumberDatagrid').datagrid('reload');
+                    $('#mobilePhoneNumberDatagrid').datagrid('reload');
                 } else {
                     $.messager.alert("提示信息",jsonResult.message,"warning");
                 }
@@ -204,7 +189,7 @@ function savePhoneNumber() {
                 $.messager.alert("系统异常","系统发生异常","warning");
             }
             clearEditPhoneNumberForm();
-            $editPhoneNumberDialog.dialog('close');
+            $editMobilePhoneNumberDialog.dialog('close');
         }
     });
 }
@@ -249,43 +234,19 @@ function importMobilePhoneNumberExcel() {
             var result = $.parseJSON(data);
             if (result.success) {
                 $.messager.alert("导入成功",result.message);
+                $('#mobilePhoneNumberDatagrid').datagrid('reload');
+                $importMobilePhoneNumberDialog.dialog("close");
             } else {
                 $.messager.alert("导入失败",result.message,"error");
             }
-            $importMobilePhoneNumberDialog.dialog("close");
         }
     });
-}
-
-function checkFile() {
-    var isValid = true;
-    var $fileObjectList = $("input[type='file'][name='mobilePhoneNumberExcel']");
-    if ($fileObjectList.length > 0 && $fileObjectList[0].files.length > 0) {
-        var file = $fileObjectList[0].files[0];
-        var fileName = file.name;
-        var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1,fileName.length);
-        if (fileExt != 'xls' && fileExt != 'xlsx') {//非Excel文件
-            $.messager.alert("文件类型错误","请选择Excel数据文件","error");
-            isValid = false;
-        } else {//Excel文件
-            var fileSize = Math.round(file.size / 1024 * 100) / 100;//单位为：KB
-            if (fileSize > 1) {//文件大小不能超过2MB
-                $.messager.alert("文件过大","数据文件过大，请分批进行导入","warning");
-                isValid = false;
-            }
-        }
-    } else {
-        $.messager.alert("未选择文件","请选择Excel数据文件","error");
-        isValid = false;
-    }
-    alert(isValid);
-    return isValid;
 }
 
 function editPhoneNumber(event, deptId) {
     event.stopPropagation();
     clearEditPhoneNumberForm();
-    var $editPhoneNumberDialog = $("#editPhoneNumberDialog").dialog({title:"修改号码"});
+    var $editMobilePhoneNumberDialog = $("#editMobilePhoneNumberDialog").dialog({title:"修改号码"});
     $.ajax({
         url:"mobilePhoneNumber/queryById.json",
         method:"get",
@@ -294,7 +255,7 @@ function editPhoneNumber(event, deptId) {
         success: function (result) {
             if (result && result.data) {
                 var phoneNumber = result.data;
-                $editPhoneNumberDialog.find("#editPhoneNumberFrom").form('load',{
+                $editMobilePhoneNumberDialog.find("#editPhoneNumberFrom").form('load',{
                     cnName:phoneNumber.cnName,
                     enName:phoneNumber.enName,
                     parent:phoneNumber.parent ? phoneNumber.parent.id : '',
@@ -307,5 +268,5 @@ function editPhoneNumber(event, deptId) {
             }
         }
     });
-    $editPhoneNumberDialog.dialog("open");
+    $editMobilePhoneNumberDialog.dialog("open");
 }

@@ -3,6 +3,8 @@ package org.dannis.cms.service.impl;
 import org.dannis.cms.dal.entity.MobilePhoneNumberEntity;
 import org.dannis.cms.manager.MobilePhoneNumberManager;
 import org.dannis.cms.model.MobilePhoneNumber;
+import org.dannis.cms.query.QueryParams;
+import org.dannis.cms.query.result.PaginationQueryResult;
 import org.dannis.cms.service.MobilePhoneNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,12 +33,8 @@ public class MobilePhoneNumberServiceImpl implements MobilePhoneNumberService {
         mobilePhoneNumberManager.saveMobilePhoneNumbers(mobilePhoneNumbers);
     }
 
-    public void deleteMobilePhoneNumberById(Integer id) {
-        mobilePhoneNumberManager.deleteMobilePhoneNumberById(id);
-    }
-
-    public void deleteMobilePhoneNumberByNumber(String number) {
-        mobilePhoneNumberManager.deleteMobilePhoneNumberByNumber(number);
+    public void deleteById(Integer id) {
+        mobilePhoneNumberManager.deleteById(id);
     }
 
     public MobilePhoneNumberEntity findMobilePhoneNumberById(Integer id) {
@@ -47,7 +45,16 @@ public class MobilePhoneNumberServiceImpl implements MobilePhoneNumberService {
         return mobilePhoneNumberManager.findMobilePhoneNumberByNumber(number);
     }
 
-    public List<MobilePhoneNumber> findMobilePhoneNumberByPage(Map<String, Object> queryParams) {
-        return mobilePhoneNumberManager.findMobilePhoneNumberByPage(queryParams);
+    @Override
+    public PaginationQueryResult<MobilePhoneNumber> queryByPage(QueryParams queryParams) {
+        PaginationQueryResult<MobilePhoneNumber> result = new PaginationQueryResult<>();
+        if (null == queryParams) {
+            result.setMessage("查询部门失败，未指定查询参数");
+            return result;
+        }
+        result.setTotal(mobilePhoneNumberManager.queryTotal(queryParams.getParams()));
+        result.setRows(mobilePhoneNumberManager.queryByPage(queryParams.getParams()));
+
+        return result;
     }
 }

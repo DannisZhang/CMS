@@ -1,6 +1,6 @@
 package org.dannis.cms.query.result;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,12 +19,14 @@ public class PaginationQueryResult<T> extends BaseResult {
      * 数据集合
      */
     private List<T> rows;
+
     public PaginationQueryResult() {
-        this(0l,Collections.EMPTY_LIST);
+        this(0l, new ArrayList<T>());
     }
-    public PaginationQueryResult(long total,List<T> rows) {
+
+    public PaginationQueryResult(long total, List<T> rows) {
         this.total = total;
-        this.rows = rows == null ? Collections.EMPTY_LIST : rows;
+        this.rows = rows == null ? new ArrayList<T>() : rows;
     }
 
     public long getTotal() {

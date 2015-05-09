@@ -35,14 +35,7 @@ public interface MobilePhoneNumberMapper {
      *
      * @param id 手机号码ID
      */
-    void deleteMobilePhoneNumberById(Integer id);
-
-    /**
-     * 根据号码删除手机号码信息
-     *
-     * @param number 号码
-     */
-    void deleteMobilePhoneNumberByNumber(String number);
+    void deleteById(Integer id);
 
     /**
      * 根据ID查找手机号码信息
@@ -61,10 +54,18 @@ public interface MobilePhoneNumberMapper {
     MobilePhoneNumberEntity findMobilePhoneNumberByNumber(String number);
 
     /**
-     * 分页查询手机号码信息
+     * 分页查询符合查询条件的手机号码
      *
      * @param queryParams 分页查询参数
-     * @return 手机号码实体对象列表
+     * @return 手机号码列表
      */
-    List<MobilePhoneNumber> findMobilePhoneNumberByPage(Map<String,Object> queryParams);
+    List<MobilePhoneNumberEntity> queryByPage(Map<String, Object> queryParams);
+
+    /**
+     * 查询符合条件的手机号码总数
+     *
+     * @param queryParams 查询参数
+     * @return 符合条件的手机号码总数
+     */
+    long queryTotal(Map<String, Object> queryParams);
 }

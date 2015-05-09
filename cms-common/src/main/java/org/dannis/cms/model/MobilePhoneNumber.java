@@ -1,5 +1,7 @@
 package org.dannis.cms.model;
 
+import java.util.Date;
+
 /**
  * 手机业务模型
  *
@@ -8,6 +10,10 @@ package org.dannis.cms.model;
  * @date 2015-05-04 21:56
  */
 public class MobilePhoneNumber {
+    /**
+     * ID
+     */
+    private Integer id;
     /**
      * 号码
      */
@@ -40,6 +46,30 @@ public class MobilePhoneNumber {
      * 描述
      */
     private String remark;
+    /**
+     * 创建时间
+     */
+    private Date createdOn;
+    /**
+     * 创建人
+     */
+    private Integer createdBy;
+    /**
+     * 最近修改时间
+     */
+    private Date lastModifiedOn;
+    /**
+     * 最近修改人
+     */
+    private Integer lastModifiedBy;
+
+    public Integer getId() {
+        return id == null ? -1 : id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNumber() {
         return number;
@@ -103,5 +133,37 @@ public class MobilePhoneNumber {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getLastModifiedOn() {
+        return lastModifiedOn;
+    }
+
+    public void setLastModifiedOn(Date lastModifiedOn) {
+        this.lastModifiedOn = lastModifiedOn;
+    }
+
+    public Integer getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(Integer lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 }
