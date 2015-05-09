@@ -41,21 +41,22 @@
 		</foreach>
 	</insert>
 
+	<update id="update" parameterType="org.dannis.cms.dal.entity.MobilePhoneNumberEntity">
+		UPDATE t_cms_mobile_phone_number
+		SET number = #{number},operator = #{operator},attribution = #{attribution},wholesale_price = #{wholesalePrice},
+		floor_price = #{floorPrice},balance = #{balance},priority = #{priority},remark = #{remark}
+		WHERE id = #{id}
+	</update>
+
 	<delete id="deleteById" parameterType="java.lang.Integer">
 		DELETE FROM t_cms_mobile_phone_number
 		WHERE id = #{id}
 	</delete>
 
-	<select id="findMobilePhoneNumberById" parameterType="java.lang.Integer">
+	<select id="queryById" parameterType="java.lang.Integer" resultMap="mobilePhoneNumberMap">
 		SELECT <include refid="allColumns"/>
 		FROM t_cms_mobile_phone_number
 		WHERE id = #{id}
-	</select>
-
-	<select id="findMobilePhoneNumberByNumber" parameterType="java.lang.String">
-		SELECT <include refid="allColumns"/>
-		FROM t_cms_mobile_phone_number
-		WHERE number = #{number}
 	</select>
 
 	<select id="queryByPage" resultMap="mobilePhoneNumberMap">

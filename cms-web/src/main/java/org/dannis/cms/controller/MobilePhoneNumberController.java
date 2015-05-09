@@ -1,9 +1,11 @@
 package org.dannis.cms.controller;
 
-import org.apache.commons.io.FileUtils;
 import org.dannis.cms.MobilePhoneNumberExcelParser;
 import org.dannis.cms.model.MobilePhoneNumber;
-import org.dannis.cms.result.BaseResult;
+import org.dannis.cms.query.QueryParams;
+import org.dannis.cms.query.result.BaseResult;
+import org.dannis.cms.query.result.PaginationQueryResult;
+import org.dannis.cms.query.result.SingleQueryResult;
 import org.dannis.cms.service.MobilePhoneNumberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,38 +40,44 @@ public class MobilePhoneNumberController {
     @Autowired
     private MobilePhoneNumberService mobilePhoneNumberService;
 
-    @RequestMapping(value = "/save.json")
+    @RequestMapping(value = "/save.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult save(MobilePhoneNumber mobilePhoneNumber) {
         LOGGER.info("保存电话号码");
         BaseResult result = new BaseResult();
-        if (null != mobilePhoneNumber) {
-            try {
-                mobilePhoneNumberService.saveMobilePhoneNumber(mobilePhoneNumber);
-                result.setSuccess(true);
-                result.setMessage("保存手机号码成功！");
-                LOGGER.info("保存手机号码成功");
-            } catch (Exception e) {
-                result.setSuccess(false);
-                result.setMessage("保存手机号码失败，服务器异常！");
-                LOGGER.error("保存手机号码失败，发生异常",e);
-            }
-        } else {
+        try {
+            mobilePhoneNumber.setCreatedBy(1);
+            mobilePhoneNumberService.save(mobilePhoneNumber);
+            result.setSuccess(true);
+            result.setMessage("保存手机号码成功");
+            LOGGER.info("保存手机号码成功");
+        } catch (Exception e) {
             result.setSuccess(false);
-            result.setMessage("手机号码为空！");
-            LOGGER.info("保存手机号码失败，原因： 手机号码为空");
+            String errorMessage = e.getMessage();
+            if (errorMessage != null && errorMessage.contains("Duplicate entry")) {
+                result.setMessage("手机号码已存在！");
+            } else {
+                result.setMessage("服务器异常！");
+            }
+            LOGGER.error("保存手机号码失败", e);
         }
         return result;
     }
 
+    /**
+     * 批量导入手机号码
+     *
+     * @param file Excel文件
+     * @return 导入结果
+     */
     @RequestMapping(value = "/importExcel.json", method = RequestMethod.POST)
     @ResponseBody
-    public BaseResult importExcel(@RequestParam("mobilePhoneNumberExcel") MultipartFile file,HttpServletRequest request) throws IOException {
+    public BaseResult importExcel(@RequestParam("mobilePhoneNumberExcel") MultipartFile file) {
         LOGGER.info("批量导入手机号码开始......");
         BaseResult result = new BaseResult();
         if (!file.isEmpty()) {
-            List<MobilePhoneNumber> mobilePhoneNumbers = MobilePhoneNumberExcelParser.parseExcel(file.getInputStream());
             try {
+                List<MobilePhoneNumber> mobilePhoneNumbers = MobilePhoneNumberExcelParser.parseExcel(file.getInputStream());
                 mobilePhoneNumberService.saveMobilePhoneNumbers(mobilePhoneNumbers);
                 result.setSuccess(true);
                 result.setMessage("导入成功，共导入" + mobilePhoneNumbers.size() + "条手机号码");
@@ -82,15 +85,81 @@ public class MobilePhoneNumberController {
             } catch (Exception e) {
                 result.setSuccess(false);
                 result.setMessage("批量导入手机号码失败");
-                LOGGER.error("批量导入手机号码失败",e);
+                LOGGER.error("批量导入手机号码失败", e);
             }
         }
         LOGGER.info("批量导入手机号码结束......");
         return result;
     }
 
-    public List<MobilePhoneNumber> findByPage() {
-        List<MobilePhoneNumber> mobilePhoneNumbers = new ArrayList<MobilePhoneNumber>();
-        return mobilePhoneNumbers;
+    /**
+     * 根据ID删除手机号码
+     *
+     * @param id ID
+     * @return 删除操作执行结果
+     */
+    @RequestMapping(value = "/deleteById.json", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteById(Integer id) {
+        LOGGER.info("删除手机号码，手机号码ID： " + id);
+        BaseResult result = new BaseResult();
+        try {
+            if (null != id) {
+                mobilePhoneNumberService.deleteById(id);
+                result.setMessage("删除手机号码成功");
+            } else {
+                result.setSuccess(false);
+                result.setMessage("未指定手机号码ID");
+            }
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage("删除手机号码失败");
+            LOGGER.error("删除手机号码失败", e);
+        }
+        return result;
+    }
+
+    /**
+     * 根据ID查询手机号码
+     *
+     * @param id ID
+     * @return 手机号码
+     */
+    @RequestMapping(value = "queryById.json", method = RequestMethod.POST)
+    @ResponseBody
+    public SingleQueryResult<?> queryById(Integer id) {
+        SingleQueryResult<MobilePhoneNumber> result = new SingleQueryResult<MobilePhoneNumber>();
+        try {
+            MobilePhoneNumber mobilePhoneNumber = mobilePhoneNumberService.queryById(id);
+            result.setData(mobilePhoneNumber);
+            if (null == mobilePhoneNumber) {
+                result.setSuccess(false);
+            }
+        } catch (Exception e) {
+            result.setSuccess(false);
+            LOGGER.error("根据ID查找手机号码失败",e);
+        }
+        return result;
+    }
+
+    /**
+     * 分页查询手机号码
+     *
+     * @param queryParams 查询参数
+     * @return 查询结果
+     */
+    @RequestMapping(value = "queryByPage.json")
+    @ResponseBody
+    public PaginationQueryResult<?> queryByPage(QueryParams queryParams) {
+        PaginationQueryResult<MobilePhoneNumber> result = new PaginationQueryResult<MobilePhoneNumber>();
+        try {
+            PaginationQueryResult<MobilePhoneNumber> queryResult = mobilePhoneNumberService.queryByPage(queryParams);
+            result.setTotal(queryResult.getTotal());
+            result.setRows(queryResult.getRows());
+        } catch (Exception e) {
+            LOGGER.error("分页查询出错", e);
+        }
+
+        return result;
     }
 }

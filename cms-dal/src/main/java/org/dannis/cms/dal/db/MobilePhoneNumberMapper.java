@@ -31,6 +31,13 @@ public interface MobilePhoneNumberMapper {
     void saveMobilePhoneNumbers(List<MobilePhoneNumberEntity> entities);
 
     /**
+     * 修改手机号码
+     *
+     * @param mobilePhoneNumber 手机号码
+     */
+    void update(MobilePhoneNumber mobilePhoneNumber);
+
+    /**
      * 根据ID删除手机号码信息
      *
      * @param id 手机号码ID
@@ -43,7 +50,7 @@ public interface MobilePhoneNumberMapper {
      * @param id 手机号码ID
      * @return 若存在，返回手机号码实体对象；否则返回null
      */
-    MobilePhoneNumberEntity findMobilePhoneNumberById(Integer id);
+    MobilePhoneNumberEntity queryById(Integer id);
 
     /**
      * 根据号码查询手机号码信息

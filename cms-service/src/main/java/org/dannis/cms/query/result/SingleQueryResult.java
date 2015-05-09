@@ -14,7 +14,7 @@ public class SingleQueryResult<T> extends BaseResult {
     private T data;
 
     public SingleQueryResult() {
-        //do nothing
+        this(null);
     }
     public SingleQueryResult(T data) {
         this(true,"",data);

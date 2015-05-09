@@ -1,6 +1,5 @@
 package org.dannis.cms.service.impl;
 
-import org.dannis.cms.dal.entity.MobilePhoneNumberEntity;
 import org.dannis.cms.manager.MobilePhoneNumberManager;
 import org.dannis.cms.model.MobilePhoneNumber;
 import org.dannis.cms.query.QueryParams;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author deng.zhang
@@ -25,8 +23,12 @@ public class MobilePhoneNumberServiceImpl implements MobilePhoneNumberService {
     @Autowired
     private MobilePhoneNumberManager mobilePhoneNumberManager;
 
-    public void saveMobilePhoneNumber(MobilePhoneNumber mobilePhoneNumber) {
-        mobilePhoneNumberManager.saveMobilePhoneNumber(mobilePhoneNumber);
+    public void save(MobilePhoneNumber mobilePhoneNumber) {
+        if (mobilePhoneNumber.getId() == -1) {//添加手机号码
+            mobilePhoneNumberManager.save(mobilePhoneNumber);
+        } else {//修改手机号码
+            mobilePhoneNumberManager.update(mobilePhoneNumber);
+        }
     }
 
     public void saveMobilePhoneNumbers(List<MobilePhoneNumber> mobilePhoneNumbers) {
@@ -37,12 +39,8 @@ public class MobilePhoneNumberServiceImpl implements MobilePhoneNumberService {
         mobilePhoneNumberManager.deleteById(id);
     }
 
-    public MobilePhoneNumberEntity findMobilePhoneNumberById(Integer id) {
-        return mobilePhoneNumberManager.findMobilePhoneNumberById(id);
-    }
-
-    public MobilePhoneNumberEntity findMobilePhoneNumberByNumber(String number) {
-        return mobilePhoneNumberManager.findMobilePhoneNumberByNumber(number);
+    public MobilePhoneNumber queryById(Integer id) {
+        return mobilePhoneNumberManager.queryById(id);
     }
 
     @Override

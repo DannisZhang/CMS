@@ -21,7 +21,7 @@ public interface MobilePhoneNumberService {
      *
      * @param mobilePhoneNumber 手机号码业务模型对象
      */
-    void saveMobilePhoneNumber(MobilePhoneNumber mobilePhoneNumber);
+    void save(MobilePhoneNumber mobilePhoneNumber);
 
     /**
      * 批量保存手机号码信息
@@ -43,15 +43,7 @@ public interface MobilePhoneNumberService {
      * @param id 手机号码ID
      * @return 若存在，返回手机号码实体对象；否则返回null
      */
-    MobilePhoneNumberEntity findMobilePhoneNumberById(Integer id);
-
-    /**
-     * 根据号码查询手机号码信息
-     *
-     * @param number 号码
-     * @return 若存在，返回手机号码实体对象；否则返回null
-     */
-    MobilePhoneNumberEntity findMobilePhoneNumberByNumber(String number);
+    MobilePhoneNumber queryById(Integer id);
 
     /**
      * 分页查询手机号码

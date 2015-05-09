@@ -30,7 +30,7 @@ public class MobilePhoneNumberManager {
      *
      * @param mobilePhoneNumber 手机号码业务模型对象
      */
-    public void saveMobilePhoneNumber(MobilePhoneNumber mobilePhoneNumber) {
+    public void save(MobilePhoneNumber mobilePhoneNumber) {
         mobilePhoneNumberMapper.saveMobilePhoneNumber(convertToEntity(mobilePhoneNumber));
     }
 
@@ -41,6 +41,15 @@ public class MobilePhoneNumberManager {
      */
     public void saveMobilePhoneNumbers(List<MobilePhoneNumber> mobilePhoneNumbers) {
         mobilePhoneNumberMapper.saveMobilePhoneNumbers(convertToEntities(mobilePhoneNumbers));
+    }
+
+    /**
+     * 修改手机号码
+     *
+     * @param mobilePhoneNumber 手机号码
+     */
+    public void update(MobilePhoneNumber mobilePhoneNumber) {
+        mobilePhoneNumberMapper.update(mobilePhoneNumber);
     }
 
     /**
@@ -56,10 +65,10 @@ public class MobilePhoneNumberManager {
      * 根据ID查找手机号码信息
      *
      * @param id 手机号码ID
-     * @return 若存在，返回手机号码实体对象；否则返回null
+     * @return 手机号码
      */
-    public MobilePhoneNumberEntity findMobilePhoneNumberById(Integer id) {
-        return mobilePhoneNumberMapper.findMobilePhoneNumberById(id);
+    public MobilePhoneNumber queryById(Integer id) {
+        return convertToModel(mobilePhoneNumberMapper.queryById(id));
     }
 
     /**

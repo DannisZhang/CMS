@@ -1,91 +1,95 @@
 <div class="easyui-layout" id="phoneNumberManagement" style="overflow: visible" split="true" fit="true">
     <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
-        <label for="textbox-mobilePhone-name">电话号码：</label>
-        <input id="textbox-mobilePhone-name" class="easyui-textbox" style="width:120px"/>
-        <label for="textbox-mobilePhone-code">运营商：</label>
-        <input id="textbox-mobilePhone-code" class="easyui-textbox" style="width:120px"/>
-        <label for="mobilePhone-select">归属地：</label>
-        <select id="mobilePhone-select" class="easyui-combobox" panelHeight="auto" style="width:120px">
-            <option value="1">北京</option>
-            <option value="2">上海</option>
-            <option value="3">广州</option>
-            <option value="4">深圳</option>
-            <option value="5">福州</option>
-        </select>
-        <label for="textbox-mobilePhone-manager">部门经理：</label>
-        <input id="textbox-mobilePhone-manager" class="easyui-textbox" style="width:120px"/>
+        <label for="textbox-mobile-phone-number-number">电话号码：</label>
+        <input id="textbox-mobile-phone-number-number" class="easyui-textbox" style="width:120px"/>
+        <label for="textbox-mobile-phone-number-operator">运营商：</label>
+        <input id="textbox-mobile-phone-number-operator" class="easyui-textbox" style="width:120px"/>
+        <label for="textbox-mobile-phone-number-attribution">归属地：</label>
+        <input id="textbox-mobile-phone-number-attribution" class="easyui-textbox" style="width:120px"/>
         <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
     </div>
     <div region="center" border="false" style="overflow: visible;">
-        <table id="phoneNumberDatagrid" fit="true">
+        <table id="mobilePhoneNumberDatagrid" fit="true">
         </table>
 
-        <div id="deletePhoneNumberDialog">
-            <p style="margin-left:25px;margin-top:25px">真的要删除该部门吗?</p>
-        </div>
         <!-- Edit mobilePhone dialog #################### Begin #################### -->
-        <div id="editPhoneNumberDialog">
-            <form class="form" method="post" id="editPhoneNumberFrom">
-                <div class="form-title">部门信息</div>
+        <div id="editMobilePhoneNumberDialog">
+            <form class="form" method="post" id="editMobilePhoneNumberFrom">
+                <div class="form-title">基本信息</div>
                 <div class="form-content">
                     <div class="form-item">
-                        <div style="width:80px;">中文名称：</div>
-                        <div><input type="text" class="easyui-textbox" name="cnName" style="width:200px;"/></div>
-                    </div>
-                    <div class="form-item">
-                        <div style="width:80px;">英文名称：</div>
-                        <div><input type="text" class="easyui-textbox" name="enName" style="width:200px;"/></div>
-                    </div>
-                    <div class="form-item">
-                        <div style="width:80px;">上级部门：</div>
+                        <div style="width:80px;">手机号码：</div>
                         <div>
-                            <select class="easyui-combobox" name="parent" style="width:200px;">
-                                <option value="1">财务部</option>
-                                <option value="2">信息技术部</option>
-                                <option value="3">产品部</option>
-                                <option value="4">客户服务部</option>
-                                <option value="5">设计部</option>
-                                <option value="6">运营部</option>
+                            <input type="text" class="easyui-numberbox" name="number"
+                                   data-options="prompt:'请输入11位的手机号码'" style="width:150px;"/>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">运营商：</div>
+                        <div>
+                            <select class="easyui-combobox" name="operator" style="width:100px;"
+                                    data-options="panelMaxHeight:80,prompt:'请选择运营商'">
+                                <option value="中国移动" selected>中国移动</option>
+                                <option value="中国联通">中国联通</option>
+                                <option value="中国电信">中国电信</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:80px;">部门经理：</div>
+                        <div style="width:80px;">归属地：</div>
                         <div>
-                            <select class="easyui-combobox" name="phoneNumberManager" style="width:100px;" value="">
-                                <option value="1">张三</option>
-                                <option value="2">李四</option>
-                                <option value="3">王五</option>
-                                <option value="4">钱多多</option>
-                                <option value="5">张无忌</option>
-                                <option value="6">王麻子</option>
-                            </select>
+                            <input type="text" class="easyui-textbox" name="attribution" style="width:150px;"
+                                    data-options="prompt:'请填写手机号码归属地'"/>
                         </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:80px;">办公地址：</div>
-                        <div><input type="text" class="easyui-textbox" name="location" style="width:200px;"/></div>
+                        <div style="width:80px;">批发价：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="wholesalePrice" style="width:120px;"
+                                   data-options="min:0,precision:2,prefix:'￥',prompt:'￥0.00'" value="0.00"/>
+                            <span>默认批发价￥0.00</span>
+                        </div>
                     </div>
                     <div class="form-item">
-                        <div style="width: 80px;">成立日期：</div>
-                        <input class="easyui-datebox" name="establishedDate" style="width:100px;"/>
+                        <div style="width:80px;">底价：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="floorPrice" style="width:120px;"
+                                    data-options="min:0,precision:2,prefix:'￥',prompt:'￥0.00'" value="0.00"/>
+                            <span>默认底价￥0.00</span>
+                        </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:80px;">备注信息：</div>
+                        <div style="width:80px;">含话费：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="balance" style="width:120px;"
+                                   data-options="min:0,precision:2,prefix:'￥',prompt:'￥0.00'" value="0.00"/>
+                            <span>默认含话费￥0.00</span>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">优先级：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="priority" style="width:60px;"
+                                    data-options="min:0,max:9999,prompt:'9999'" value="9999"/>
+                            <span>默认优先级为9999</span>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">备注：</div>
                         <div>
                             <input type="text" class="easyui-textbox" name="remark"
-                                   data-options="multiline:true" style="height: 60px;width: 200px;"/>
+                                   data-options="multiline:true" style="height: 50px;width: 200px;"/>
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="phoneNumberId"/>
+                <input type="hidden" name="id"/>
             </form>
         </div>
-        <div id="phoneNumberDialogButtons">
-            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="savePhoneNumber()"
-               style="width:90px">保存</a>
+        <div id="mobilePhoneNumberDialogButtons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" name="save-btn"
+               onclick="saveMobilePhoneNumber()" style="width:90px">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-               onclick="$('#editPhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
+               onclick="$('#editMobilePhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
         </div>
         <!-- Edit mobilePhone dialog #################### End   #################### -->
 
@@ -114,8 +118,8 @@
             </form>
         </div>
         <div id="importMobilePhoneNumberButtons">
-            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="importMobilePhoneNumberExcel()"
-               style="width:90px">导入</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" style="width:90px"
+               onclick="importMobilePhoneNumberExcel()">导入</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
                onclick="$('#importMobilePhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
         </div>
