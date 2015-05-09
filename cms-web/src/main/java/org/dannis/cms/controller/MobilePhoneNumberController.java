@@ -19,6 +19,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class MobilePhoneNumberController {
 
     @RequestMapping(value = "/save.json")
     @ResponseBody
-    public BaseResult saveMobilePhoneNumber(MobilePhoneNumber mobilePhoneNumber) {
+    public BaseResult save(MobilePhoneNumber mobilePhoneNumber) {
         LOGGER.info("保存电话号码");
         BaseResult result = new BaseResult();
         if (null != mobilePhoneNumber) {
@@ -66,9 +67,9 @@ public class MobilePhoneNumberController {
         return result;
     }
 
-    @RequestMapping(value = "/upload.json", method = RequestMethod.POST)
+    @RequestMapping(value = "/importExcel.json", method = RequestMethod.POST)
     @ResponseBody
-    public BaseResult uploadMobilePhoneNumbers(@RequestParam("mobilePhoneNumberExcel") MultipartFile file,HttpServletRequest request) throws IOException {
+    public BaseResult importExcel(@RequestParam("mobilePhoneNumberExcel") MultipartFile file,HttpServletRequest request) throws IOException {
         LOGGER.info("批量导入手机号码开始......");
         BaseResult result = new BaseResult();
         if (!file.isEmpty()) {
@@ -86,5 +87,10 @@ public class MobilePhoneNumberController {
         }
         LOGGER.info("批量导入手机号码结束......");
         return result;
+    }
+
+    public List<MobilePhoneNumber> findByPage() {
+        List<MobilePhoneNumber> mobilePhoneNumbers = new ArrayList<MobilePhoneNumber>();
+        return mobilePhoneNumbers;
     }
 }

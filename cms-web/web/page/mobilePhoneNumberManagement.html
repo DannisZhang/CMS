@@ -92,17 +92,18 @@
         <!-- Batch import mobile phone number dialog #################### Begin #################### -->
         <div id="importMobilePhoneNumberDialog">
             <form class="form" method="post" id="importMobilePhoneNumberFrom" enctype="multipart/form-data">
-                <div class="form-title">导入步骤</div>
+                <div class="form-title">导入Excel数据</div>
                 <div class="form-content">
                     <div class="form-item">
-                        <div style="width:100px;font-weight: bold;margin-top: 10px;vertical-align: top">注意事项：</div>
+                        <div style="width:68px;font-weight: bold;margin-top: 10px;vertical-align: top">注意事项：</div>
                         <div>
-                            <p>1.导入数据时请认真填写Excel表格中的每一项数据，并严格按照<br>指定的格式录入；</p>
-                            <p>2.一次性导入的数据不宜过大，对于的数据量建议分多次导入。</p>
+                            <p>1.只能导入后缀为xls或者xlsx的Excel文件，请从【资源管理】里<br>下载相应的模板文件；</p>
+                            <p>2.导入数据时请认真填写Excel表格中的每一项数据，并严格按照<br>指定的格式录入；</p>
+                            <p>3.导入的数据不宜过大，如果数据量量较大，建议分多次导入。</p>
                         </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:100px;font-weight: bold">选择Excel文件：</div>
+                        <div style="width:68px;font-weight: bold">选择文件：</div>
                         <div><input class="easyui-filebox" id="mobilePhoneNumberExcel" name="mobilePhoneNumberExcel"
                                     data-options="prompt:'选择Excel文件...',buttonText:'选择文件'"
                                     style="width:240px;"/>
@@ -113,7 +114,7 @@
             </form>
         </div>
         <div id="importMobilePhoneNumberButtons">
-            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="uploadExcelFile()"
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok"  onclick="importMobilePhoneNumberExcel()"
                style="width:90px">导入</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
                onclick="$('#importMobilePhoneNumberDialog').dialog('close')" style="width:90px">取消</a>

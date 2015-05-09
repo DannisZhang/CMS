@@ -3,7 +3,7 @@
  * @date 2014/11/19.
  */
 var deletingDeptId = -1;
-var allowFileTypes = ['xls','xlsx'];
+var maxFileSize = 2048;//最大文件大小，单位：KB
 $(function () {
     initPhoneNumberDatagrid();
     initPhoneNumberDialog();
@@ -29,13 +29,13 @@ function initPhoneNumberDatagrid() {
         [
             {field: 'ck', checkbox: true},
             {field: "number", title: "号码", align: "center", width: 120, fixed: true},
-            {field: "type", title: "类型", align: "center", width: 80, fixed: true},
             {field: "operator", title: "运营商", align: "center", width: 100, fixed: true},
             {field: "attribution", title: "归属地", align: "center", width: 80, fixed: true},
             {field: "wholesalePrice", title: "批发价", align: "center", width: 80, fixed: true},
             {field: "floorPrice", title: "底价", align: "center", width: 80, fixed: true},
+            {field: "balance", title: "含话费", align: "center", width: 80, fixed: true},
             {field: "priority", title: "优先级", align: "center", width: 80, fixed: true},
-            {field: "description", title: "描述", align: "center", width: 200},
+            {field: "remark", title: "备注", align: "center", width: 200},
             {
                 field: "id", title: "操作", align: "center", width: 150, fixed: true,
                 formatter: function (value, row, index) {
@@ -64,19 +64,19 @@ function initPhoneNumberDatagrid() {
             alert("删除号码");
         }
     },'-',{
-        text:'批量导入',
+        text:'导入Excel',
         handler:function(){
-            batchUploadPhoneNumber();
+            importMobilePhoneNumber();
         }
     },'-',{
-        text:'导出EXCEL',
+        text:'导出Excel',
         handler:function(){
             alert("导出EXCEL");
         }
     }];
 
     $("#phoneNumberDatagrid").datagrid({
-        url: "mobilePhoneNumber/queryByPage.json",
+        url: "mobilePhoneNumber/findByPage.json",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -111,7 +111,8 @@ function initPhoneNumberDialog() {
     });
 
     $("#importMobilePhoneNumberDialog").dialog({
-        title:"批量导入手机号码",
+        iconCls:"icon-save",
+        title:"导入数据",
         width:550,
         height:380,
         closed:true,
@@ -164,8 +165,8 @@ function viewPhoneNumberDetail(event, deptId) {
     alert("详情");
 }
 
-function batchUploadPhoneNumber() {
-    $("#importMobilePhoneNumberDialog").dialog({title:"批量导入电话号码"}).dialog("open");
+function importMobilePhoneNumber() {
+    $("#importMobilePhoneNumberDialog").dialog({title:"导入数据"}).dialog("open");
 }
 
 function clearEditPhoneNumberForm() {
@@ -208,45 +209,77 @@ function savePhoneNumber() {
     });
 }
 
-function uploadExcelFile() {
+/**
+ * 导入手机号码Excel数据
+ */
+function importMobilePhoneNumberExcel() {
     var $importMobilePhoneNumberDialog = $("#importMobilePhoneNumberDialog");
     $importMobilePhoneNumberDialog.find("#importMobilePhoneNumberFrom").form("submit",{
-        url:"mobilePhoneNumber/upload.json",
-        onSubmit: function(){
-            checkFile();
+        url:"mobilePhoneNumber/importExcel.json",
+        onSubmit: function() {
+            var isValid = true;
+            var $fileObjectList = $("input[type='file'][name='mobilePhoneNumberExcel']");
+            if ($fileObjectList.length > 0 && $fileObjectList[0].files.length > 0) {
+                var file = $fileObjectList[0].files[0];
+                var fileName = file.name;
+                var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1,fileName.length);
+                if (fileExt != 'xls' && fileExt != 'xlsx') {//非Excel文件
+                    $.messager.alert("文件类型错误","请选择Excel数据文件","error");
+                    isValid = false;
+                } else {//Excel文件
+                    var fileSize = Math.round(file.size / 1024 * 100) / 100;//单位为：KB
+                    if (fileSize > maxFileSize) {
+                        $.messager.alert("文件过大","数据文件过大，请分批进行导入","warning");
+                        isValid = false;
+                    }
+                }
+            } else {
+                $.messager.alert("未选择文件","请选择Excel数据文件","error");
+                isValid = false;
+            }
+            if (isValid) {
+                $.messager.progress({
+                    msg:'正在导入数据...'
+                });
+            }
+            return isValid;
         },
         success: function (data) {
-            console.log(data)
+            $.messager.progress("close");
             var result = $.parseJSON(data);
-            $.messager.alert("提示信息",result.message);
+            if (result.success) {
+                $.messager.alert("导入成功",result.message);
+            } else {
+                $.messager.alert("导入失败",result.message,"error");
+            }
             $importMobilePhoneNumberDialog.dialog("close");
         }
     });
 }
 
 function checkFile() {
+    var isValid = true;
     var $fileObjectList = $("input[type='file'][name='mobilePhoneNumberExcel']");
     if ($fileObjectList.length > 0 && $fileObjectList[0].files.length > 0) {
         var file = $fileObjectList[0].files[0];
-        console.log(file);
         var fileName = file.name;
         var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1,fileName.length);
-        if (fileExt != 'xls' && fileExt != 'xlsx') {
-            $.messager.alert("文件类型错误","数据文件必须是Excel文件");
-            event.returnValue = false;
-            return;
-        }
-        var fileSize = Math.round(file.size / 1024 * 100) / 100;//单位为：KB
-        if (fileSize > 1) {//文件大小不能超过2MB
-            $.messager.alert("文件过大","数据文件过大，请分批进行导入");
-            event.returnValue = false;
-            return;
+        if (fileExt != 'xls' && fileExt != 'xlsx') {//非Excel文件
+            $.messager.alert("文件类型错误","请选择Excel数据文件","error");
+            isValid = false;
+        } else {//Excel文件
+            var fileSize = Math.round(file.size / 1024 * 100) / 100;//单位为：KB
+            if (fileSize > 1) {//文件大小不能超过2MB
+                $.messager.alert("文件过大","数据文件过大，请分批进行导入","warning");
+                isValid = false;
+            }
         }
     } else {
-        $.messager.alert("未指定文件","未指定数据文件");
-        event.returnValue = false;
-        return;
+        $.messager.alert("未选择文件","请选择Excel数据文件","error");
+        isValid = false;
     }
+    alert(isValid);
+    return isValid;
 }
 
 function editPhoneNumber(event, deptId) {
