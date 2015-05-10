@@ -1,12 +1,23 @@
-<div class="easyui-layout" id="phoneNumberManagement" style="overflow: visible" split="true" fit="true">
+<div class="easyui-layout" id="mobilePhoneNumberManagement" style="overflow: visible" split="true" fit="true">
     <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
-        <label for="textbox-mobile-phone-number-number">电话号码：</label>
-        <input id="textbox-mobile-phone-number-number" class="easyui-textbox" style="width:120px"/>
-        <label for="textbox-mobile-phone-number-operator">运营商：</label>
-        <input id="textbox-mobile-phone-number-operator" class="easyui-textbox" style="width:120px"/>
-        <label for="textbox-mobile-phone-number-attribution">归属地：</label>
-        <input id="textbox-mobile-phone-number-attribution" class="easyui-textbox" style="width:120px"/>
-        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+        <div id="queryMobilePhoneNumberDiv">
+              电话号码：
+            <input class="easyui-textbox" id="queryMobilePhoneNumberItemNumber" style="width:120px"/>
+            运营商：
+            <select class="easyui-combobox"  id="queryMobilePhoneNumberItemOperator" style="width:100px;"
+                    data-options="panelMaxHeight:90,prompt:'请选择运营商'">
+                <option value="all">全部运营商</option>
+                <option value="中国移动">中国移动</option>
+                <option value="中国联通">中国联通</option>
+                <option value="中国电信">中国电信</option>
+            </select>
+            归属地：
+            <input class="easyui-textbox" id="queryMobilePhoneNumberItemAttribution" style="width:120px"/>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+               onclick="queryMobilePhoneNumbers()">
+                查询
+            </a>
+        </div>
     </div>
     <div region="center" border="false" style="overflow: visible;">
         <table id="mobilePhoneNumberDatagrid" fit="true">
@@ -39,7 +50,7 @@
                         <div style="width:80px;">归属地：</div>
                         <div>
                             <input type="text" class="easyui-textbox" name="attribution" style="width:150px;"
-                                    data-options="prompt:'请填写手机号码归属地'"/>
+                                   data-options="prompt:'请填写手机号码归属地'"/>
                         </div>
                     </div>
                     <div class="form-item">
@@ -54,7 +65,7 @@
                         <div style="width:80px;">底价：</div>
                         <div>
                             <input type="text" class="easyui-numberbox" name="floorPrice" style="width:120px;"
-                                    data-options="min:0,precision:2,prefix:'￥',prompt:'￥0.00'" value="0.00"/>
+                                   data-options="min:0,precision:2,prefix:'￥',prompt:'￥0.00'" value="0.00"/>
                             <span>默认底价￥0.00</span>
                         </div>
                     </div>
@@ -70,7 +81,7 @@
                         <div style="width:80px;">优先级：</div>
                         <div>
                             <input type="text" class="easyui-numberbox" name="priority" style="width:60px;"
-                                    data-options="min:0,max:9999,prompt:'9999'" value="9999"/>
+                                   data-options="min:0,max:9999,prompt:'9999'" value="9999"/>
                             <span>默认优先级为9999</span>
                         </div>
                     </div>
@@ -102,7 +113,9 @@
                         <div style="width:68px;font-weight: bold;margin-top: 10px;vertical-align: top">注意事项：</div>
                         <div>
                             <p>1.只能导入后缀为xls或者xlsx的Excel文件，请从【资源管理】里<br>下载相应的模板文件；</p>
+
                             <p>2.导入数据时请认真填写Excel表格中的每一项数据，并严格按照<br>指定的格式录入；</p>
+
                             <p>3.导入的数据不宜过大，如果数据量量较大，建议分多次导入。</p>
                         </div>
                     </div>
@@ -124,14 +137,6 @@
                onclick="$('#importMobilePhoneNumberDialog').dialog('close')" style="width:90px">取消</a>
         </div>
         <!-- Batch import mobile phone number dialog #################### End   #################### -->
-
-        <div id="dd" class="easyui-dialog" title="删除部门" style="width:320px;height:150px;"
-             data-options="iconCls:'icon-custom-exit',resizable:true,modal:true,closed:true,
-                 buttons:[
-                 {text:'是的',iconCls:'icon-ok',handler:function(){alert('YES')}},
-                 {text:'不是',iconCls:'icon-no',handler:function(){alert('NO')}}
-                 ]">
-        </div>
     </div>
 </div>
 <script type="text/javascript" src="static/js/mobilePhoneNumberManagement.js"></script>

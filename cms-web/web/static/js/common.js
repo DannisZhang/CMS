@@ -50,67 +50,31 @@ function initLeftMenu() {
     var leftMenus = {
         "menus": [
             {
-                "menuId": 1, "menuName": "系统管理", "icon": "icon-dannis-setting",
+                "menuId": 1, "menuName": "系统管理", "iconCls": "icon-dannis-setting",
                 "menus": [
-                    {"menuId": 1, "menuName": "用户管理", "icon": "", "url": "page/userManagement.html"},
-                    {"menuId": 1, "menuName": "角色管理", "icon": "", "url": "page/roleManagement.html"},
-                    {"menuId": 1, "menuName": "权限管理", "icon": "", "url": "page/permissionManagement.html"},
-                    {"menuId": 1, "menuName": "模块管理", "icon": "", "url": "page/moduleManagement.html"},
-                    {"menuId": 1, "menuName": "菜单管理", "icon": "", "url": "page/menuManagement.html"},
-                    {"menuId": 1, "menuName": "系统日志", "icon": "", "url": "page/systemSetting.html"}
+                    {"menuId": 1, "menuName": "用户管理", "iconCls": "icon-dannis-user", "url": "page/userManagement.html"},
+                    {"menuId": 1, "menuName": "系统日志", "iconCls": "icon-custom-log", "url": "page/systemSetting.html"}
                 ]
             },
             {
-                "menuId": 1, "menuName": "运营维护", "icon": "icon-dannis-setting",
+                "menuId": 1, "menuName": "运营数据", "iconCls": "icon-dannis-storage",
                 "menus": [
-                    {"menuId": 1, "menuName": "手机号码", "icon": "", "url": "page/mobilePhoneNumberManagement.html"},
-                    {"menuId": 1, "menuName": "电话号码", "icon": "", "url": "page/telephoneNumberManagement.html"},
-                    {"menuId": 1, "menuName": "部门管理", "icon": "", "url": "page/departmentManagement.html"},
-                    {"menuId": 1, "menuName": "客户管理", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "货品类别", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "仓库管理", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "货架管理", "icon": "", "url": "page/default.html"}
+                    {"menuId": 1, "menuName": "手机号码", "iconCls": "icon-custom-mobile-phone", "url": "page/mobilePhoneNumberManagement.html"},
+                    {"menuId": 1, "menuName": "电话号码", "iconCls": "icon-custom-telephone", "url": "page/telephoneNumberManagement.html"},
+                    {"menuId": 1, "menuName": "二手车", "iconCls": "icon-custom-car", "url": "page/default.html"}
                 ]
             },
             {
-                "menuId": 1, "menuName": "仓库管理", "icon": "icon-dannis-storage",
+                "menuId": 1, "menuName": "系统资源", "iconCls": "icon-dannis-report",
                 "menus": [
-                    {"menuId": 1, "menuName": "库存查询", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "采购入库", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "归还入库", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "领用入库", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "调库出库", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "报废出库", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "库存盘点", "icon": "", "url": "page/default.html"}
+                    {"menuId": 1, "menuName": "模板下载", "iconCls": "icon-custom-excel", "url": "page/default.html"}
                 ]
             },
             {
-                "menuId": 1, "menuName": "采购管理", "icon": "icon-dannis-storage",
+                "menuId": 1, "menuName": "关于系统", "iconCls": "icon-dannis-about",
                 "menus": [
-                    {"menuId": 1, "menuName": "商品入库", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "商品出库", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "商品类别", "icon": "", "url": "page/default.html"}
-                ]
-            },
-            {
-                "menuId": 1, "menuName": "财务报表", "icon": "icon-dannis-report",
-                "menus": [
-                    {"menuId": 1, "menuName": "用户管理", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "网站设置", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "网站设置", "icon": "", "url": "page/default.html"}
-                ]
-            },
-            {
-                "menuId": 1, "menuName": "资源管理", "icon": "icon-dannis-report",
-                "menus": [
-                    {"menuId": 1, "menuName": "模板下载", "icon": "", "url": "page/default.html"}
-                ]
-            },
-            {
-                "menuId": 1, "menuName": "关于系统", "icon": "icon-dannis-about",
-                "menus": [
-                    {"menuId": 1, "menuName": "关于本系统", "icon": "", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "使用手册", "icon": "", "url": "page/default.html"}
+                    {"menuId": 1, "menuName": "关于本系统", "iconCls": "icon-dannis-about", "url": "page/default.html"},
+                    {"menuId": 1, "menuName": "使用手册", "iconCls": "icon-custom-manual", "url": "page/default.html"}
                 ]
             }
         ]
@@ -122,20 +86,25 @@ function initLeftMenu() {
     $.each(leftMenus.menus, function (index1, next1) {
         var menuList = '<ul>';
         $.each(next1.menus, function (index2, next2) {
-            menuList += '<li><a ref="' + next2.menuId + '" href="javascript:void(0)" rel=" ' + next2.url + '">' + next2.menuName + '</a></li>';
+            var menuItem = '<li>';
+            menuItem += '<div class="menu-item-icon ' + next2.iconCls + '"></div>';
+            menuItem += '<a ref="' + next2.menuId + '" iconCls="' + next2.iconCls + '" href="javascript:void(0)" rel="' + next2.url + '">' + next2.menuName + '</a>';
+            menuItem += '</li>';
+            menuList += menuItem;
         });
         menuList += '</ul>';
 
         $('#left-menu').accordion('add', {
             title: next1.menuName,
             content: menuList,
-            iconCls: next1.icon
+            iconCls: next1.iconCls
         });
     });
     $('.easyui-accordion ul li a').click(function () {
         var tabTitle = $(this).text();
         var url = $(this).attr('rel');
-        addTab(tabTitle, url);
+        var iconCls = $(this).attr('iconCls');
+        addTab(tabTitle, url, iconCls);
         $('.easyui-accordion ul li a').removeClass('selected');
         $(this).addClass('selected');
     });
@@ -173,8 +142,9 @@ function initCalendar() {
  * 添加Tab，若当前Tab已经存在，则选择当前Tab，否则创建一个Tab
  * @param tabTitle Tab标题
  * @param url Tab内容URL
+ * @param iconCls 图标
  */
-function addTab(tabTitle, url) {
+function addTab(tabTitle, url, iconCls) {
     var $workspaceTabs = $('#workspaceTabs');
     if ($workspaceTabs) {
         if ($workspaceTabs.tabs('exists', tabTitle)) {//如果Tab已经存在，则选择标题为tabTitle参数值的Tab
@@ -189,6 +159,7 @@ function addTab(tabTitle, url) {
                     if (content) {
                         $workspaceTabs.tabs('add', {
                             title: tabTitle,
+                            iconCls: iconCls,
                             content: content,
                             fit: true,
                             closable: true,

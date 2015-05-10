@@ -58,8 +58,17 @@ public class MobilePhoneNumberExcelParser {
                         } else {
                             mobilePhone.setBalance(0.00);
                         }
-                        mobilePhone.setRemark(getCellData(row.getCell(6)));
-                        mobilePhone.setPriority(9999);
+                        int priority = 9999;
+                        String priorityStr = getCellData(row.getCell(6));
+                        if (priorityStr != null && !"".equals(priorityStr.trim())) {
+                            priority = (int)Double.parseDouble(priorityStr);
+                            if (priority < 0 || priority > 9999) {
+                                priority = 9999;
+                            }
+                        }
+                        mobilePhone.setPriority(priority);
+                        mobilePhone.setRemark(getCellData(row.getCell(7)));
+                        mobilePhone.setCreatedBy(0);//0表示系统导入
 
                         mobilePhoneNumbers.add(mobilePhone);
                     }
@@ -106,8 +115,16 @@ public class MobilePhoneNumberExcelParser {
                         } else {
                             mobilePhone.setBalance(0.00);
                         }
-                        mobilePhone.setRemark(getCellData(row.getCell(6)));
-                        mobilePhone.setPriority(9999);
+                        int priority = 9999;
+                        String priorityStr = getCellData(row.getCell(6));
+                        if (priorityStr != null && !"".equals(priorityStr.trim())) {
+                            priority = (int)Double.parseDouble(priorityStr);
+                            if (priority < 0 || priority > 9999) {
+                                priority = 9999;
+                            }
+                        }
+                        mobilePhone.setPriority(priority);
+                        mobilePhone.setRemark(getCellData(row.getCell(7)));
                         mobilePhone.setCreatedBy(0);//0表示系统导入
 
                         mobilePhoneNumbers.add(mobilePhone);

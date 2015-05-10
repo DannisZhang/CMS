@@ -6,21 +6,6 @@ var maxFileSize = 2048;//最大文件大小，单位：KB
 $(function () {
     initMobilePhoneNumberDatagrid();
     initMobilePhoneNumberDialog();
-
-    $("#deleteDeptBtn").click(function () {
-        var rows = $('#mobilePhoneNumberDatagrid').datagrid('getChecked');
-        if (rows.length == 0) {
-            return;
-        }
-        var ids = [];
-        $.each(rows, function (i, row) {
-            ids.push(row.id);
-        });
-        $.post('../phoneNumber/deletePhoneNumbersByIds.json', {ids: ids.join(",")}, function (result) {
-            alert(result.message);
-            $('#mobilePhoneNumberDatagrid').datagrid('reload');
-        });
-    });
 });
 
 function initMobilePhoneNumberDatagrid() {
@@ -81,13 +66,13 @@ function initMobilePhoneNumberDatagrid() {
         text: '添加号码',
         iconCls: 'icon-add',
         handler: function () {
-            addPhoneNumber();
+            addMobilePhoneNumber();
         }
     }, '-', {
         text: '删除号码',
         iconCls: 'icon-remove',
         handler: function () {
-            alert("删除号码");
+            deleteMobilePhoneNumbers();
         }
     }, '-', {
         text: '导入Excel',
@@ -97,7 +82,7 @@ function initMobilePhoneNumberDatagrid() {
     }, '-', {
         text: '导出Excel',
         handler: function () {
-            alert("导出EXCEL");
+            $.messager.alert("系统提示", "该功能还不能使用");
         }
     }];
 
@@ -125,7 +110,7 @@ function initMobilePhoneNumberDatagrid() {
 }
 
 function initMobilePhoneNumberDialog() {
-    $.parser.parse("#phoneNumberManagement");
+    $.parser.parse("#mobilePhoneNumberManagement");
     $("#editMobilePhoneNumberDialog").dialog({
         iconCls: "icon-edit",
         title: "添加手机号码",
@@ -149,7 +134,7 @@ function initMobilePhoneNumberDialog() {
     });
 }
 
-function addPhoneNumber() {
+function addMobilePhoneNumber() {
     clearEditMobilePhoneNumberForm();
     $("#editMobilePhoneNumberDialog").dialog({title: "添加号码"}).dialog("open");
 }
@@ -177,6 +162,35 @@ function deleteMobilePhoneNumberById(event, mobilePhoneNumberId) {
                 url: "mobilePhoneNumber/deleteById.json",
                 method: "post",
                 data: {"id": mobilePhoneNumberId},
+                success: function (result) {
+                    if (result.success) {
+                        $.messager.alert("删除成功", result.message);
+                        $('#mobilePhoneNumberDatagrid').datagrid('reload');
+                    } else {
+                        $.messager.alert("删除失败", result.message, "error");
+                    }
+                }
+            })
+        }
+    });
+}
+
+function deleteMobilePhoneNumbers() {
+    var rows = $('#mobilePhoneNumberDatagrid').datagrid('getChecked');
+    if (rows.length == 0) {
+        $.messager.alert("提示信息", "请勾选将要删除的手机号码", "warning");
+        return;
+    }
+    $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
+        if (r) {
+            var ids = [];
+            $.each(rows, function (i, row) {
+                ids.push(row.id);
+            });
+            $.ajax({
+                url: "mobilePhoneNumber/deleteByIds.json",
+                method: "post",
+                data: {"ids": ids.join(",")},
                 success: function (result) {
                     if (result.success) {
                         $.messager.alert("删除成功", result.message);
@@ -239,7 +253,7 @@ function importMobilePhoneNumberExcel() {
                 var file = $fileObjectList[0].files[0];
                 var fileName = file.name;
                 var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length);
-                if (fileExt != 'xls' && fileExt != 'xlsx') {//非Excel文件
+                if (fileExt != "xls" && fileExt != "xlsx") {//非Excel文件
                     $.messager.alert("文件类型错误", "请选择Excel数据文件", "error");
                     isValid = false;
                 } else {//Excel文件
@@ -255,7 +269,7 @@ function importMobilePhoneNumberExcel() {
             }
             if (isValid) {
                 $.messager.progress({
-                    msg: '正在导入数据...'
+                    msg: "正在导入数据..."
                 });
             }
             return isValid;
@@ -265,7 +279,7 @@ function importMobilePhoneNumberExcel() {
             var result = $.parseJSON(data);
             if (result.success) {
                 $.messager.alert("导入成功", result.message);
-                $('#mobilePhoneNumberDatagrid').datagrid('reload');
+                $("#mobilePhoneNumberDatagrid").datagrid("reload");
                 $importMobilePhoneNumberDialog.dialog("close");
             } else {
                 $.messager.alert("导入失败", result.message, "error");
@@ -331,4 +345,15 @@ function editMobilePhoneNumber(event, mobilePhoneNumberId) {
         }
     });
     $editMobilePhoneNumberDialog.dialog("open");
+}
+
+function queryMobilePhoneNumbers() {
+    var $queryMobilePhoneNumberDiv = $("#queryMobilePhoneNumberDiv");
+    $('#mobilePhoneNumberDatagrid').datagrid('reload',{
+        params:{
+            number:$queryMobilePhoneNumberDiv.find("#queryMobilePhoneNumberItemNumber").textbox('getValue'),
+            operator:$queryMobilePhoneNumberDiv.find("#queryMobilePhoneNumberItemOperator").combobox('getValue'),
+            attribution:$queryMobilePhoneNumberDiv.find("#queryMobilePhoneNumberItemAttribution").textbox('getValue')
+        }
+    });
 }

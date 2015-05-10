@@ -39,6 +39,11 @@ public class MobilePhoneNumberServiceImpl implements MobilePhoneNumberService {
         mobilePhoneNumberManager.deleteById(id);
     }
 
+    @Override
+    public void deleteByIds(Integer[] ids) {
+        mobilePhoneNumberManager.deleteByIds(ids);
+    }
+
     public MobilePhoneNumber queryById(Integer id) {
         return mobilePhoneNumberManager.queryById(id);
     }

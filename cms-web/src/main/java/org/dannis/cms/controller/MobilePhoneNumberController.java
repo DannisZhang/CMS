@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -79,8 +80,7 @@ public class MobilePhoneNumberController {
             try {
                 List<MobilePhoneNumber> mobilePhoneNumbers = MobilePhoneNumberExcelParser.parseExcel(file.getInputStream());
                 mobilePhoneNumberService.saveMobilePhoneNumbers(mobilePhoneNumbers);
-                result.setSuccess(true);
-                result.setMessage("导入成功，共导入" + mobilePhoneNumbers.size() + "条手机号码");
+                result.setMessage("共导入" + mobilePhoneNumbers.size() + "条手机号码");
                 LOGGER.info("批量导入手机号码成功");
             } catch (Exception e) {
                 result.setSuccess(false);
@@ -120,6 +120,30 @@ public class MobilePhoneNumberController {
     }
 
     /**
+     * 根据ID批量删除手机号码
+     *
+     * @param ids ID列表
+     * @return 删除操作执行结果
+     */
+    @RequestMapping(value = "deleteByIds.json", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteByIds(Integer[] ids) {
+        LOGGER.info("批量删除手机号码，手机号码ID列表： " + Arrays.toString(ids));
+        BaseResult result = new BaseResult();
+        try {
+            mobilePhoneNumberService.deleteByIds(ids);
+            result.setMessage("删除手机号码成功");
+            LOGGER.info("批量删除手机号码成功");
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage("删除手机号码失败");
+            LOGGER.error("批量删除手机号码失败",e);
+        }
+
+        return result;
+    }
+
+    /**
      * 根据ID查询手机号码
      *
      * @param id ID
@@ -137,7 +161,7 @@ public class MobilePhoneNumberController {
             }
         } catch (Exception e) {
             result.setSuccess(false);
-            LOGGER.error("根据ID查找手机号码失败",e);
+            LOGGER.error("根据ID查找手机号码失败", e);
         }
         return result;
     }

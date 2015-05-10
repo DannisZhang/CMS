@@ -45,6 +45,13 @@ public interface MobilePhoneNumberMapper {
     void deleteById(Integer id);
 
     /**
+     * 根据ID批量删除手机号码
+     *
+     * @param ids ID列表
+     */
+    void deleteByIds(Integer[] ids);
+
+    /**
      * 根据ID查找手机号码信息
      *
      * @param id 手机号码ID

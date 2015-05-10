@@ -53,6 +53,14 @@
 		WHERE id = #{id}
 	</delete>
 
+	<delete id="deleteByIds">
+		DELETE FROM t_cms_mobile_phone_number
+		WHERE id IN
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
 	<select id="queryById" parameterType="java.lang.Integer" resultMap="mobilePhoneNumberMap">
 		SELECT <include refid="allColumns"/>
 		FROM t_cms_mobile_phone_number
@@ -63,6 +71,15 @@
 		SELECT <include refid="allColumns"/>
 		FROM t_cms_mobile_phone_number
 		WHERE status = 'active'
+		<if test="number != null and number != ''">
+			AND number LIKE CONCAT('%',#{number},'%')
+		</if>
+		<if test="operator != null and operator != 'all'">
+			AND operator LIKE CONCAT('%',#{operator},'%')
+		</if>
+		<if test="attribution != null and attribution != ''">
+			AND attribution LIKE CONCAT('%',#{attribution},'%')
+		</if>
 		ORDER BY priority ASC ,created_on DESC
 		LIMIT #{offset},#{limit}
 	</select>
@@ -71,5 +88,14 @@
 		SELECT COUNT(id)
 		FROM t_cms_mobile_phone_number
 		WHERE status = 'active'
+		<if test="number != null and number != ''">
+			AND number LIKE CONCAT('%',#{number},'%')
+		</if>
+		<if test="operator != null and operator != 'all'">
+			AND operator LIKE CONCAT('%',#{operator},'%')
+		</if>
+		<if test="attribution != null and attribution != ''">
+			AND attribution LIKE CONCAT('%',#{attribution},'%')
+		</if>
 	</select>
 </mapper>

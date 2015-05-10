@@ -7,16 +7,16 @@ body {
 }
 
 .header {
-    height:64px;
+    height:48px;
     overflow:hidden;
-    background: #000 url("../../static/images/header_bg.png") repeat-x;
-    color: #ffffff;
+    background:url("../../static/images/cms_repeat.png") repeat-x;
 }
 
 .logo {
     width:70%;
     height:100%;
     font-size:38px;
+    background:url("../../static/images/cms_logo.png") no-repeat;
     float:left;
 }
 
@@ -58,15 +58,26 @@ body {
 }
 
 .easyui-accordion ul li {
-    padding: 0;
+    margin-top: 2px;
 }
 
 .easyui-accordion ul li a {
-    padding: 0 0 0 20px;
-    line-height: 24px;
+    padding-left: 36px;;
+    line-height: 16px;
+    font-size: 12px;
     text-decoration: none;
     display: block;
     color: #000;
+}
+
+.easyui-accordion ul li .menu-item-icon {
+    margin-left: 18px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    display: inline-block;
+    overflow: hidden;
+    position: absolute;
 }
 
 .easyui-accordion ul li:hover {
