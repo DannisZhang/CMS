@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登陆内容管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link id="easyuiTheme" rel="stylesheet" type="text/css" href="static/easyui/themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="static/css/default.css">
+    <link href="static/images/user_male_2.png" rel="shortcut icon">
+    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="static/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="static/js/login.js"></script>
+</head>
+<body class="easyui-layout" scroll="no">
+<noscript>
+    <div style="position: absolute; z-index: 100000; height: 2046px; top: 0; left: 0;
+            width: 100%; background: white; text-align: center;">
+        <img src="static/images/noscript.gif" alt='抱歉，请开启脚本支持！'/>
+    </div>
+</noscript>
+
+<div data-options="region:'north'" style="height:50px" class="header">
+    <div class="logo"></div>
+</div>
+
+<div data-options="region:'center'">
+    <div class="easyui-layout" data-options="fit:true">
+        <div data-options="region:'center',border:false"></div>
+        <div data-options="region:'east',border:false" style="width:600px;padding-top: 20%;">
+            <div class="easyui-panel" title="欢迎登录"
+                 style="width:450px;height:200px;margin: 0 auto;padding:10px;">
+                <p>用户账号：<input name="username" class="easyui-textbox"></p>
+                <p>登陆密码：<input name="password" class="easyui-textbox" type="password"></p>
+                <p>验证码：</p>
+                <p><input class="easyui-linkbutton" value="登录"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-options="region:'south'" style="height:20px;">
+    <div style="text-align: center;font-size:12px;font-family:arial,serif">
+        Copyright&copy;网站内容管理系统-Designed by Dannis
+    </div>
+</div>
+</body>
+</html>
