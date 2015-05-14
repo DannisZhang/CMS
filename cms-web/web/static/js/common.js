@@ -53,7 +53,7 @@ function initLeftMenu() {
                 "menuId": 1, "menuName": "系统管理", "iconCls": "icon-dannis-setting",
                 "menus": [
                     {"menuId": 1, "menuName": "用户管理", "iconCls": "icon-dannis-user", "url": "page/userManagement.html"},
-                    {"menuId": 1, "menuName": "系统日志", "iconCls": "icon-custom-log", "url": "page/systemSetting.html"}
+                    {"menuId": 1, "menuName": "操作日志", "iconCls": "icon-custom-log", "url": "page/systemSetting.html"}
                 ]
             },
             {
