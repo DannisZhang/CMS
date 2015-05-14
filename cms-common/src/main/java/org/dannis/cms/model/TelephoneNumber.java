@@ -7,7 +7,7 @@ package org.dannis.cms.model;
  * @version 1.0.0
  * @date 2015-05-06 20:39
  */
-public class Telephone {
+public class TelephoneNumber {
     /**
      * 号码
      */
