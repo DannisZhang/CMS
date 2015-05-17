@@ -1,134 +1,77 @@
 var themeName = 'gray';
 var customThemeHref = "static/easyui/themes/gray/easyui.css";
-$(function () {
-    init();
-});
 
-function init() {
-    initTopMenu();
-    initLeftMenu();
-    initWorkspaceTabs();
-    $('body').layout();
-    showCurrentTime();
-    initCalendar();
-    loadWorkbenches();
-    if ($.cookie('easyuiThemeName')) {
-        changeTheme($.cookie('easyuiThemeName'));
-    }
-}
-
-function initTopMenu() {
-    var $changeThemeMenuButton = $("#change-theme-menubutton").menubutton({
+/**
+ * 初始化切换主题菜单按钮
+ */
+function initSwitchThemeMenubutton() {
+    var $switchThemeMenubutton = $('#switch-theme-menubutton').menubutton({
         menu: '#theme-menu',
         iconCls: 'icon-custom-theme'
     });
-    var $exitMenuButton = $("#exit-menubutton").menubutton({
-        menu: '#system-menu',
-        iconCls: 'icon-custom-lock'
-    });
-    $($changeThemeMenuButton.menubutton('options').menu).menu({
+    $($switchThemeMenubutton.menubutton('options').menu).menu({
         onClick: function (item) {
             themeName = item.text.toLowerCase();
-            changeTheme(themeName);
+            switchTheme(themeName);
         }
+    });
+}
+
+/**
+ * 初始化关闭系统菜单按钮
+ */
+function initShutdownMenubutton() {
+    var $exitMenuButton = $("#shutdown-menubutton").menubutton({
+        menu: '#shutdown-menu',
+        iconCls: 'icon-custom-lock'
     });
     $($exitMenuButton.menubutton('options').menu).menu({
         onClick: function (item) {
             if ("logout-button" == item.name) {
-                $('#logout-dialog').dialog('open');
+                $.messager.confirm('登出系统','请确认是否登出系统？', function (rs) {
+                    if (rs) {
+                        //登出系统;
+                    }
+                });
             } else if ("exit-button" == item.name) {
-                $("#exit-dialog").dialog('open');
+                $.messager.confirm('关闭系统','请确认是否关闭系统？', function (rs) {
+                    if (rs) {
+                        //关闭系统;
+                    }
+                });
             }
         }
     });
 }
 
 /**
- * 初始化菜单栏
+ * 切换主题
+ *
+ * @param themeName 主题名称
  */
-function initLeftMenu() {
-    var leftMenus = {
-        "menus": [
-            {
-                "menuId": 1, "menuName": "系统管理", "iconCls": "icon-dannis-setting",
-                "menus": [
-                    {"menuId": 1, "menuName": "用户管理", "iconCls": "icon-dannis-user", "url": "page/userManagement.html"},
-                    {"menuId": 1, "menuName": "操作日志", "iconCls": "icon-custom-log", "url": "page/systemSetting.html"}
-                ]
-            },
-            {
-                "menuId": 1, "menuName": "运营数据", "iconCls": "icon-dannis-storage",
-                "menus": [
-                    {"menuId": 1, "menuName": "手机号码", "iconCls": "icon-custom-mobile-phone", "url": "page/mobilePhoneNumberManagement.html"},
-                    {"menuId": 1, "menuName": "电话号码", "iconCls": "icon-custom-telephone", "url": "page/telephoneNumberManagement.html"},
-                    {"menuId": 1, "menuName": "二手车", "iconCls": "icon-custom-car", "url": "page/default.html"}
-                ]
-            },
-            {
-                "menuId": 1, "menuName": "系统资源", "iconCls": "icon-dannis-report",
-                "menus": [
-                    {"menuId": 1, "menuName": "模板下载", "iconCls": "icon-custom-excel", "url": "page/default.html"}
-                ]
-            },
-            {
-                "menuId": 1, "menuName": "关于系统", "iconCls": "icon-dannis-about",
-                "menus": [
-                    {"menuId": 1, "menuName": "关于本系统", "iconCls": "icon-dannis-about", "url": "page/default.html"},
-                    {"menuId": 1, "menuName": "使用手册", "iconCls": "icon-custom-manual", "url": "page/default.html"}
-                ]
-            }
-        ]
-    };
+function switchTheme(themeName) {
+    var $easyuiTheme = $("link[id='easyuiTheme']");
+    var oldHref = $easyuiTheme.attr("href");
+    var newHref = oldHref.substring(0, oldHref.indexOf('themes')) + 'themes/' + themeName + '/easyui.css';
+    $easyuiTheme.attr("href", newHref);
+    customThemeHref = newHref;
 
-    $('#left-menu').accordion({
-        animate: false
-    });
-    $.each(leftMenus.menus, function (index1, next1) {
-        var menuList = '<ul>';
-        $.each(next1.menus, function (index2, next2) {
-            var menuItem = '<li>';
-            menuItem += '<div class="menu-item-icon ' + next2.iconCls + '"></div>';
-            menuItem += '<a ref="' + next2.menuId + '" iconCls="' + next2.iconCls + '" href="javascript:void(0)" rel="' + next2.url + '">' + next2.menuName + '</a>';
-            menuItem += '</li>';
-            menuList += menuItem;
-        });
-        menuList += '</ul>';
-
-        $('#left-menu').accordion('add', {
-            title: next1.menuName,
-            content: menuList,
-            iconCls: next1.iconCls
-        });
-    });
-    $('.easyui-accordion ul li a').click(function () {
-        var tabTitle = $(this).text();
-        var url = $(this).attr('rel');
-        var iconCls = $(this).attr('iconCls');
-        addTab(tabTitle, url, iconCls);
-        $('.easyui-accordion ul li a').removeClass('selected');
-        $(this).addClass('selected');
+    //子页面iframe
+    var $iframes = $('iframe');
+    if ($iframes.length > 0) {
+        var iframeHref = '../' + newHref;
+        for (var i = 0; i < $iframes.length; i++) {
+            $($iframes[i]).contents().find('link[id="easyuiTheme"]').attr('href', iframeHref);
+        }
+    }
+    $.cookie('easyuiThemeName', themeName, {
+        expires: 7
     });
 }
 
 /**
- * 初始化Tab
+ * 初始化日历控件
  */
-function initWorkspaceTabs() {
-    $("div[id='workspaceTabs']").tabs({
-        border: false,
-        fit: true
-    });
-}
-
-/**
- * 加载工作面板
- */
-function loadWorkbenches() {
-    var $workbenches = $("#workbenches");
-    $workbenches.find("#userManagementWorkbench").load("page/userManagement.html");
-}
-
-/* Initialize calendar */
 function initCalendar() {
     $('#cc').calendar({
         border: true,
@@ -139,49 +82,18 @@ function initCalendar() {
 }
 
 /**
- * 添加Tab，若当前Tab已经存在，则选择当前Tab，否则创建一个Tab
- * @param tabTitle Tab标题
- * @param url Tab内容URL
- * @param iconCls 图标
+ * 显示当前时间
  */
-function addTab(tabTitle, url, iconCls) {
-    var $workspaceTabs = $('#workspaceTabs');
-    if ($workspaceTabs) {
-        if ($workspaceTabs.tabs('exists', tabTitle)) {//如果Tab已经存在，则选择标题为tabTitle参数值的Tab
-            $workspaceTabs.tabs('select', tabTitle);
-        } else {
-            $.ajax({
-                type: 'post',
-                url: url,
-                cache: false,
-                async: false,
-                success: function (content) {
-                    if (content) {
-                        $workspaceTabs.tabs('add', {
-                            title: tabTitle,
-                            iconCls: iconCls,
-                            content: content,
-                            fit: true,
-                            closable: true,
-                            height: $('#mainPanel').height() - 26
-                        });
-                    }
-                },
-                error: function () {
-                    alert("Load page error!")
-                }
-            });
-        }
-    }
-}
-
-/* 显示当前时间 */
 function showCurrentTime() {
     $("#current-time").text(getCurrentTime());
     setTimeout("showCurrentTime()", 1000);
 }
 
-/* 获取当前时间字符串 */
+/**
+ * 获取当前时间字符串
+ *
+ * @returns {string}
+ */
 function getCurrentTime() {
     var today = new Date();
     var day;
@@ -232,52 +144,6 @@ function getCurrentTime() {
     time = hours + "时" + minutes + "分" + seconds + "秒";
 
     return date + " " + day + " " + time;
-}
-
-/* 修改主题 */
-function changeTheme(themeName) {
-    var $easyuiTheme = $("link[id='easyuiTheme']");
-    var oldHref = $easyuiTheme.attr("href");
-    var newHref = oldHref.substring(0, oldHref.indexOf('themes')) + 'themes/' + themeName + '/easyui.css';
-    $easyuiTheme.attr("href", newHref);
-    customThemeHref = newHref;
-
-    //子页面iframe
-    var $iframes = $('iframe');
-    if ($iframes.length > 0) {
-        var iframeHref = '../' + newHref;
-        for (var i = 0; i < $iframes.length; i++) {
-            $($iframes[i]).contents().find('link[id="easyuiTheme"]').attr('href', iframeHref);
-        }
-    }
-    $.cookie('easyuiThemeName', themeName, {
-        expires: 7
-    });
-}
-function refreshTheme() {
-    //子页面iframe
-    var $iframes = $('iframe');
-    if ($iframes.length > 0) {
-        var iframeHref = '../' + customThemeHref;
-        for (var i = 0; i < $iframes.length; i++) {
-            $($iframes[i]).contents().find('link[id="easyuiTheme"]').attr('href', iframeHref);
-        }
-    }
-}
-/**
- * 检查新添加的Tab的主题是否跟系统一致，若不一致则切换至跟系统一样
- * @param title
- */
-function checkTheme(title) {
-    var $iframes = $('iframe');
-    if ($iframes.length > 0) {
-        var iframeId = 'iframe' + title;
-        for (var i = 0; i < $iframes.length; i++) {
-            if (iframeId == $($iframes[i]).attr('id')) {
-                $($iframes[i]).contents().find('link[id="easyuiTheme"]').attr('href', '../' + customThemeHref);
-            }
-        }
-    }
 }
 
 /**

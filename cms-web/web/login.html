@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>登陆内容管理系统</title>
+    <title>登陆网站内容管理系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link id="easyuiTheme" rel="stylesheet" type="text/css" href="static/easyui/themes/gray/easyui.css">
     <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
     <link rel="stylesheet" type="text/css" href="static/easyui/themes/color.css">
-    <link rel="stylesheet" type="text/css" href="static/css/default.css">
+    <link rel="stylesheet" type="text/css" href="static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="static/css/login.css">
     <link href="static/images/user_male_2.png" rel="shortcut icon">
     <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="static/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="static/js/common.js"></script>
     <script type="text/javascript" src="static/js/login.js"></script>
 </head>
 <body class="easyui-layout" scroll="no">
@@ -22,29 +24,105 @@
     </div>
 </noscript>
 
-<div data-options="region:'north'" style="height:50px" class="header">
-    <div class="logo"></div>
+<div data-options="region:'north',minWidth:900" style="height:50px" class="cms-header">
+    <div class="cms-logo"></div>
+    <div class="cms-system-menu-bar">
+        <a class="easyui-menubutton" id="switch-theme-menubutton" href="javascript:void(0)">更换主题</a>
+    </div>
 </div>
 
-<div data-options="region:'center'">
-    <div class="easyui-layout" data-options="fit:true">
-        <div data-options="region:'center',border:false"></div>
+<div data-options="region:'center',minWidth:900">
+    <div class="easyui-layout" data-options="fit:true" scroll="no">
+        <div data-options="region:'center',border:false" style="padding-top: 20%;">
+            <div style="text-align: center;padding-top: 20px">
+                <img src="static/images/login_image.png">
+            </div>
+        </div>
         <div data-options="region:'east',border:false" style="width:600px;padding-top: 20%;">
-            <div class="easyui-panel" title="欢迎登录"
-                 style="width:450px;height:200px;margin: 0 auto;padding:10px;">
-                <p>用户账号：<input name="username" class="easyui-textbox"></p>
-                <p>登陆密码：<input name="password" class="easyui-textbox" type="password"></p>
-                <p>验证码：</p>
-                <p><input class="easyui-linkbutton" value="登录"></p>
+            <div class="easyui-panel" style="width:360px">
+                <div style="padding: 10px">
+                    <form id="login-form" class="form" method="post">
+                        <div class="form-title" style="font-size: 16px;font-weight: bold;color: #1984b5;">登陆网站内容管理系统
+                        </div>
+                        <table cellpadding="5">
+                            <tr>
+                                <td>用户账号:</td>
+                                <td>
+                                    <input name="username" class="easyui-textbox"
+                                           data-options="
+                                           width:160,
+                                           prompt:'用户账号',
+                                           iconCls:'icon-man',
+                                           iconAlign:'left',
+                                           iconWidth:16">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>登陆密码:</td>
+                                <td>
+                                    <input name="password" class="easyui-textbox" type="password"
+                                           data-options="
+                                           width:160,
+                                           prompt:'登陆密码',
+                                           iconCls:'icon-lock',
+                                           iconAlign:'left',
+                                           iconWidth:16">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>验证码:</td>
+                                <td>
+                                    <input name="validatecode" class="easyui-textbox"
+                                           data-options="
+                                           width:160,
+                                           prompt:'验证码',
+                                           iconAlign:'left',
+                                           iconWidth:16">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="login()"
+                                       data-options="width:60">
+                                        登录
+                                    </a>
+                                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearLoginForm()"
+                                       data-options="width:60">
+                                        清除
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div data-options="region:'south'" style="height:20px;">
+<div data-options="region:'south',minWidth:900" style="height:20px;">
     <div style="text-align: center;font-size:12px;font-family:arial,serif">
         Copyright&copy;网站内容管理系统-Designed by Dannis
     </div>
+</div>
+
+<div id="theme-menu" style="width: 150px;display: none">
+    <div data-options="iconCls:''">Default</div>
+    <div data-options="iconCls:''">Gray</div>
+    <div data-options="iconCls:''">Bootstrap</div>
+    <div data-options="iconCls:''">Black</div>
+    <div data-options="iconCls:''">Metro</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:''">Metro-Blue</div>
+    <div data-options="iconCls:''">Metro-Gray</div>
+    <div data-options="iconCls:''">Metro-Green</div>
+    <div data-options="iconCls:''">Metro-Orange</div>
+    <div data-options="iconCls:''">Metro-Red</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:''">UI-Cupertino</div>
+    <div data-options="iconCls:''">UI-Pepper-Grinder</div>
+    <div data-options="iconCls:''">UI-Sunny</div>
 </div>
 </body>
 </html>

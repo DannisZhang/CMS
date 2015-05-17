@@ -87,7 +87,7 @@ function initMobilePhoneNumberDatagrid() {
     }];
 
     $("#mobilePhoneNumberDatagrid").datagrid({
-        url: "mobilePhoneNumber/queryByPage.json",
+        url: "mobilePhoneNumber/queryByPage.ajax",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -159,7 +159,7 @@ function deleteMobilePhoneNumberById(event, mobilePhoneNumberId) {
     $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
         if (r) {
             $.ajax({
-                url: "mobilePhoneNumber/deleteById.json",
+                url: "mobilePhoneNumber/deleteById.ajax",
                 method: "post",
                 data: {"id": mobilePhoneNumberId},
                 success: function (result) {
@@ -188,7 +188,7 @@ function deleteMobilePhoneNumbers() {
                 ids.push(row.id);
             });
             $.ajax({
-                url: "mobilePhoneNumber/deleteByIds.json",
+                url: "mobilePhoneNumber/deleteByIds.ajax",
                 method: "post",
                 data: {"ids": ids.join(",")},
                 success: function (result) {
@@ -208,7 +208,7 @@ function saveMobilePhoneNumber() {
     var $editMobilePhoneNumberDialog = $("#editMobilePhoneNumberDialog");
     var $editMobilePhoneNumberFrom = $editMobilePhoneNumberDialog.find("#editMobilePhoneNumberFrom");
     $editMobilePhoneNumberFrom.form("submit", {
-        url: "mobilePhoneNumber/save.json",
+        url: "mobilePhoneNumber/save.ajax",
         onSubmit: function () {
             var number = $editMobilePhoneNumberFrom.find("input[name='number']").val();
             if (!number || number.length != 11) {
@@ -245,7 +245,7 @@ function saveMobilePhoneNumber() {
 function importMobilePhoneNumberExcel() {
     var $importMobilePhoneNumberDialog = $("#importMobilePhoneNumberDialog");
     $importMobilePhoneNumberDialog.find("#importMobilePhoneNumberFrom").form("submit", {
-        url: "mobilePhoneNumber/importExcel.json",
+        url: "mobilePhoneNumber/importExcel.ajax",
         onSubmit: function () {
             var isValid = true;
             var $fileObjectList = $("input[type='file'][name='mobilePhoneNumberExcel']");
@@ -293,7 +293,7 @@ function viewMobilePhoneNumberDetail(event, mobilePhoneNumberId) {
     clearEditMobilePhoneNumberForm();
     var $editMobilePhoneNumberDialog = $("#editMobilePhoneNumberDialog").dialog({title: "查看号码"});
     $.ajax({
-        url: "mobilePhoneNumber/queryById.json",
+        url: "mobilePhoneNumber/queryById.ajax",
         method: "post",
         data: {id: mobilePhoneNumberId},
         dataType: "json",
@@ -323,7 +323,7 @@ function editMobilePhoneNumber(event, mobilePhoneNumberId) {
     clearEditMobilePhoneNumberForm();
     var $editMobilePhoneNumberDialog = $("#editMobilePhoneNumberDialog").dialog({title: "修改号码"});
     $.ajax({
-        url: "mobilePhoneNumber/queryById.json",
+        url: "mobilePhoneNumber/queryById.ajax",
         method: "post",
         data: {id: mobilePhoneNumberId},
         dataType: "json",

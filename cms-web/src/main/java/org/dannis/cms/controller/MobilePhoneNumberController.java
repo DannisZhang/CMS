@@ -41,7 +41,7 @@ public class MobilePhoneNumberController {
     @Autowired
     private MobilePhoneNumberService mobilePhoneNumberService;
 
-    @RequestMapping(value = "/save.json", method = RequestMethod.POST)
+    @RequestMapping(value = "/save.ajax", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult save(MobilePhoneNumber mobilePhoneNumber) {
         LOGGER.info("保存电话号码");
@@ -71,7 +71,7 @@ public class MobilePhoneNumberController {
      * @param file Excel文件
      * @return 导入结果
      */
-    @RequestMapping(value = "/importExcel.json", method = RequestMethod.POST)
+    @RequestMapping(value = "/importExcel.ajax", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult importExcel(@RequestParam("mobilePhoneNumberExcel") MultipartFile file) {
         LOGGER.info("批量导入手机号码开始......");
@@ -98,7 +98,7 @@ public class MobilePhoneNumberController {
      * @param id ID
      * @return 删除操作执行结果
      */
-    @RequestMapping(value = "/deleteById.json", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteById.ajax", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult deleteById(Integer id) {
         LOGGER.info("删除手机号码，手机号码ID： " + id);
@@ -125,7 +125,7 @@ public class MobilePhoneNumberController {
      * @param ids ID列表
      * @return 删除操作执行结果
      */
-    @RequestMapping(value = "deleteByIds.json", method = RequestMethod.POST)
+    @RequestMapping(value = "deleteByIds.ajax", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult deleteByIds(Integer[] ids) {
         LOGGER.info("批量删除手机号码，手机号码ID列表： " + Arrays.toString(ids));
@@ -149,7 +149,7 @@ public class MobilePhoneNumberController {
      * @param id ID
      * @return 手机号码
      */
-    @RequestMapping(value = "queryById.json", method = RequestMethod.POST)
+    @RequestMapping(value = "queryById.ajax", method = RequestMethod.POST)
     @ResponseBody
     public SingleQueryResult<?> queryById(Integer id) {
         SingleQueryResult<MobilePhoneNumber> result = new SingleQueryResult<MobilePhoneNumber>();
@@ -172,7 +172,7 @@ public class MobilePhoneNumberController {
      * @param queryParams 查询参数
      * @return 查询结果
      */
-    @RequestMapping(value = "queryByPage.json")
+    @RequestMapping(value = "queryByPage.ajax")
     @ResponseBody
     public PaginationQueryResult<?> queryByPage(QueryParams queryParams) {
         PaginationQueryResult<MobilePhoneNumber> result = new PaginationQueryResult<MobilePhoneNumber>();

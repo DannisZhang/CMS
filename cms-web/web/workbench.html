@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>网站内容管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link id="easyuiTheme" rel="stylesheet" type="text/css" href="static/easyui/themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="static/easyui/themes/color.css">
+    <link rel="stylesheet" type="text/css" href="static/css/common.css">
+    <link href="static/images/user_male_2.png" rel="shortcut icon">
+    <script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="static/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="static/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="static/js/common.js"></script>
+    <script type="text/javascript" src="static/js/workbench.js"></script>
+</head>
+<body class="easyui-layout" scroll="no">
+<noscript>
+    <div style="position: absolute; z-index: 100000; height: 2046px; top: 0; left: 0;
+            width: 100%; background: white; text-align: center;">
+        <img src="static/images/noscript.gif" alt='抱歉，请开启脚本支持！'/>
+    </div>
+</noscript>
+
+<div region="north" split="true" class="cms-header">
+    <div style="width:100%;height:100%;margin:0 auto;padding:0 auto">
+        <div class="cms-logo"></div>
+        <div class="cms-system-menu-bar">
+            <img alt="user" src="static/images/user_male_2.png" style="vertical-align: middle"/>
+            <span style="line-height:26px;vertical-align:middle;display:inline-block">欢迎您！</span>
+            <span style="line-height:26px;vertical-align:middle;display:inline-block">[管理员]</span>
+            <a id="switch-theme-menubutton" href="javascript:void(0)">更换主题</a>
+            <a id="shutdown-menubutton" href="javascript:void(0)">退出系统</a>
+        </div>
+    </div>
+</div>
+
+<!-- 系统菜单栏 -->
+<div region="west" split="true" title="系统菜单栏" style="width:180px;">
+    <div id="left-menu" class="easyui-accordion" fit="true" border="false">
+        <!-- 菜单列表 -->
+    </div>
+</div>
+
+<div region="center" id="mainPanel" style="background: #eee;overflow:hidden;">
+    <div id="workspaceTabs">
+        <div title="系统首页" style="padding: 20px;" data-options="iconCls:'icon-custom-home'" id="home">
+            <h2>欢迎光临网站内容管理系统</h2>
+        </div>
+    </div>
+</div>
+
+<div region="east" title="工具栏" data-options="iconCls:'icon-dannis-tool'" style="width:182px;">
+    <div id="cc" style="width:180px;height:180px;"></div>
+    <div id="p" data-options="iconCls:'icon-dannis-pin'" class="easyui-panel" title="待办事宜"
+         style="width:180px;height:150px;padding:10px;background:#fafafa;">
+        <p>今天无待办事宜</p>
+    </div>
+</div>
+
+<div region="south" style="height: 20px;">
+    <div style="text-align: center;font-size:12px;font-family:arial,serif">
+        Copyright&copy;网站内容管理系统-Designed by Dannis
+    </div>
+</div>
+
+<!-- 切换主题菜单 -->
+<div id="theme-menu" style="width: 150px;display: none">
+    <div data-options="iconCls:''">Default</div>
+    <div data-options="iconCls:''">Gray</div>
+    <div data-options="iconCls:''">Bootstrap</div>
+    <div data-options="iconCls:''">Black</div>
+    <div data-options="iconCls:''">Metro</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:''">Metro-Blue</div>
+    <div data-options="iconCls:''">Metro-Gray</div>
+    <div data-options="iconCls:''">Metro-Green</div>
+    <div data-options="iconCls:''">Metro-Orange</div>
+    <div data-options="iconCls:''">Metro-Red</div>
+    <div class="menu-sep"></div>
+    <div data-options="iconCls:''">UI-Cupertino</div>
+    <div data-options="iconCls:''">UI-Pepper-Grinder</div>
+    <div data-options="iconCls:''">UI-Sunny</div>
+</div>
+
+<!-- 关闭系统菜单 -->
+<div id="shutdown-menu" style="width: 120px;display: none">
+    <div data-options="iconCls:'icon-custom-lock-go'" name="logout-button">注销登陆</div>
+    <div data-options="iconCls:'icon-custom-exit'" name="exit-button">关闭系统</div>
+</div>
+
+</body>
+</html>

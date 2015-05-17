@@ -6,22 +6,22 @@ body {
     height: 100%;
 }
 
-.header {
+.cms-header {
     height:48px;
     overflow:hidden;
-    background:url("../../static/images/cms_repeat.png") repeat-x;
+    background:url("../images/cms_header_bg.png") repeat-x;
 }
 
-.logo {
-    width:70%;
-    height:100%;
-    font-size:38px;
+.cms-header .cms-logo {
+    width:600px;
+    height: 48px;;
     background:url("../../static/images/cms_logo.png") no-repeat;
-    float:left;
+    display: inline-block;
 }
 
-.btn-area {
-    height:100%;
+.cms-header .cms-system-menu-bar {
+    padding-top: 10px;
+    padding-right: 20px;
     text-align:right;
     float:right;
 }
@@ -98,6 +98,7 @@ body {
     font-size: 14px;
     text-align: left;
     padding-bottom: 8px;
+    margin-bottom: 8px;
     border-bottom: solid 1px #D4D4D4;
 }
 
