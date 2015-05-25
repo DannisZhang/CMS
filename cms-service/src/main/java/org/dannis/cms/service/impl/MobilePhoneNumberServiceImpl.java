@@ -32,7 +32,18 @@ public class MobilePhoneNumberServiceImpl implements MobilePhoneNumberService {
     }
 
     public void saveMobilePhoneNumbers(List<MobilePhoneNumber> mobilePhoneNumbers) {
-        mobilePhoneNumberManager.saveMobilePhoneNumbers(mobilePhoneNumbers);
+        if (mobilePhoneNumbers == null || mobilePhoneNumbers.size() == 0) {
+            return;
+        }
+        for (MobilePhoneNumber mobilePhoneNumber : mobilePhoneNumbers) {
+            MobilePhoneNumber savedMobilePhoneNumber = mobilePhoneNumberManager.queryByNumber(mobilePhoneNumber.getNumber());
+            if (savedMobilePhoneNumber != null) {
+                mobilePhoneNumber.setId(savedMobilePhoneNumber.getId());
+                mobilePhoneNumberManager.update(mobilePhoneNumber);
+            } else {
+                mobilePhoneNumberManager.save(mobilePhoneNumber);
+            }
+        }
     }
 
     public void deleteById(Integer id) {
