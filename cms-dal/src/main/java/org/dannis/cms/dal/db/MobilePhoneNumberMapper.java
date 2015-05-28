@@ -65,7 +65,7 @@ public interface MobilePhoneNumberMapper {
      * @param number 号码
      * @return 若存在，返回手机号码实体对象；否则返回null
      */
-    MobilePhoneNumberEntity findMobilePhoneNumberByNumber(String number);
+    MobilePhoneNumberEntity queryByNumber(String number);
 
     /**
      * 分页查询符合查询条件的手机号码

@@ -67,6 +67,12 @@
 		WHERE id = #{id}
 	</select>
 
+	<select id="queryByNumber" parameterType="java.lang.String" resultMap="mobilePhoneNumberMap">
+		SELECT <include refid="allColumns"/>
+		FROM t_cms_mobile_phone_number
+		WHERE number = #{number}
+	</select>
+
 	<select id="queryByPage" resultMap="mobilePhoneNumberMap">
 		SELECT <include refid="allColumns"/>
 		FROM t_cms_mobile_phone_number

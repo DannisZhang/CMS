@@ -84,10 +84,10 @@ public class MobilePhoneNumberManager {
      * 根据号码查询手机号码信息
      *
      * @param number 号码
-     * @return 若存在，返回手机号码实体对象；否则返回null
+     * @return 若存在，返回手机号码；否则返回null
      */
-    public MobilePhoneNumberEntity findMobilePhoneNumberByNumber(String number) {
-        return mobilePhoneNumberMapper.findMobilePhoneNumberByNumber(number);
+    public MobilePhoneNumber queryByNumber(String number) {
+        return convertToModel(mobilePhoneNumberMapper.queryByNumber(number));
     }
 
     /**
