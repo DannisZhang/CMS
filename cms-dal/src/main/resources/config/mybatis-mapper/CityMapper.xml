@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dannis.cms.dal.db.CityMapper">
+	<resultMap id="cityMap" type="org.dannis.cms.dal.entity.CityEntity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result property="name" column="name" jdbcType="VARCHAR"/>
+		<result property="code" column="code" jdbcType="VARCHAR" />
+		<result property="provinceCode" column="province_code" jdbcType="VARCHAR" />
+		<result property="createdOn" column="created_on" jdbcType="TIMESTAMP"/>
+		<result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+		<result property="lastModifiedOn" column="last_modified_on" jdbcType="TIMESTAMP"/>
+		<result property="lastModifiedBy" column="last_modified_by" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="allColumns">
+		id,name,code,province_code,created_on,created_by,last_modified_on,last_modified_by
+	</sql>
+
+	<select id="queryAllCities" resultMap="cityMap">
+		SELECT <include refid="allColumns"/>
+		FROM t_city
+	</select>
+
+	<select id="queryCityByProvinceCode" parameterType="java.lang.String" resultMap="cityMap">
+		SELECT <include refid="allColumns"/>
+		FROM t_city
+		WHERE province_code = #{provinceCode}
+	</select>
+
+	<select id="queryCityCodeByName" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT code
+		FROM t_city
+		WHERE name = #{cityName}
+	</select>
+</mapper>

@@ -7,6 +7,7 @@ CREATE TABLE `t_cms_mobile_phone_number` (
   `attribution` VARCHAR(64) NOT NULL COMMENT '归属地',
   `wholesale_price` DOUBLE(10,2) NOT NULL DEFAULT 0.00 COMMENT '批发价',
   `floor_price` DOUBLE(10,2) NOT NULL DEFAULT 0.00 COMMENT '底价',
+  `price` DOUBLE(10,2) NOT NULL DEFAULT 0.00 COMMENT '售价',
   `balance` DOUBLE(10,2) NOT NULL DEFAULT 0.00 COMMENT '话费余额',
   `priority` INT(11) NOT NULL DEFAULT 9999 COMMENT '优先级',
   `remark` VARCHAR(128) NULL COMMENT '备注',

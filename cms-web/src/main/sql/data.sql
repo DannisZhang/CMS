@@ -4,8 +4,14 @@ CREATE TABLE `t_province` (
   `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `code` VARCHAR(6) NOT NULL COMMENT '省份编码',
   `name` VARCHAR(32) NOT NULL COMMENT '省份名称',
+  `status` VARCHAR(16) NOT NULL DEFAULT 'active' COMMENT '状态',
+  `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` INT(11) NOT NULL DEFAULT 0 COMMENT '创建人',
+  `last_modified_on` TIMESTAMP NULL COMMENT '最近修改时间',
+  `last_modified_by` INT(11) NULL COMMENT '最近修改人',
   PRIMARY KEY (`id`)
 )ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 COMMENT '省份表';
+
 INSERT INTO `t_province` (`id`, `code`, `name`) VALUES
   (1, '110000', '北京市'),
   (2, '120000', '天津市'),
@@ -48,6 +54,11 @@ CREATE TABLE `t_city`(
   `code` VARCHAR(6) NOT NULL COMMENT '城市编码',
   `name` VARCHAR(32) NOT NULL COMMENT '城市名称',
   `province_code` VARCHAR(6) NOT NULL COMMENT '省份编码',
+  `status` VARCHAR(16) NOT NULL DEFAULT 'active' COMMENT '状态',
+  `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` INT(11) NOT NULL DEFAULT 0 COMMENT '创建人',
+  `last_modified_on` TIMESTAMP NULL COMMENT '最近修改时间',
+  `last_modified_by` INT(11) NULL COMMENT '最近修改人',
   PRIMARY KEY (`id`)
 )ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=343 COMMENT '城市表';
 
