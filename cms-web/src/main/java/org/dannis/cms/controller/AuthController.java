@@ -29,9 +29,8 @@ public class AuthController {
         request.getSession().setAttribute("username", username);
         System.out.println("Username: " + username + ", Password: " + password);
         result.setSuccess(true);
-        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
 
-        result.setMessage(basePath + "/workbench.html");
+        result.setMessage("/workbench.html");
         response.setContentType("text/plain; charset=utf-8");
         return result;
     }
