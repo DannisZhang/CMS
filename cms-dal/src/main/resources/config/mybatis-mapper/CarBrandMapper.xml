@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dannis.cms.dal.db.CarBrandMapper">
+    <resultMap id="carBrandMap" type="org.dannis.cms.dal.entity.CarBrandEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="englishName" column="english_name" jdbcType="VARCHAR"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="createdOn" column="created_on" jdbcType="TIMESTAMP"/>
+        <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+        <result property="lastModifiedOn" column="last_modified_on" jdbcType="TIMESTAMP"/>
+        <result property="lastModifiedBy" column="last_modified_by" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="allColumns">
+		id,name,english_name,country,created_on,created_by,last_modified_on,last_modified_by
+	</sql>
+
+    <insert id="save" parameterType="org.dannis.cms.dal.entity.CarBrandEntity">
+		INSERT INTO t_cms_car_brand(name,english_name,country,created_by)
+		VALUES (#{name},#{englishName},#{country},#{createdBy})
+	</insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+		DELETE FROM t_cms_car_brand
+		WHERE id = #{id}
+	</delete>
+
+    <update id="update" parameterType="org.dannis.cms.dal.entity.CarBrandEntity">
+        UPDATE t_cms_car_brand
+        SET name=#{name},english_name=#{englishName},country=#{country},last_modified_by=#{lastModifiedBy}
+        WHERE id = #{id}
+    </update>
+
+    <select id="query" resultMap="carBrandMap">
+        SELECT
+        <include refid="allColumns"/>
+        FROM t_cms_car_brand
+        WHERE id=#{id}
+    </select>
+
+    <select id="queryByPage" resultMap="carBrandMap">
+        SELECT
+        <include refid="allColumns"/>
+        FROM t_cms_car_brand
+        WHERE 1=1
+        <if test="name != null and name != ''">
+            AND name = #{name}
+        </if>
+        <if test="country != null and country != ''">
+            AND country = #{country}
+        </if>
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="queryTotal" resultType="java.lang.Long">
+		SELECT count(id)
+		FROM t_cms_car_brand
+		WHERE 1=1
+        <if test="name != null and name != ''">
+            AND name = #{name}
+        </if>
+        <if test="country != null and country != ''">
+            AND country = #{country}
+        </if>
+	</select>
+</mapper>
