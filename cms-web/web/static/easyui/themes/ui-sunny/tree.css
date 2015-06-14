@@ -155,3 +155,6 @@
   background: #ffffff;
   color: #0074c7;
 }
+.tree-node-hidden {
+  display: none;
+}
