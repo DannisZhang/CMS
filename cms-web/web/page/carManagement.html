@@ -1,0 +1,183 @@
+<div class="easyui-layout" id="carManagement" style="overflow: visible" split="true" fit="true">
+    <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
+        <div id="queryCarDiv">
+            车型：
+            <select class="easyui-combobox"  id="queryCarItemType" style="width:100px;"
+                    data-options="panelMaxHeight:90,prompt:'请选择车型'">
+                <option value="all">全部车型</option>
+                <option value="car">轿车</option>
+                <option value="SUV">SUV</option>
+                <option value="越野">越野</option>
+                <option value="superCar">跑车</option>
+            </select>
+            品牌：
+            <select class="easyui-combobox"  id="queryCarItemBrand" style="width:100px;"
+                    data-options="panelMaxHeight:90,prompt:'请选择品牌'">
+                <option value="all">全部品牌</option>
+                <option value="Das">大众</option>
+                <option value="Audi">奥迪</option>
+                <option value="Honda">本田</option>
+                <option value="Toyota">丰田</option>
+            </select>
+            系列：
+            <select class="easyui-combobox"  id="queryCarItemSeries" style="width:100px;"
+                    data-options="panelMaxHeight:90,prompt:'请选择车系'">
+                <option value="all">全部车系</option>
+                <option value="Tiguan">途观</option>
+                <option value="A4L">A4L</option>
+                <option value="A6L">A6L</option>
+                <option value="凯美瑞">凯美瑞</option>
+            </select>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'"
+               onclick="queryCars()">
+                查询
+            </a>
+        </div>
+    </div>
+    <div region="center" border="false" style="overflow: visible;">
+        <table id="carDatagrid" fit="true">
+        </table>
+
+        <!-- Edit car dialog #################### Begin #################### -->
+        <div id="editCarDialog">
+            <form class="form" method="post" id="editCarFrom">
+                <div class="form-title">基本信息</div>
+                <div class="form-content">
+                    <div class="form-item">
+                        <div style="width:80px;">汽车型号：</div>
+                        <div>
+                            <select class="easyui-combobox" name="type" style="width:100px;"
+                                    data-options="panelMaxHeight:90,prompt:'请选择车型'">
+                                <option value="all">全部车型</option>
+                                <option value="car">轿车</option>
+                                <option value="SUV">SUV</option>
+                                <option value="越野">越野</option>
+                                <option value="superCar">跑车</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">汽车品牌：</div>
+                        <div>
+                            <select class="easyui-combobox" name="brand" style="width:100px;"
+                                    data-options="panelMaxHeight:90,prompt:'请选择品牌'">
+                                <option value="all">全部品牌</option>
+                                <option value="Das">大众</option>
+                                <option value="Audi">奥迪</option>
+                                <option value="Honda">本田</option>
+                                <option value="Toyota">丰田</option>
+                            </select>
+                        </div>
+                        <div style="width:80px;">车系：</div>
+                        <div>
+                            <select class="easyui-combobox" name="series" style="width:100px;"
+                                    data-options="panelMaxHeight:90,prompt:'请选择车系'">
+                                <option value="all">全部车系</option>
+                                <option value="Tiguan">途观</option>
+                                <option value="A4L">A4L</option>
+                                <option value="A6L">A6L</option>
+                                <option value="凯美瑞">凯美瑞</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">车身结构：</div>
+                        <div>
+                            <select class="easyui-combobox" name="structure" style="width:100px;"
+                                    data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
+                                <option value="two">两厢</option>
+                                <option value="three">三厢</option>
+                            </select>
+                        </div>
+                        <div style="width:80px;">变速箱：</div>
+                        <div>
+                            <select class="easyui-combobox" name="gearbox" style="width:100px;"
+                                    data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
+                                <option value="手动">手动</option>
+                                <option value="自动">自动</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">排量：</div>
+                        <div>
+                            <select class="easyui-combobox" name="displacement" style="width:100px;"
+                                    data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
+                                <option value="1.4L">1.4L</option>
+                                <option value="1.6L">1.6L</option>
+                                <option value="1.8L">1.8L</option>
+                                <option value="2.0L">2.0L</option>
+                                <option value="2.4L">2.4L</option>
+                                <option value="3.0L">3.0L</option>
+                            </select>
+                        </div>
+                        <div style="width:80px;">排放标准：</div>
+                        <div>
+                            <select class="easyui-combobox" name="emissionStandard" style="width:100px;"
+                                    data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
+                                <option value="国标1">国标1</option>
+                                <option value="国标2">国标2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">车龄：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="age" style="width:60px;"
+                                   data-options="min:0,max:9999"/>
+                        </div>
+                        <div style="width:80px;">表显里程：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="mileage" style="width:60px;"
+                                   data-options="min:0,max:9999,prompt:'9999'" value="9999"/>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">上牌时间：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="registrationTime" style="width:60px;"
+                                   data-options="min:0,max:9999,prompt:'9999'" value="9999"/>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">价格：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="wholesalePrice" style="width:120px;"
+                                   data-options="min:0,precision:2,prefix:'￥',prompt:'￥0.00'" value="0.00"/>
+                        </div>
+
+                        <div style="width:80px;">最低价格：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="lowestPrice" style="width:120px;"
+                                   data-options="min:0,precision:2,prefix:'￥',prompt:'￥0.00'" value="0.00"/>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">优先级：</div>
+                        <div>
+                            <input type="text" class="easyui-numberbox" name="priority" style="width:60px;"
+                                   data-options="min:0,max:9999,prompt:'9999'" value="9999"/>
+                            <span>默认优先级为9999</span>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:80px;">备注：</div>
+                        <div>
+                            <input type="text" class="easyui-textbox" name="remark"
+                                   data-options="multiline:true" style="height: 50px;width: 200px;"/>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="id"/>
+            </form>
+        </div>
+        <div id="carDialogButtons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" name="save-btn"
+               onclick="saveCar()" style="width:90px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="$('#editCarDialog').dialog('close')" style="width:90px">取消</a>
+        </div>
+        <!-- Edit car dialog #################### End   #################### -->
+    </div>
+</div>
+<script type="text/javascript" src="static/js/carManagement.js"></script>

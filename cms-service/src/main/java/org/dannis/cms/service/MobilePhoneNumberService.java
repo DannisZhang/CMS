@@ -1,12 +1,10 @@
 package org.dannis.cms.service;
 
-import org.dannis.cms.dal.entity.MobilePhoneNumberEntity;
 import org.dannis.cms.model.MobilePhoneNumber;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 手机号码服务接口

@@ -53,7 +53,7 @@ public class CarBrandManager {
      * @param id 汽车品牌ID
      * @return 汽车品牌信息
      */
-    CarBrand query(Integer id) {
+    public CarBrand query(Integer id) {
         return convertToModel(carBrandMapper.query(id));
     }
 

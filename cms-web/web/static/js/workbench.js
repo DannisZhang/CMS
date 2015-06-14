@@ -56,7 +56,12 @@ function initWorkbenchLeftMenu() {
                         "iconCls": "icon-custom-telephone",
                         "url": "page/telephoneNumberManagement.html"
                     },
-                    {"menuId": 1, "menuName": "二手车", "iconCls": "icon-custom-car", "url": "page/default.html"}
+                    {
+                        "menuId": 1,
+                        "menuName": "汽车信息",
+                        "iconCls": "icon-custom-car",
+                        "url": "page/carManagement.html"
+                    }
                 ]
             },
             {

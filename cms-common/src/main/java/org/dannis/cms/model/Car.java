@@ -12,6 +12,10 @@ import java.util.List;
  */
 public class Car {
     /**
+     * ID
+     */
+    private Integer id;
+    /**
      * 品牌
      */
     private CarBrand brand;
@@ -56,9 +60,45 @@ public class Car {
      */
     private Double price;
     /**
+     * 最低价格
+     */
+    private Double lowestPrice;
+    /**
      * 图片地址
      */
     private List<String> imageUrls;
+    /**
+     * 优先级
+     */
+    private Integer priority;
+    /**
+     * 备注信息
+     */
+    private String remark;
+    /**
+     * 创建时间
+     */
+    private Date createdOn;
+    /**
+     * 创建人
+     */
+    private Integer createdBy;
+    /**
+     * 最近修改时间
+     */
+    private Date lastModifiedOn;
+    /**
+     * 最近修改人
+     */
+    private Integer lastModifiedBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public CarBrand getBrand() {
         return brand;
@@ -148,11 +188,67 @@ public class Car {
         this.price = price;
     }
 
+    public Double getLowestPrice() {
+        return lowestPrice;
+    }
+
+    public void setLowestPrice(Double lowestPrice) {
+        this.lowestPrice = lowestPrice;
+    }
+
     public List<String> getImageUrls() {
         return imageUrls;
     }
 
     public void setImageUrls(List<String> imageUrls) {
         this.imageUrls = imageUrls;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getLastModifiedOn() {
+        return lastModifiedOn;
+    }
+
+    public void setLastModifiedOn(Date lastModifiedOn) {
+        this.lastModifiedOn = lastModifiedOn;
+    }
+
+    public Integer getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(Integer lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 }
