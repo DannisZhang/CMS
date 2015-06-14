@@ -60,7 +60,6 @@ CREATE TABLE `t_cms_car` (
   `displacement` VARCHAR(32) NOT NULL COMMENT '排量',
   `emission_standard` VARCHAR(32) NOT NULL COMMENT '排放标准',
   `gearbox` VARCHAR(32) NOT NULL COMMENT '变速箱',
-  `age` INT(11) COMMENT '车龄',
   `mileage` INT(11) COMMENT '表现里程',
   `registration_time` TIMESTAMP COMMENT '优先级',
   `price` DOUBLE(10,2) NOT NULL DEFAULT 0.00 COMMENT '售价',

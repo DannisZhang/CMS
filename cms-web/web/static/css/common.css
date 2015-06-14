@@ -119,3 +119,8 @@ body {
     font-size: 10px;
     color: teal;;
 }
+
+.form .form-content .form-item .form-item-horizontal {
+    display: inline-block;
+    margin-right: 30px;
+}

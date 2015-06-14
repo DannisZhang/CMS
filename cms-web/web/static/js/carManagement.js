@@ -2,7 +2,6 @@
  * @author deng.zhang
  * @date 2014/11/19.
  */
-var maxFileSize = 2048;//最大文件大小，单位：KB
 $(function () {
     initCarDatagrid();
     initCarDialog();
@@ -100,7 +99,7 @@ function initCarDatagrid() {
 }
 
 function initCarDialog() {
-    $.parser.parse("#carManagement");
+    $.parser.parse("#carManagementPage");
     $("#editCarDialog").dialog({
         iconCls: "icon-edit",
         title: "添加汽车",
@@ -119,14 +118,7 @@ function addCar() {
 }
 
 function clearEditCarForm() {
-    var $editCarDialog = $("#editCarDialog");
-    var $editCarFrom = $editCarDialog.find("#editCarFrom");
-    $editCarFrom.form("clear");
-    $editCarFrom.find("input[name='wholesalePrice']").val(0.00);
-    $editCarFrom.find("input[name='floorPrice']").val(0.00);
-    $editCarFrom.find("input[name='balance']").val(0.00);
-    $editCarFrom.find("input[name='priority']").val(9999);
-    $("#carDialogButtons").find("a[name='save-btn']").linkbutton("enable");
+    $("#editCarDialog").find("#editCarFrom").form("clear");
 }
 
 function deleteCarById(event, carId) {

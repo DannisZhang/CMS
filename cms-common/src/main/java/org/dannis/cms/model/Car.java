@@ -48,10 +48,6 @@ public class Car {
      */
     private Date registrationTime;
     /**
-     * 车龄
-     */
-    private Integer age;
-    /**
      * 里程数，单位公里
      */
     private Integer mileage;
@@ -162,14 +158,6 @@ public class Car {
 
     public void setRegistrationTime(Date registrationTime) {
         this.registrationTime = registrationTime;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
     public Integer getMileage() {

@@ -3,6 +3,7 @@ package org.dannis.cms.controller;
 import org.dannis.cms.model.Car;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
+import org.dannis.cms.query.result.SingleQueryResult;
 import org.dannis.cms.result.BaseResult;
 import org.dannis.cms.service.CarService;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @date 2015-06-14 13:39
  */
 @Controller
+@RequestMapping(value = "/car")
 public class CarController {
     /**
      * Logger
@@ -50,6 +52,56 @@ public class CarController {
                 result.setMessage("服务器异常！");
             }
             LOGGER.error("保存汽车信息失败", e);
+        }
+        return result;
+    }
+
+    /**
+     * 根据ID删除汽车信息
+     *
+     * @param id ID
+     * @return 删除操作执行结果
+     */
+    @RequestMapping(value = "/deleteById.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteById(Integer id) {
+        LOGGER.info("删除汽车信息，汽车信息ID： " + id);
+        BaseResult result = new BaseResult();
+        try {
+            if (null != id) {
+                carService.delete(id);
+                result.setMessage("删除汽车信息成功");
+            } else {
+                result.setSuccess(false);
+                result.setMessage("未指定汽车信息ID");
+            }
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage("删除汽车信息失败");
+            LOGGER.error("删除汽车信息失败", e);
+        }
+        return result;
+    }
+
+    /**
+     * 根据ID查询汽车信息
+     *
+     * @param id ID
+     * @return 汽车信息
+     */
+    @RequestMapping(value = "queryById.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    public SingleQueryResult<?> queryById(Integer id) {
+        SingleQueryResult<Car> result = new SingleQueryResult<>();
+        try {
+            Car car = carService.query(id);
+            result.setData(car);
+            if (null == car) {
+                result.setSuccess(false);
+            }
+        } catch (Exception e) {
+            result.setSuccess(false);
+            LOGGER.error("根据ID查找汽车信息失败", e);
         }
         return result;
     }

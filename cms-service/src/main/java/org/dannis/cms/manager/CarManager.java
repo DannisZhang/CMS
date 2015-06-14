@@ -96,7 +96,6 @@ public class CarManager {
             entity.setEmissionStandard(car.getEmissionStandard());
             entity.setGearbox(car.getGearbox());
             entity.setRegistrationTime(car.getRegistrationTime());
-            entity.setAge(car.getAge());
             entity.setMileage(car.getMileage());
             entity.setPrice(car.getPrice());
             entity.setLowestPrice(car.getLowestPrice());
@@ -143,7 +142,6 @@ public class CarManager {
             car.setEmissionStandard(entity.getEmissionStandard());
             car.setGearbox(entity.getGearbox());
             car.setRegistrationTime(entity.getRegistrationTime());
-            car.setAge(entity.getAge());
             car.setMileage(entity.getMileage());
             car.setPrice(entity.getPrice());
             car.setLowestPrice(entity.getLowestPrice());

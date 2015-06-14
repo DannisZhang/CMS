@@ -39,10 +39,6 @@ public class CarEntity extends AbstractEntity {
      */
     private String gearbox;
     /**
-     * 车龄
-     */
-    private Integer age;
-    /**
      * 表显里程，单位公里
      */
     private Integer mileage;
@@ -121,14 +117,6 @@ public class CarEntity extends AbstractEntity {
 
     public void setGearbox(String gearbox) {
         this.gearbox = gearbox;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
     public Integer getMileage() {

@@ -1,6 +1,31 @@
 var themeName = 'gray';
 var customThemeHref = "static/easyui/themes/gray/easyui.css";
 
+$(function () {
+    $.fn.datebox.defaults.formatter = function (date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        return y + '年' + (m < 10 ? ('0' + m) : m) + '月' + (d < 10 ? ('0' + d) : d) + '日';
+    };
+
+    $.fn.datebox.defaults.parser = function (s) {
+        if (!s) {
+            return new Date();
+        }
+        s = s.replace('年', '-').replace('月', '-').replace('日', '');
+        var ss = s.split('-');
+        var y = parseInt(ss[0], 10);
+        var m = parseInt(ss[1], 10);
+        var d = parseInt(ss[2], 10);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+            return new Date(y, m - 1, d);
+        } else {
+            return new Date();
+        }
+    }
+});
+
 /**
  * 初始化切换主题菜单按钮
  */
@@ -28,13 +53,13 @@ function initShutdownMenubutton() {
     $($exitMenuButton.menubutton('options').menu).menu({
         onClick: function (item) {
             if ("logout-button" == item.name) {
-                $.messager.confirm('登出系统','请确认是否登出系统？', function (rs) {
+                $.messager.confirm('登出系统', '请确认是否登出系统？', function (rs) {
                     if (rs) {
                         //登出系统;
                     }
                 });
             } else if ("exit-button" == item.name) {
-                $.messager.confirm('关闭系统','请确认是否关闭系统？', function (rs) {
+                $.messager.confirm('关闭系统', '请确认是否关闭系统？', function (rs) {
                     if (rs) {
                         //关闭系统;
                     }
@@ -144,26 +169,4 @@ function getCurrentTime() {
     time = hours + "时" + minutes + "分" + seconds + "秒";
 
     return date + " " + day + " " + time;
-}
-
-/**
- * DateBox格式化器
- * @param date 日期对象
- * @returns {string} 格式化日期字符串，如：2014-12-22
- */
-function dateBoxFormatter(date) {
-    return date ? date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() : "";
-}
-
-/**
- * DateBox解析器
- * @param dateString 日期字符串，格式：yyyy-MM-dd
- * @returns {Date} 日期对象
- */
-function dateBoxParser(dateString) {
-    if (dateString || dateString.trim() != "") {
-        return new Date(dateString.replaceAll("-", ","));
-    } else {
-        return new Date();
-    }
 }
