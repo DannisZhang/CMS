@@ -1,5 +1,6 @@
 package org.dannis.cms.controller;
 
+import org.apache.commons.io.FileUtils;
 import org.dannis.cms.model.Car;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
@@ -12,7 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
 
 /**
  * @author deng.zhang
@@ -89,7 +98,7 @@ public class CarController {
      * @param id ID
      * @return 汽车信息
      */
-    @RequestMapping(value = "queryById.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryById.ajax", method = RequestMethod.POST)
     @ResponseBody
     public SingleQueryResult<?> queryById(Integer id) {
         SingleQueryResult<Car> result = new SingleQueryResult<>();
@@ -112,7 +121,7 @@ public class CarController {
      * @param queryParams 查询参数
      * @return 查询结果
      */
-    @RequestMapping(value = "queryByPage.ajax")
+    @RequestMapping(value = "/queryByPage.ajax")
     @ResponseBody
     public PaginationQueryResult<?> queryByPage(QueryParams queryParams) {
         PaginationQueryResult<Car> result = new PaginationQueryResult<Car>();
@@ -125,5 +134,49 @@ public class CarController {
         }
 
         return result;
+    }
+
+    /**
+     * 上传汽车图片
+     *
+     * @param file    汽车图片文件
+     * @return 上传成功返回图片URL
+     */
+    @RequestMapping(value = "/uploadImage.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult uploadImage(@RequestParam("carImageFile") MultipartFile file) {
+        LOGGER.info("开始上传图片......");
+        BaseResult result = new BaseResult();
+        if (!file.isEmpty()) {
+            String dir = "/data/web/images/car";    //设定文件保存的目录
+
+            String filename = file.getOriginalFilename();    //得到上传时的文件名
+            filename = generateImageFileName(filename);
+            String imageUrl = "http://localhost/images/car/" + filename;
+            try {
+                FileUtils.writeByteArrayToFile(new File(dir, filename), file.getBytes());
+                result.setSuccess(true);
+                result.setMessage(imageUrl);
+            } catch (IOException e) {
+                result.setSuccess(false);
+                result.setMessage("导入失败");
+                LOGGER.error("上传汽车图片失败", e);
+            }
+        }
+        LOGGER.info("上传图片结束......");
+        return result;
+    }
+
+    private String generateImageFileName(String fileName) {
+        Calendar calendar = Calendar.getInstance();
+        return "car_"
+                + calendar.get(Calendar.YEAR)
+                + calendar.get(Calendar.MONTH)
+                + calendar.get(Calendar.DAY_OF_MONTH) + 1
+                + calendar.get(Calendar.HOUR)
+                + calendar.get(Calendar.MINUTE)
+                + calendar.get(Calendar.SECOND)
+                + calendar.get(Calendar.MILLISECOND)
+                + fileName.substring(fileName.lastIndexOf("."));
     }
 }

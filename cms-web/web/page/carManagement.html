@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="static/css/car.css">
 <div class="easyui-layout" id="carManagementPage" style="overflow: visible" split="true" fit="true">
     <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
         <form id="queryCarForm">
@@ -169,14 +170,32 @@
                         </div>
                     </div>
                     <div class="form-item">
+                        <div style="width:60px;">图片：</div>
+                        <div>
+                            <div id="addCarImagePanel" class="easyui-panel"
+                                 style="width:460px;height:150px;padding:3px;">
+                                <div id="addCarImage" class="upload-image">
+                                    <div class="upload-image-inner">
+                                        <p>添加图片</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item">
                         <div style="width:60px;">备注：</div>
                         <div>
                             <input type="text" class="easyui-textbox" name="remark"
-                                   data-options="multiline:true" style="height: 50px;width: 360px;"/>
+                                   data-options="multiline:true" style="height: 50px;width: 460px;"/>
                         </div>
                     </div>
                 </div>
                 <input type="hidden" name="id"/>
+            </form>
+            <form id="uploadCarImageForm" method="post" enctype="multipart/form-data">
+                <input type="file" name="carImageFile" id="carImageFile"
+                       style="display: none"
+                       onchange="uploadCarImage()">
             </form>
         </div>
         <div id="carDialogButtons">

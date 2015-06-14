@@ -58,6 +58,18 @@ function initWorkbenchLeftMenu() {
                     },
                     {
                         "menuId": 1,
+                        "menuName": "汽车类型",
+                        "iconCls": "icon-custom-car",
+                        "url": "page/carTypeManagement.html"
+                    },
+                    {
+                        "menuId": 1,
+                        "menuName": "汽车品牌",
+                        "iconCls": "icon-custom-car",
+                        "url": "page/carBrandManagement.html"
+                    },
+                    {
+                        "menuId": 1,
                         "menuName": "汽车信息",
                         "iconCls": "icon-custom-car",
                         "url": "page/carManagement.html"
