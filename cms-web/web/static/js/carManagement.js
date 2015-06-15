@@ -297,11 +297,34 @@ function uploadCarImage() {
                 uploadedImageDivHtml += '<img src="' + jsonResult.message + '" />';
                 uploadedImageDivHtml += '</div>';
                 $('#addCarImage').before(uploadedImageDivHtml);
+                $('.uploaded-image').on('mouseover', function (e) {
+                    var pointX = e.pageX;
+                    var pointY = e.pageY;
+                    var $previewCarImageDiv = $('#previewCarImageDiv');
+                    $previewCarImageDiv.find('img').prop('src',jsonResult.message);
+                    $previewCarImageDiv.css('top',pointY);
+                    $previewCarImageDiv.css('left',pointX);
+                    $previewCarImageDiv.show();
+                });
+                $('.uploaded-image').on('mousemove', function (e) {
+                    var pointX = e.pageX;
+                    var pointY = e.pageY;
+                    var $previewCarImageDiv = $('#previewCarImageDiv');
+                    $previewCarImageDiv.css('top',pointY - 20);
+                    $previewCarImageDiv.css('left',pointX - 100);
+                });
+                $('.uploaded-image').on('mouseout', function (e) {
+                    $('#previewCarImageDiv').hide();
+                });
             }
         }
     });
 }
 
-function previewCarImage(carImageUrl) {
-    //
+function previewCarImage(e,imageUrl) {
+    var pointX = e.pageX;
+    var pointY = e.pageY;
+    var $previewCarImageDiv = $('#previewCarImageDiv');
+    $previewCarImageDiv.css('top',pointY);
+    $previewCarImageDiv.css('left',pointX);
 }
