@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -139,7 +137,7 @@ public class CarController {
     /**
      * 上传汽车图片
      *
-     * @param file    汽车图片文件
+     * @param file 汽车图片文件
      * @return 上传成功返回图片URL
      */
     @RequestMapping(value = "/uploadImage.ajax", method = RequestMethod.POST)
@@ -167,6 +165,52 @@ public class CarController {
         return result;
     }
 
+    /**
+     * 删除已上传的图片
+     *
+     * @param imageUrl 图片URL
+     * @return 执行结果
+     */
+    @RequestMapping(value = "/deleteImage.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteUploadedImage(String imageUrl) {
+        LOGGER.info("开始删除已上传的图片......");
+        BaseResult result = new BaseResult();
+        if (null != imageUrl && !"".equals(imageUrl.trim())) {
+            String dir = "/data/web/images/car/";    //设定文件保存的目录
+            String filename = parseImageFileName(imageUrl);    //得到上传时的文件名
+            File file = new File(dir + filename);
+            if (file.exists()) {
+                result.setSuccess(file.delete());
+            }
+        }
+        LOGGER.info("删除已上传的图片结束......");
+        return result;
+    }
+
+    /**
+     * 批量删除已上传的图片
+     *
+     * @param imageUrls 图片URL
+     */
+    @RequestMapping(value = "/deleteImages.ajax", method = RequestMethod.POST)
+    @ResponseBody
+    public void deleteUploadedImages(String imageUrls) {
+        LOGGER.info("批量删除已上传的图片......");
+        if (null != imageUrls && !"".equals(imageUrls.trim())) {
+            String[] imageUrlArray = imageUrls.split(",");
+            String dir = "D:/data/web/images/car/";    //设定文件保存的目录
+            for (String imageUrl : imageUrlArray) {
+                String filename = parseImageFileName(imageUrl);
+                File file = new File(dir + filename);
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+        }
+        LOGGER.info("批量删除已上传的图片结束......");
+    }
+
     private String generateImageFileName(String fileName) {
         Calendar calendar = Calendar.getInstance();
         return "car_"
@@ -178,5 +222,13 @@ public class CarController {
                 + calendar.get(Calendar.SECOND)
                 + calendar.get(Calendar.MILLISECOND)
                 + fileName.substring(fileName.lastIndexOf("."));
+    }
+
+    private String parseImageFileName(String imageUrl) {
+        String imageFileName = null;
+        if (null != imageUrl && !"".equals(imageUrl.trim())) {
+            imageFileName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+        }
+        return imageFileName;
     }
 }

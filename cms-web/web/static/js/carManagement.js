@@ -122,7 +122,7 @@ function addCar() {
 
 function clearEditCarForm() {
     $("#editCarDialog").find("#editCarFrom").form("clear");
-    $('#addCarImagePanel').find('div[class="uploaded-image"]').remove();
+    //TODO:删除已选图片
 }
 
 function deleteCarById(event, carId) {
@@ -271,17 +271,17 @@ function editCar(event, carId) {
 
 function queryCars() {
     var $queryCarDiv = $("#queryCarDiv");
-    $('#carDatagrid').datagrid('reload',{
-        params:{
-            number:$queryCarDiv.find("#queryCarItemNumber").textbox('getValue'),
-            operator:$queryCarDiv.find("#queryCarItemOperator").combobox('getValue'),
-            attribution:$queryCarDiv.find("#queryCarItemAttribution").textbox('getValue')
+    $('#carDatagrid').datagrid('reload', {
+        params: {
+            number: $queryCarDiv.find("#queryCarItemNumber").textbox('getValue'),
+            operator: $queryCarDiv.find("#queryCarItemOperator").combobox('getValue'),
+            attribution: $queryCarDiv.find("#queryCarItemAttribution").textbox('getValue')
         }
     });
 }
 
 function uploadCarImage() {
-    $('#uploadCarImageForm').form('submit',{
+    $('#uploadCarImageForm').form('submit', {
         url: "car/uploadImage.ajax",
         onSubmit: function () {
             var $fileObjectList = $("#carImageFile");
@@ -295,36 +295,31 @@ function uploadCarImage() {
             if (jsonResult.success) {
                 var uploadedImageDivHtml = '<div class="uploaded-image">';
                 uploadedImageDivHtml += '<img src="' + jsonResult.message + '" />';
+                uploadedImageDivHtml += '<span>×</span>';
                 uploadedImageDivHtml += '</div>';
                 $('#addCarImage').before(uploadedImageDivHtml);
-                $('.uploaded-image').on('mouseover', function (e) {
-                    var pointX = e.pageX;
-                    var pointY = e.pageY;
-                    var $previewCarImageDiv = $('#previewCarImageDiv');
-                    $previewCarImageDiv.find('img').prop('src',jsonResult.message);
-                    $previewCarImageDiv.css('top',pointY);
-                    $previewCarImageDiv.css('left',pointX);
-                    $previewCarImageDiv.show();
-                });
-                $('.uploaded-image').on('mousemove', function (e) {
-                    var pointX = e.pageX;
-                    var pointY = e.pageY;
-                    var $previewCarImageDiv = $('#previewCarImageDiv');
-                    $previewCarImageDiv.css('top',pointY - 20);
-                    $previewCarImageDiv.css('left',pointX - 100);
-                });
-                $('.uploaded-image').on('mouseout', function (e) {
-                    $('#previewCarImageDiv').hide();
+                $('.uploaded-image').find('span').on('click', function (e) {
+                    var $uploadedImageDiv = $(this).parent();
+                    $.ajax({
+                        url: "car/deleteImage.ajax",
+                        method: "post",
+                        data: {imageUrl: $uploadedImageDiv.find('img').attr('src')},
+                        success: function (result) {
+                            if (result && result.success) {
+                                $uploadedImageDiv.remove();
+                            }
+                        }
+                    });
                 });
             }
         }
     });
 }
 
-function previewCarImage(e,imageUrl) {
+function previewCarImage(e, imageUrl) {
     var pointX = e.pageX;
     var pointY = e.pageY;
     var $previewCarImageDiv = $('#previewCarImageDiv');
-    $previewCarImageDiv.css('top',pointY);
-    $previewCarImageDiv.css('left',pointX);
+    $previewCarImageDiv.css('top', pointY);
+    $previewCarImageDiv.css('left', pointX);
 }
