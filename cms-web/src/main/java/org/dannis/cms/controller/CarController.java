@@ -7,6 +7,7 @@ import org.dannis.cms.query.result.PaginationQueryResult;
 import org.dannis.cms.query.result.SingleQueryResult;
 import org.dannis.cms.result.BaseResult;
 import org.dannis.cms.service.CarService;
+import org.dannis.cms.vo.CarVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -41,10 +43,11 @@ public class CarController {
 
     @RequestMapping(value = "/save.ajax", method = RequestMethod.POST)
     @ResponseBody
-    public BaseResult save(Car car) {
+    public BaseResult save(CarVO vo) {
         LOGGER.info("保存汽车信息");
         BaseResult result = new BaseResult();
         try {
+            Car car = convertToModel(vo);
             car.setCreatedBy(1);
             carService.save(car);
             result.setSuccess(true);
@@ -183,6 +186,7 @@ public class CarController {
             if (file.exists()) {
                 result.setSuccess(file.delete());
             }
+            result.setSuccess(true);
         }
         LOGGER.info("删除已上传的图片结束......");
         return result;
@@ -209,6 +213,28 @@ public class CarController {
             }
         }
         LOGGER.info("批量删除已上传的图片结束......");
+    }
+
+    private Car convertToModel(CarVO vo) {
+        Car car = null;
+        if (null != vo) {
+            car = new Car();
+            car.setId(vo.getId());
+            car.setSeries(vo.getSeries());
+            car.setStructure(vo.getStructure());
+            car.setDisplacement(vo.getDisplacement());
+            car.setEmissionStandard(vo.getEmissionStandard());
+            car.setGearbox(vo.getGearbox());
+//            car.setRegistrationTime(vo.getRegistrationTime());
+            car.setMileage(vo.getMileage());
+            car.setPrice(vo.getPrice());
+            car.setLowestPrice(vo.getLowestPrice());
+            if (null != vo.getImageUrls() && !"".equals(vo.getImageUrls().trim())) {
+                car.setImageUrls(Arrays.asList(vo.getImageUrls().split(",")));
+            }
+            car.setRemark(vo.getRemark());
+        }
+        return car;
     }
 
     private String generateImageFileName(String fileName) {

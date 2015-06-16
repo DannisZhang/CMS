@@ -121,8 +121,7 @@ function addCar() {
 }
 
 function clearEditCarForm() {
-    $("#editCarDialog").find("#editCarFrom").form("clear");
-    //TODO:删除已选图片
+    var $editCarFrom = $("#editCarDialog").find("#editCarFrom");
 }
 
 function deleteCarById(event, carId) {
@@ -181,21 +180,7 @@ function saveCar() {
     $editCarFrom.form("submit", {
         url: "car/save.ajax",
         onSubmit: function () {
-            var number = $editCarFrom.find("input[name='number']").val();
-            if (!number || number.length != 11) {
-                $.messager.alert("错误提示", "请填写11位手机号码", "warning");
-                return false;
-            }
-            var operator = $editCarFrom.find("input[name='operator']").val();
-            if (!operator) {
-                $.messager.alert("错误提示", "请选择运营商", "warning");
-                return false;
-            }
-            var attribution = $editCarFrom.find("input[name='attribution']").val();
-            if (!attribution) {
-                $.messager.alert("错误提示", "请填写手机号码归属地" + attribution, "warning");
-                return false;
-            }
+            //check code
         },
         success: function (result) {
             var jsonResult = $.parseJSON(result);
@@ -208,6 +193,26 @@ function saveCar() {
             }
         }
     });
+}
+
+function exitEditCar() {
+    var $editCarDialog = $('#editCarDialog');
+    var $editCarFrom = $editCarDialog.find('#editCarFrom');
+    $editCarFrom.form("clear");
+    var imageUrls = [];
+    $.each($editCarFrom.find('#addCarImagePanel').find('.uploaded-image').find('img'), function () {
+        imageUrls.push($(this).attr('src'));
+    });
+    if (imageUrls.length > 0) {
+        $.ajax({
+            url: "car/deleteImages.ajax",
+            method: "post",
+            data: {"imageUrls": imageUrls.join(",")}
+        });
+
+        $editCarFrom.find('#addCarImagePanel').find('.uploaded-image').remove();
+    }
+    $editCarDialog.dialog('close');
 }
 
 function viewCarDetail(event, carId) {
