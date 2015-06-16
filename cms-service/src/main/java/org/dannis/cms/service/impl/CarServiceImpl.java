@@ -48,6 +48,9 @@ public class CarServiceImpl implements CarService {
         }
         if (null == car.getId() || -1 == car.getId()) {
             carManager.save(car);
+            if (null != car.getImageUrls() && car.getImageUrls().size() > 0) {
+                carImageManager.saveImages(car.getId(),car.getImageUrls());
+            }
         } else {
             carManager.update(car);
         }
@@ -56,6 +59,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public void delete(Integer id) {
         carManager.delete(id);
+        carImageManager.deleteImages(id);
     }
 
     @Override

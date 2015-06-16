@@ -1,5 +1,6 @@
 package org.dannis.cms.manager;
 
+import org.dannis.cms.common.Constants;
 import org.dannis.cms.dal.db.CarMapper;
 import org.dannis.cms.dal.entity.CarEntity;
 import org.dannis.cms.model.Car;
@@ -28,7 +29,9 @@ public class CarManager {
      * @param car 汽车信息
      */
     public void save(Car car) {
-        carMapper.save(convertToEntity(car));
+        CarEntity entity = convertToEntity(car);
+        carMapper.save(entity);
+        car.setId(entity.getId());
     }
 
     /**
@@ -101,6 +104,7 @@ public class CarManager {
             entity.setLowestPrice(car.getLowestPrice());
             entity.setPriority(car.getPriority());
             entity.setRemark(car.getRemark());
+            entity.setStatus(Constants.ACTIVE);
             entity.setCreatedBy(car.getCreatedBy());
             entity.setCreatedOn(car.getCreatedOn());
             entity.setLastModifiedBy(car.getLastModifiedBy());
@@ -125,7 +129,7 @@ public class CarManager {
         Car car = null;
         if (entity != null) {
             car = new Car();
-            car.setId(car.getId());
+            car.setId(entity.getId());
             if (entity.getBrandId() != null) {
                 CarBrand brand = new CarBrand();
                 brand.setId(entity.getBrandId());

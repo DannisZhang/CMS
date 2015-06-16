@@ -33,8 +33,8 @@ public class CarImageManager {
                 entity.setImageUrl(imageUrl);
                 images.add(entity);
             }
+            carImageMapper.saveImages(images);
         }
-        carImageMapper.saveImages(images);
     }
 
     /**

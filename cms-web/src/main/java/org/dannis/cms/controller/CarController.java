@@ -2,6 +2,8 @@ package org.dannis.cms.controller;
 
 import org.apache.commons.io.FileUtils;
 import org.dannis.cms.model.Car;
+import org.dannis.cms.model.CarBrand;
+import org.dannis.cms.model.CarType;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
 import org.dannis.cms.query.result.SingleQueryResult;
@@ -80,6 +82,7 @@ public class CarController {
         try {
             if (null != id) {
                 carService.delete(id);
+                result.setSuccess(true);
                 result.setMessage("删除汽车信息成功");
             } else {
                 result.setSuccess(false);
@@ -220,6 +223,12 @@ public class CarController {
         if (null != vo) {
             car = new Car();
             car.setId(vo.getId());
+            CarType type = new CarType();
+            type.setId(1);
+            car.setType(type);
+            CarBrand brand = new CarBrand();
+            brand.setId(1);
+            car.setBrand(brand);
             car.setSeries(vo.getSeries());
             car.setStructure(vo.getStructure());
             car.setDisplacement(vo.getDisplacement());

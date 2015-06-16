@@ -14,37 +14,33 @@ function initCarDatagrid() {
     var columns = [
         [
             {field: 'ck', checkbox: true},
-            {field: "number", title: "号码", align: "center", width: 120, fixed: true},
-            {field: "operator", title: "运营商", align: "center", width: 100, fixed: true},
-            {field: "attribution", title: "归属地", align: "center", width: 80, fixed: true},
+            {field: "type", title: "车型", align: "center", width: 100, fixed: true},
+            {field: "brand", title: "品牌", align: "center", width: 100, fixed: true},
+            {field: "series", title: "车系", align: "center", width: 80, fixed: true},
+            {field: "structure", title: "车身结构", align: "center", width: 80, fixed: true},
+            {field: "displacement", title: "排量", align: "center", width: 50, fixed: true},
+            {field: "emissionStandard", title: "排放标准", align: "center", width: 80, fixed: true},
+            {field: "gearbox", title: "变速箱", align: "center", width: 80, fixed: true},
+            {field: "mileage", title: "表显里程", align: "center", width: 80, fixed: true},
+            {field: "registrationTime", title: "上牌时间", align: "center", width: 80, fixed: true},
             {
-                field: "wholesalePrice",
-                title: "批发价",
+                field: "price",
+                title: "价格",
                 align: "center",
                 width: 80,
                 fixed: true,
                 formatter: function (value, row, index) {
-                    return "￥" + row.wholesalePrice;
+                    return "￥" + row.price + '万';
                 }
             },
             {
-                field: "floorPrice",
-                title: "底价",
+                field: "lowestPrice",
+                title: "最低价格",
                 align: "center",
                 width: 80,
                 fixed: true,
                 formatter: function (value, row, index) {
-                    return "￥" + row.floorPrice;
-                }
-            },
-            {
-                field: "balance",
-                title: "含话费",
-                align: "center",
-                width: 80,
-                fixed: true,
-                formatter: function (value, row, index) {
-                    return "￥" + row.balance;
+                    return "￥" + row.lowestPrice + '万';
                 }
             },
             {field: "priority", title: "优先级", align: "center", width: 80, fixed: true},
@@ -126,7 +122,7 @@ function clearEditCarForm() {
 
 function deleteCarById(event, carId) {
     event.stopPropagation();
-    $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
+    $.messager.confirm("确认删除", "请确认是否删除汽车信息？", function (r) {
         if (r) {
             $.ajax({
                 url: "car/deleteById.ajax",
@@ -179,7 +175,13 @@ function saveCar() {
     var $editCarFrom = $editCarDialog.find("#editCarFrom");
     $editCarFrom.form("submit", {
         url: "car/save.ajax",
-        onSubmit: function () {
+        onSubmit: function (param) {
+            var imageUrls = [];
+            $.each($editCarFrom.find('#addCarImagePanel').find('.uploaded-image').find('img'), function () {
+                imageUrls.push($(this).attr('src'));
+            });
+            param.imageUrls = imageUrls.join(',');
+            console.log(param);
             //check code
         },
         success: function (result) {

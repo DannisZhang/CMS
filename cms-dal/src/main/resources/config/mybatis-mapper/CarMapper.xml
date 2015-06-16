@@ -10,7 +10,6 @@
         <result property="displacement" column="displacement" jdbcType="VARCHAR"/>
         <result property="emissionStandard" column="emission_standard" jdbcType="VARCHAR"/>
         <result property="gearbox" column="gearbox" jdbcType="VARCHAR"/>
-        <result property="age" column="age" jdbcType="INTEGER"/>
         <result property="mileage" column="mileage" jdbcType="INTEGER"/>
         <result property="registrationTime" column="registration_time" jdbcType="INTEGER"/>
         <result property="price" column="price" jdbcType="DOUBLE"/>
@@ -25,15 +24,15 @@
     </resultMap>
 
     <sql id="allColumns">
-		id,brand_id,type_id,series,structure,displacement,emission_standard,gearbox,age,mileage,registration_time,
+		id,brand_id,type_id,series,structure,displacement,emission_standard,gearbox,mileage,registration_time,
 		price,lowest_price,priority,remark,status,created_on,created_by,last_modified_on,last_modified_by
 	</sql>
 
-    <insert id="save" parameterType="org.dannis.cms.dal.entity.CarEntity">
-		INSERT INTO t_cms_car(brand_id,type_id,series,structure,displacement,emission_standard,gearbox,age,mileage,
+    <insert id="save" parameterType="org.dannis.cms.dal.entity.CarEntity" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_cms_car(brand_id,type_id,series,structure,displacement,emission_standard,gearbox,mileage,
 		registration_time,price,lowest_price,priority,remark,status,created_by)
-		VALUES (#{brandId},#{typeId},#{series},#{structure},#{displacement},#{emissionStandard},#{gearbox},#{age},
-		#{mileage},#{registrationTime},#{price},#{lowestPrice},#{priority},#{remark},#{status},#{createdBy})
+		VALUES (#{brandId},#{typeId},#{series},#{structure},#{displacement},#{emissionStandard},#{gearbox},#{mileage},
+		#{registrationTime},#{price},#{lowestPrice},#{priority},#{remark},#{status},#{createdBy})
 	</insert>
 
     <delete id="delete" parameterType="java.lang.Integer">
@@ -44,9 +43,9 @@
     <update id="update" parameterType="org.dannis.cms.dal.entity.CarEntity">
         UPDATE t_cms_car
         SET brand_id=#{brandId},type_id=#{typeId},series=#{series},structure=#{structure},displacement=#{displacement},
-        emission_standard=#{emissionStandard},gearbox=#{gearbox},age=#{age},mileage=#{mileage},
-        registration_time=#{registrationTime},price=#{price},lowest_price=#{lowestPrice},priority+#{priority},
-        remark=#{remark},status=#{status},last_modified_by=#{lastModifiedBy}
+        emission_standard=#{emissionStandard},gearbox=#{gearbox},mileage=#{mileage},registration_time=#{registrationTime},
+        price=#{price},lowest_price=#{lowestPrice},priority=#{priority},remark=#{remark},status=#{status},
+        last_modified_by=#{lastModifiedBy}
         WHERE id = #{id}
     </update>
 

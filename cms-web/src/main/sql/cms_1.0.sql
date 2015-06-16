@@ -65,6 +65,7 @@ CREATE TABLE `t_cms_car` (
   `price` DOUBLE(10,2) NOT NULL DEFAULT 0.00 COMMENT '售价',
   `lowest_price` DOUBLE(10,2) COMMENT '最低售价',
   `remark` VARCHAR(128) NULL COMMENT '备注',
+  `priority` INT(11) NULL COMMENT '优先级',
   `status` VARCHAR(16) NOT NULL DEFAULT 'active' COMMENT '状态',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `created_by` INT(11) NOT NULL DEFAULT 0 COMMENT '创建人',
@@ -77,5 +78,5 @@ CREATE TABLE `t_cms_car` (
 DROP TABLE IF EXISTS `t_cms_car_image`;
 CREATE TABLE `t_cms_car_image` (
   `car_id` INT(11) NOT NULL COMMENT '汽车ID',
-  `image_url` INT(11) NOT NULL COMMENT '图片URL'
+  `image_url` VARCHAR(256) NOT NULL COMMENT '图片URL'
 )ENGINE = MyISAM DEFAULT CHARSET = utf8 COLLATE = utf8_bin COMMENT '汽车图片表';
