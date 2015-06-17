@@ -16,8 +16,8 @@
     </sql>
 
     <insert id="save" parameterType="org.dannis.cms.dal.entity.CarTypeEntity">
-        INSERT INTO t_cms_car_type(name,english_name,created_by)
-        VALUES (#{name},#{englishName},#{createdBy})
+        INSERT INTO t_cms_car_type(name,english_name,created_by,created_on)
+        VALUES (#{name},#{englishName},#{createdBy},now())
     </insert>
 
     <delete id="delete" parameterType="java.lang.Integer">

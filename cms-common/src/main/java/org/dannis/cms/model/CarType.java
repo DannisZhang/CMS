@@ -1,5 +1,7 @@
 package org.dannis.cms.model;
 
+import java.util.Date;
+
 /**
  * @author deng.zhang
  * @version 1.0.0
@@ -19,9 +21,21 @@ public class CarType {
      */
     private String englishName;
     /**
-     * 车型简称
+     * 创建时间
      */
-    private String shortName;
+    private Date createdOn;
+    /**
+     * 创建人
+     */
+    private Integer createdBy;
+    /**
+     * 最近修改时间
+     */
+    private Date lastModifiedOn;
+    /**
+     * 最近修改人
+     */
+    private Integer lastModifiedBy;
 
     public Integer getId() {
         return id;
@@ -47,11 +61,35 @@ public class CarType {
         this.englishName = englishName;
     }
 
-    public String getShortName() {
-        return shortName;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getLastModifiedOn() {
+        return lastModifiedOn;
+    }
+
+    public void setLastModifiedOn(Date lastModifiedOn) {
+        this.lastModifiedOn = lastModifiedOn;
+    }
+
+    public Integer getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(Integer lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 }

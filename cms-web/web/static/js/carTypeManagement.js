@@ -11,40 +11,8 @@ function initCarTypeDatagrid() {
     var columns = [
         [
             {field: 'ck', checkbox: true},
-            {field: "number", title: "号码", align: "center", width: 120, fixed: true},
-            {field: "operator", title: "运营商", align: "center", width: 100, fixed: true},
-            {field: "attribution", title: "归属地", align: "center", width: 80, fixed: true},
-            {
-                field: "wholesalePrice",
-                title: "批发价",
-                align: "center",
-                width: 80,
-                fixed: true,
-                formatter: function (value, row, index) {
-                    return "￥" + row.wholesalePrice;
-                }
-            },
-            {
-                field: "floorPrice",
-                title: "底价",
-                align: "center",
-                width: 80,
-                fixed: true,
-                formatter: function (value, row, index) {
-                    return "￥" + row.floorPrice;
-                }
-            },
-            {
-                field: "balance",
-                title: "含话费",
-                align: "center",
-                width: 80,
-                fixed: true,
-                formatter: function (value, row, index) {
-                    return "￥" + row.balance;
-                }
-            },
-            {field: "priority", title: "优先级", align: "center", width: 80, fixed: true},
+            {field: "name", title: "车型名称", align: "center", width: 120, fixed: true},
+            {field: "englishName", title: "英文名称", align: "center", width: 100, fixed: true},
             {field: "remark", title: "备注", align: "center", width: 200},
             {
                 field: "id", title: "操作", align: "center", width: 150, fixed: true,
@@ -62,13 +30,13 @@ function initCarTypeDatagrid() {
     ];
 
     var toolbar = [{
-        text: '添加汽车',
+        text: '添加车型',
         iconCls: 'icon-add',
         handler: function () {
-            addCar();
+            addCarType();
         }
     }, '-', {
-        text: '删除汽车',
+        text: '删除车型',
         iconCls: 'icon-remove',
         handler: function () {
             deleteCars();
@@ -76,7 +44,7 @@ function initCarTypeDatagrid() {
     }];
 
     $("#carTypeDatagrid").datagrid({
-        url: "car/queryByPage.ajax",
+        url: "carType/queryByPage.ajax",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -102,19 +70,19 @@ function initCarTypeDialog() {
     $.parser.parse("#carTypeManagementPage");
     $("#editCarTypeDialog").dialog({
         iconCls: "icon-edit",
-        title: "添加汽车",
-        width: 650,
-        height: 600,
+        title: "添加车型",
+        width: 580,
+        height: 480,
         closed: true,
         cache: false,
         modal: true,
-        buttons: "#carDialogButtons"
+        buttons: "#carTypeDialogButtons"
     });
 }
 
 function addCarType() {
     clearEditCarTypeForm();
-    $("#editCarTypeDialog").dialog({title: "添加汽车"}).dialog("open");
+    $("#editCarTypeDialog").dialog({title: "添加车型"}).dialog("open");
 }
 
 function clearEditCarTypeForm() {
@@ -172,33 +140,19 @@ function deleteCarTypes() {
 }
 
 function saveCarType() {
-    var $editCarDialog = $("#editCarDialog");
-    var $editCarFrom = $editCarDialog.find("#editCarFrom");
-    $editCarFrom.form("submit", {
-        url: "car/save.ajax",
+    var $editCarTypeDialog = $("#editCarTypeDialog");
+    var $editCarTypeFrom = $editCarTypeDialog.find("#editCarTypeFrom");
+    $editCarTypeFrom.form("submit", {
+        url: "carType/save.ajax",
         onSubmit: function () {
-            var number = $editCarFrom.find("input[name='number']").val();
-            if (!number || number.length != 11) {
-                $.messager.alert("错误提示", "请填写11位手机号码", "warning");
-                return false;
-            }
-            var operator = $editCarFrom.find("input[name='operator']").val();
-            if (!operator) {
-                $.messager.alert("错误提示", "请选择运营商", "warning");
-                return false;
-            }
-            var attribution = $editCarFrom.find("input[name='attribution']").val();
-            if (!attribution) {
-                $.messager.alert("错误提示", "请填写手机号码归属地" + attribution, "warning");
-                return false;
-            }
+            //check
         },
         success: function (result) {
             var jsonResult = $.parseJSON(result);
             if (jsonResult.success) {
                 $.messager.alert("添加成功", jsonResult.message);
-                $editCarDialog.dialog('close');
-                $('#carDatagrid').datagrid('reload');
+                $editCarTypeFrom.dialog('close');
+                $('#carTypeDatagrid').datagrid('reload');
             } else {
                 $.messager.alert("添加失败", jsonResult.message, "error");
             }

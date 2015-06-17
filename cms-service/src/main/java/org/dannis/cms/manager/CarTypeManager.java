@@ -23,10 +23,10 @@ public class CarTypeManager {
     /**
      * 保存车型信息
      *
-     * @param brand 车型信息
+     * @param type 车型信息
      */
-    public void save(CarType brand) {
-        carTypeMapper.save(convertToEntity(brand));
+    public void save(CarType type) {
+        carTypeMapper.save(convertToEntity(type));
     }
 
     /**
@@ -41,10 +41,10 @@ public class CarTypeManager {
     /**
      * 修改车型信息
      *
-     * @param brand 车型信息
+     * @param type 车型信息
      */
-    public void update(CarType brand) {
-        carTypeMapper.update(convertToEntity(brand));
+    public void update(CarType type) {
+        carTypeMapper.update(convertToEntity(type));
     }
 
     /**
@@ -77,38 +77,46 @@ public class CarTypeManager {
         return carTypeMapper.queryTotal(params);
     }
 
-    private CarTypeEntity convertToEntity(CarType brand) {
+    private CarTypeEntity convertToEntity(CarType type) {
         CarTypeEntity entity = null;
-        if (brand != null) {
+        if (type != null) {
             entity = new CarTypeEntity();
-            entity.setId(brand.getId());
-            entity.setName(brand.getName());
-            entity.setEnglishName(brand.getEnglishName());
+            entity.setId(type.getId());
+            entity.setName(type.getName());
+            entity.setEnglishName(type.getEnglishName());
+            entity.setCreatedBy(type.getCreatedBy());
+            entity.setCreatedOn(type.getCreatedOn());
+            entity.setLastModifiedBy(type.getLastModifiedBy());
+            entity.setLastModifiedOn(type.getLastModifiedOn());
         }
 
         return entity;
     }
 
     private List<CarType> convertToModels(List<CarTypeEntity> entities) {
-        List<CarType> brands = new ArrayList<>();
+        List<CarType> types = new ArrayList<>();
         if (null != entities && entities.size() > 0) {
             for (CarTypeEntity entity : entities) {
-                brands.add(convertToModel(entity));
+                types.add(convertToModel(entity));
             }
         }
 
-        return brands;
+        return types;
     }
 
     private CarType convertToModel(CarTypeEntity entity) {
-        CarType brand = null;
+        CarType type = null;
         if (entity != null) {
-            brand = new CarType();
-            brand.setId(entity.getId());
-            brand.setName(entity.getName());
-            brand.setEnglishName(entity.getEnglishName());
+            type = new CarType();
+            type.setId(entity.getId());
+            type.setName(entity.getName());
+            type.setEnglishName(entity.getEnglishName());
+            type.setCreatedBy(entity.getCreatedBy());
+            type.setCreatedOn(entity.getCreatedOn());
+            type.setLastModifiedBy(entity.getLastModifiedBy());
+            type.setLastModifiedOn(entity.getLastModifiedOn());
         }
 
-        return brand;
+        return type;
     }
 }

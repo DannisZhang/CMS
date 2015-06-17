@@ -43,6 +43,12 @@ public class CarController {
     @Autowired
     private CarService carService;
 
+    /**
+     * 保存汽车信息
+     *
+     * @param vo VO对象
+     * @return 执行结果
+     */
     @RequestMapping(value = "/save.ajax", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult save(CarVO vo) {
