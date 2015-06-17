@@ -6,6 +6,8 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="englishName" column="english_name" jdbcType="VARCHAR"/>
         <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="logoUrl" column="logo_url" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="createdOn" column="created_on" jdbcType="TIMESTAMP"/>
         <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
         <result property="lastModifiedOn" column="last_modified_on" jdbcType="TIMESTAMP"/>
@@ -13,12 +15,12 @@
     </resultMap>
 
     <sql id="allColumns">
-		id,name,english_name,country,created_on,created_by,last_modified_on,last_modified_by
+		id,name,english_name,country,logo_url,remark,created_on,created_by,last_modified_on,last_modified_by
 	</sql>
 
     <insert id="save" parameterType="org.dannis.cms.dal.entity.CarBrandEntity">
-		INSERT INTO t_cms_car_brand(name,english_name,country,created_by)
-		VALUES (#{name},#{englishName},#{country},#{createdBy})
+		INSERT INTO t_cms_car_brand(name,english_name,country,logo_url,remark,created_by,created_on)
+		VALUES (#{name},#{englishName},#{country},#{logoUrl},#{remark},#{createdBy},now())
 	</insert>
 
     <delete id="delete" parameterType="java.lang.Integer">
@@ -28,7 +30,8 @@
 
     <update id="update" parameterType="org.dannis.cms.dal.entity.CarBrandEntity">
         UPDATE t_cms_car_brand
-        SET name=#{name},english_name=#{englishName},country=#{country},last_modified_by=#{lastModifiedBy}
+        SET name=#{name},english_name=#{englishName},country=#{country},logo_url=#{logo_url},remark=#{remark},
+        last_modified_by=#{lastModifiedBy},last_modified_on=now()
         WHERE id = #{id}
     </update>
 

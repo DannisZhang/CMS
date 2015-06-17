@@ -16,6 +16,10 @@ public class CarTypeEntity extends AbstractEntity {
      * 英语名称
      */
     private String englishName;
+    /**
+     * 备注
+     */
+    private String remark;
 
     public String getName() {
         return name;
@@ -31,5 +35,13 @@ public class CarTypeEntity extends AbstractEntity {
 
     public void setEnglishName(String englishName) {
         this.englishName = englishName;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

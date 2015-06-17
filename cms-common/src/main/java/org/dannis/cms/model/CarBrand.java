@@ -25,6 +25,10 @@ public class CarBrand {
      */
     private String country;
     /**
+     * LOGO URL
+     */
+    private String logoUrl;
+    /**
      * 备注
      */
     private String remark;
@@ -59,6 +63,14 @@ public class CarBrand {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 
     public String getRemark() {

@@ -14,7 +14,19 @@ function initCarDatagrid() {
     var columns = [
         [
             {field: 'ck', checkbox: true},
-            {field: "type", title: "车型", align: "center", width: 100, fixed: true},
+            {
+                field: "type",
+                title: "车型",
+                align: "center",
+                width: 100,
+                fixed: true,
+                formatter: function (value, row, index) {
+                    if (value) {
+                        return value.name;
+                    }
+                    return '';
+                }
+            },
             {field: "brand", title: "品牌", align: "center", width: 100, fixed: true},
             {field: "series", title: "车系", align: "center", width: 80, fixed: true},
             {field: "structure", title: "车身结构", align: "center", width: 80, fixed: true},
@@ -75,7 +87,7 @@ function initCarDatagrid() {
     }];
 
     $("#carDatagrid").datagrid({
-        url: "car/queryByPage.ajax",
+        url: "car/queryByPage.json",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -125,7 +137,7 @@ function deleteCarById(event, carId) {
     $.messager.confirm("确认删除", "请确认是否删除汽车信息？", function (r) {
         if (r) {
             $.ajax({
-                url: "car/deleteById.ajax",
+                url: "car/deleteById.json",
                 method: "post",
                 data: {"id": carId},
                 success: function (result) {
@@ -154,7 +166,7 @@ function deleteCars() {
                 ids.push(row.id);
             });
             $.ajax({
-                url: "car/deleteByIds.ajax",
+                url: "car/deleteByIds.json",
                 method: "post",
                 data: {"ids": ids.join(",")},
                 success: function (result) {
@@ -174,7 +186,7 @@ function saveCar() {
     var $editCarDialog = $("#editCarDialog");
     var $editCarFrom = $editCarDialog.find("#editCarFrom");
     $editCarFrom.form("submit", {
-        url: "car/save.ajax",
+        url: "car/save.json",
         onSubmit: function (param) {
             var imageUrls = [];
             $.each($editCarFrom.find('#addCarImagePanel').find('.uploaded-image').find('img'), function () {
@@ -207,7 +219,7 @@ function exitEditCar() {
     });
     if (imageUrls.length > 0) {
         $.ajax({
-            url: "car/deleteImages.ajax",
+            url: "car/deleteImages.json",
             method: "post",
             data: {"imageUrls": imageUrls.join(",")}
         });
@@ -222,7 +234,7 @@ function viewCarDetail(event, carId) {
     clearEditCarForm();
     var $editCarDialog = $("#editCarDialog").dialog({title: "查看号码"});
     $.ajax({
-        url: "car/queryById.ajax",
+        url: "car/queryById.json",
         method: "post",
         data: {id: carId},
         dataType: "json",
@@ -252,7 +264,7 @@ function editCar(event, carId) {
     clearEditCarForm();
     var $editCarDialog = $("#editCarDialog").dialog({title: "修改号码"});
     $.ajax({
-        url: "car/queryById.ajax",
+        url: "car/queryById.json",
         method: "post",
         data: {id: carId},
         dataType: "json",
@@ -289,7 +301,7 @@ function queryCars() {
 
 function uploadCarImage() {
     $('#uploadCarImageForm').form('submit', {
-        url: "car/uploadImage.ajax",
+        url: "car/uploadImage.json",
         onSubmit: function () {
             var $fileObjectList = $("#carImageFile");
             if ($fileObjectList.length > 0 && $fileObjectList[0].files.length > 0) {
@@ -308,7 +320,7 @@ function uploadCarImage() {
                 $('.uploaded-image').find('span').on('click', function (e) {
                     var $uploadedImageDiv = $(this).parent();
                     $.ajax({
-                        url: "car/deleteImage.ajax",
+                        url: "car/deleteImage.json",
                         method: "post",
                         data: {imageUrl: $uploadedImageDiv.find('img').attr('src')},
                         success: function (result) {

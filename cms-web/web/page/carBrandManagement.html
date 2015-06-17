@@ -1,7 +1,4 @@
 <div class="easyui-layout" id="carBrandManagementPage" style="overflow: visible" split="true" fit="true">
-    <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
-
-    </div>
     <div region="center" border="false" style="overflow: visible;">
         <table id="carBrandDatagrid" fit="true">
         </table>
@@ -12,77 +9,41 @@
                 <div class="form-title">基本信息</div>
                 <div class="form-content">
                     <div class="form-item">
-                        <div style="width:60px;">汽车型号：</div>
+                        <div style="width:60px;">品牌名称：</div>
                         <div>
-                            <select class="easyui-combobox" name="type" style="width:120px;"
-                                    data-options="panelMaxHeight:90,prompt:'请选择车型'">
-                                <option value="car">轿车</option>
-                                <option value="SUV">SUV</option>
-                                <option value="越野">越野</option>
-                                <option value="superCar">跑车</option>
+                            <input type="text" class="easyui-textbox" name="name" style="width: 200px;"/>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:60px;">英文名称：</div>
+                        <div>
+                            <input type="text" class="easyui-textbox" name="englishName" style="width: 200px;"/>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div style="width:60px;">所属国家：</div>
+                        <div>
+                            <select class="easyui-combobox" name="country" style="width:120px;"
+                                    data-options="panelMaxHeight:90,prompt:'请选择国家'">
+                                <option value="China">中国</option>
+                                <option value="German">德国</option>
+                                <option value="Japan">日本</option>
+                                <option value="America">美国</option>
+                                <option value="England">英国</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-item">
-                        <div class="form-item-horizontal">
-                            <div style="width:60px;">汽车品牌：</div>
-                            <div>
-                                <select class="easyui-combobox" name="brand" style="width:120px;"
-                                        data-options="panelMaxHeight:90,prompt:'请选择品牌'">
-                                    <option value="Das">大众</option>
-                                    <option value="Audi">奥迪</option>
-                                    <option value="Honda">本田</option>
-                                    <option value="Toyota">丰田</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-item-horizontal">
-                            <div style="width:60px;">车系：</div>
-                            <div>
-                                <select class="easyui-combobox" name="series" style="width:120px;"
-                                        data-options="panelMaxHeight:90,prompt:'请选择车系'">
-                                    <option value="Tiguan">途观</option>
-                                    <option value="A4L">A4L</option>
-                                    <option value="A6L">A6L</option>
-                                    <option value="凯美瑞">凯美瑞</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div class="form-item-horizontal">
-                            <div style="width:60px;">车身结构：</div>
-                            <div>
-                                <select class="easyui-combobox" name="structure" style="width:120px;"
-                                        data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
-                                    <option value="two">两厢</option>
-                                    <option value="three">三厢</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-item-horizontal">
-                            <div style="width:60px;">变速箱：</div>
-                            <div>
-                                <select class="easyui-combobox" name="gearbox" style="width:120px;"
-                                        data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
-                                    <option value="手动">手动</option>
-                                    <option value="自动">自动</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-item">
-                        <div style="width:60px;">优先级：</div>
+                        <div style="width:60px;">品牌LOGO：</div>
                         <div>
-                            <input type="text" class="easyui-numberbox" name="priority" style="width:120px;"
-                                   data-options="min:0,max:9999" value="9999"/>
+                            <input type="text" class="easyui-textbox" name="logoUrl" style="width: 200px;"/>
                         </div>
                     </div>
                     <div class="form-item">
                         <div style="width:60px;">备注：</div>
                         <div>
                             <input type="text" class="easyui-textbox" name="remark"
-                                   data-options="multiline:true" style="height: 50px;width: 460px;"/>
+                                   data-options="multiline:true" style="height: 50px;width: 380px;"/>
                         </div>
                     </div>
                 </div>

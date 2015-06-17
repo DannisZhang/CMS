@@ -4,6 +4,8 @@ import org.dannis.cms.model.CarType;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
 
+import java.util.List;
+
 /**
  * 车型服务类
  *
@@ -48,4 +50,10 @@ public interface CarTypeService {
      * @return 车型信息列表
      */
     PaginationQueryResult<CarType> queryByPage(QueryParams queryParams);
+
+    /**
+     * 查询所有车型
+     * @return 车型列表
+     */
+    List<CarType> queryAll();
 }

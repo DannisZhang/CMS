@@ -77,6 +77,14 @@ public class CarTypeManager {
         return carTypeMapper.queryTotal(params);
     }
 
+    /**
+     * 查询所有车型
+     * @return 车型列表
+     */
+    public List<CarType> queryAll() {
+        return convertToModels(carTypeMapper.queryAll());
+    }
+
     private CarTypeEntity convertToEntity(CarType type) {
         CarTypeEntity entity = null;
         if (type != null) {
@@ -84,6 +92,7 @@ public class CarTypeManager {
             entity.setId(type.getId());
             entity.setName(type.getName());
             entity.setEnglishName(type.getEnglishName());
+            entity.setRemark(type.getRemark());
             entity.setCreatedBy(type.getCreatedBy());
             entity.setCreatedOn(type.getCreatedOn());
             entity.setLastModifiedBy(type.getLastModifiedBy());
@@ -111,6 +120,7 @@ public class CarTypeManager {
             type.setId(entity.getId());
             type.setName(entity.getName());
             type.setEnglishName(entity.getEnglishName());
+            type.setRemark(entity.getRemark());
             type.setCreatedBy(entity.getCreatedBy());
             type.setCreatedOn(entity.getCreatedOn());
             type.setLastModifiedBy(entity.getLastModifiedBy());

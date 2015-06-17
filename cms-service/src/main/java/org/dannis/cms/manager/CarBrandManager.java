@@ -84,6 +84,8 @@ public class CarBrandManager {
             entity.setId(brand.getId());
             entity.setName(brand.getName());
             entity.setEnglishName(brand.getEnglishName());
+            entity.setLogoUrl(brand.getLogoUrl());
+            entity.setRemark(brand.getRemark());
         }
 
         return entity;
@@ -107,6 +109,8 @@ public class CarBrandManager {
             brand.setId(entity.getId());
             brand.setName(entity.getName());
             brand.setEnglishName(entity.getEnglishName());
+            brand.setLogoUrl(entity.getLogoUrl());
+            brand.setRemark(entity.getRemark());
         }
 
         return brand;

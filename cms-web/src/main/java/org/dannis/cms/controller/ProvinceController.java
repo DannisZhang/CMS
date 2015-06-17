@@ -28,7 +28,7 @@ public class ProvinceController {
      *
      * @return 省份列表
      */
-    @RequestMapping(value = "/queryAll.ajax")
+    @RequestMapping(value = "/queryAll.json")
     @ResponseBody
     public List<Province> queryAllProvinces() {
         return provinceService.queryAllProvinces();

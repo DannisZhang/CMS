@@ -44,7 +44,7 @@ function initCarTypeDatagrid() {
     }];
 
     $("#carTypeDatagrid").datagrid({
-        url: "carType/queryByPage.ajax",
+        url: "carType/queryByPage.json",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -94,7 +94,7 @@ function deleteCarTypeById(event, carId) {
     $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
         if (r) {
             $.ajax({
-                url: "car/deleteById.ajax",
+                url: "car/deleteById.json",
                 method: "post",
                 data: {"id": carId},
                 success: function (result) {
@@ -123,7 +123,7 @@ function deleteCarTypes() {
                 ids.push(row.id);
             });
             $.ajax({
-                url: "car/deleteByIds.ajax",
+                url: "car/deleteByIds.json",
                 method: "post",
                 data: {"ids": ids.join(",")},
                 success: function (result) {
@@ -143,7 +143,7 @@ function saveCarType() {
     var $editCarTypeDialog = $("#editCarTypeDialog");
     var $editCarTypeFrom = $editCarTypeDialog.find("#editCarTypeFrom");
     $editCarTypeFrom.form("submit", {
-        url: "carType/save.ajax",
+        url: "carType/save.json",
         onSubmit: function () {
             //check
         },
@@ -151,7 +151,7 @@ function saveCarType() {
             var jsonResult = $.parseJSON(result);
             if (jsonResult.success) {
                 $.messager.alert("添加成功", jsonResult.message);
-                $editCarTypeFrom.dialog('close');
+                $editCarTypeDialog.dialog('close');
                 $('#carTypeDatagrid').datagrid('reload');
             } else {
                 $.messager.alert("添加失败", jsonResult.message, "error");
@@ -165,7 +165,7 @@ function editCarType(event, carId) {
     clearEditCarForm();
     var $editCarDialog = $("#editCarDialog").dialog({title: "修改号码"});
     $.ajax({
-        url: "car/queryById.ajax",
+        url: "car/queryById.json",
         method: "post",
         data: {id: carId},
         dataType: "json",

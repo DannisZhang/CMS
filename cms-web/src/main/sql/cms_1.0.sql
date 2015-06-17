@@ -26,6 +26,7 @@ CREATE TABLE `t_cms_car_brand` (
   `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `name` VARCHAR(128) NOT NULL COMMENT '品牌名称',
   `english_name` VARCHAR(128) COMMENT '英文名称',
+  `logo_url` VARCHAR(128) COMMENT 'LOGO URL',
   `country` VARCHAR(128) COMMENT '所属国家',
   `remark` VARCHAR(128) NULL COMMENT '备注',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

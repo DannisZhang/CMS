@@ -5,6 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="englishName" column="english_name" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="createdOn" column="created_on" jdbcType="TIMESTAMP"/>
         <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
         <result property="lastModifiedOn" column="last_modified_on" jdbcType="TIMESTAMP"/>
@@ -12,12 +13,12 @@
     </resultMap>
 
     <sql id="allColumns">
-        id,name,english_name,created_on,created_by,last_modified_on,last_modified_by
+        id,name,english_name,remark,created_on,created_by,last_modified_on,last_modified_by
     </sql>
 
     <insert id="save" parameterType="org.dannis.cms.dal.entity.CarTypeEntity">
-        INSERT INTO t_cms_car_type(name,english_name,created_by,created_on)
-        VALUES (#{name},#{englishName},#{createdBy},now())
+        INSERT INTO t_cms_car_type(name,english_name,remark,created_by,created_on)
+        VALUES (#{name},#{englishName},#{remark},#{createdBy},now())
     </insert>
 
     <delete id="delete" parameterType="java.lang.Integer">
@@ -27,7 +28,7 @@
 
     <update id="update" parameterType="org.dannis.cms.dal.entity.CarTypeEntity">
         UPDATE t_cms_car_type
-        SET name=#{name},english_name=#{englishName},last_modified_by=#{lastModifiedBy}
+        SET name=#{name},english_name=#{englishName},remark=#{remark},last_modified_by=#{lastModifiedBy}
         WHERE id = #{id}
     </update>
 
@@ -56,5 +57,11 @@
         <if test="name != null and name != ''">
             AND name = #{name}
         </if>
+    </select>
+
+    <select id="queryAll" resultMap="carTypeMap">
+        SELECT
+        <include refid="allColumns"/>
+        FROM t_cms_car_type
     </select>
 </mapper>

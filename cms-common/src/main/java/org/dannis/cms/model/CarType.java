@@ -21,6 +21,10 @@ public class CarType {
      */
     private String englishName;
     /**
+     * 备注
+     */
+    private String remark;
+    /**
      * 创建时间
      */
     private Date createdOn;
@@ -59,6 +63,14 @@ public class CarType {
 
     public void setEnglishName(String englishName) {
         this.englishName = englishName;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Date getCreatedOn() {

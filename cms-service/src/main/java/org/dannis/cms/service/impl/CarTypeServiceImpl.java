@@ -8,6 +8,8 @@ import org.dannis.cms.service.CarTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author deng.zhang
  * @version 1.0.0
@@ -52,5 +54,10 @@ public class CarTypeServiceImpl implements CarTypeService {
             result.setTotal(carTypeManager.queryTotal(queryParams.getParams()));
         }
         return result;
+    }
+
+    @Override
+    public List<CarType> queryAll() {
+        return carTypeManager.queryAll();
     }
 }

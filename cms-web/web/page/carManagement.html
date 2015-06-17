@@ -3,12 +3,14 @@
     <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
         <form id="queryCarForm">
             车型：
-            <select class="easyui-combobox" id="queryCarItemType" style="width:120px;"
-                    data-options="prompt:'请选择车型'">
-                <option value="car">轿车</option>
-                <option value="SUV">SUV</option>
-                <option value="越野">越野</option>
-                <option value="superCar">跑车</option>
+            <select class="easyui-combobox" name="type" style="width:120px;"
+                    data-options="
+                                    url:'carType/queryAll.json',
+                                    method:'get',
+                                    valueField:'id',
+                                    textField:'name',
+                                    panelHeight:'auto',
+                                    prompt:'请选择车型'">
             </select>
             品牌：
             <select class="easyui-combobox" id="queryCarItemBrand" style="width:120px;"
@@ -49,11 +51,13 @@
                         <div style="width:60px;">汽车型号：</div>
                         <div>
                             <select class="easyui-combobox" name="type" style="width:120px;"
-                                    data-options="panelMaxHeight:90,prompt:'请选择车型'">
-                                <option value="car">轿车</option>
-                                <option value="SUV">SUV</option>
-                                <option value="越野">越野</option>
-                                <option value="superCar">跑车</option>
+                                    data-options="
+                                    url:'carType/queryAll.json',
+                                    method:'get',
+                                    valueField:'id',
+                                    textField:'name',
+                                    panelHeight:'auto',
+                                    prompt:'请选择车型'">
                             </select>
                         </div>
                     </div>

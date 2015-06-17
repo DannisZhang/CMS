@@ -55,4 +55,10 @@ public interface CarTypeMapper {
      * @return 符合条件的车型信息总数
      */
     Long queryTotal(Map<String, Object> params);
+
+    /**
+     * 查询所有车型
+     * @return 车型列表
+     */
+    List<CarTypeEntity> queryAll();
 }

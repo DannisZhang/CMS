@@ -49,7 +49,7 @@ public class CarController {
      * @param vo VO对象
      * @return 执行结果
      */
-    @RequestMapping(value = "/save.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/save.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult save(CarVO vo) {
         LOGGER.info("保存汽车信息");
@@ -80,7 +80,7 @@ public class CarController {
      * @param id ID
      * @return 删除操作执行结果
      */
-    @RequestMapping(value = "/deleteById.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteById.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult deleteById(Integer id) {
         LOGGER.info("删除汽车信息，汽车信息ID： " + id);
@@ -108,7 +108,7 @@ public class CarController {
      * @param id ID
      * @return 汽车信息
      */
-    @RequestMapping(value = "/queryById.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryById.json", method = RequestMethod.POST)
     @ResponseBody
     public SingleQueryResult<?> queryById(Integer id) {
         SingleQueryResult<Car> result = new SingleQueryResult<>();
@@ -131,7 +131,7 @@ public class CarController {
      * @param queryParams 查询参数
      * @return 查询结果
      */
-    @RequestMapping(value = "/queryByPage.ajax")
+    @RequestMapping(value = "/queryByPage.json")
     @ResponseBody
     public PaginationQueryResult<?> queryByPage(QueryParams queryParams) {
         PaginationQueryResult<Car> result = new PaginationQueryResult<Car>();
@@ -152,7 +152,7 @@ public class CarController {
      * @param file 汽车图片文件
      * @return 上传成功返回图片URL
      */
-    @RequestMapping(value = "/uploadImage.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/uploadImage.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult uploadImage(@RequestParam("carImageFile") MultipartFile file) {
         LOGGER.info("开始上传图片......");
@@ -183,7 +183,7 @@ public class CarController {
      * @param imageUrl 图片URL
      * @return 执行结果
      */
-    @RequestMapping(value = "/deleteImage.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteImage.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult deleteUploadedImage(String imageUrl) {
         LOGGER.info("开始删除已上传的图片......");
@@ -206,7 +206,7 @@ public class CarController {
      *
      * @param imageUrls 图片URL
      */
-    @RequestMapping(value = "/deleteImages.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteImages.json", method = RequestMethod.POST)
     @ResponseBody
     public void deleteUploadedImages(String imageUrls) {
         LOGGER.info("批量删除已上传的图片......");

@@ -11,40 +11,21 @@ function initCarBrandDatagrid() {
     var columns = [
         [
             {field: 'ck', checkbox: true},
-            {field: "number", title: "号码", align: "center", width: 120, fixed: true},
-            {field: "operator", title: "运营商", align: "center", width: 100, fixed: true},
-            {field: "attribution", title: "归属地", align: "center", width: 80, fixed: true},
+            {field: "name", title: "品牌名称", align: "center", width: 120, fixed: true},
+            {field: "englishName", title: "英文名称", align: "center", width: 120, fixed: true},
             {
-                field: "wholesalePrice",
-                title: "批发价",
+                field: "logoUrl",
+                title: "LOGO",
                 align: "center",
-                width: 80,
+                width: 120,
                 fixed: true,
                 formatter: function (value, row, index) {
-                    return "￥" + row.wholesalePrice;
+                    if (value) {
+                        return '<img src="' + value + '/>';
+                    }
+                    return '';
                 }
             },
-            {
-                field: "floorPrice",
-                title: "底价",
-                align: "center",
-                width: 80,
-                fixed: true,
-                formatter: function (value, row, index) {
-                    return "￥" + row.floorPrice;
-                }
-            },
-            {
-                field: "balance",
-                title: "含话费",
-                align: "center",
-                width: 80,
-                fixed: true,
-                formatter: function (value, row, index) {
-                    return "￥" + row.balance;
-                }
-            },
-            {field: "priority", title: "优先级", align: "center", width: 80, fixed: true},
             {field: "remark", title: "备注", align: "center", width: 200},
             {
                 field: "id", title: "操作", align: "center", width: 150, fixed: true,
@@ -62,13 +43,13 @@ function initCarBrandDatagrid() {
     ];
 
     var toolbar = [{
-        text: '添加汽车',
+        text: '添加品牌',
         iconCls: 'icon-add',
         handler: function () {
-            addCar();
+            addCarBrand();
         }
     }, '-', {
-        text: '删除汽车',
+        text: '删除品牌',
         iconCls: 'icon-remove',
         handler: function () {
             deleteCars();
@@ -76,7 +57,7 @@ function initCarBrandDatagrid() {
     }];
 
     $("#carBrandDatagrid").datagrid({
-        url: "car/queryByPage.ajax",
+        url: "car/queryByPage.json",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -102,13 +83,13 @@ function initCarBrandDialog() {
     $.parser.parse("#carBrandManagementPage");
     $("#editCarBrandDialog").dialog({
         iconCls: "icon-edit",
-        title: "添加汽车",
-        width: 650,
-        height: 600,
+        title: "添加品牌",
+        width: 580,
+        height: 480,
         closed: true,
         cache: false,
         modal: true,
-        buttons: "#carDialogButtons"
+        buttons: "#carBrandDialogButtons"
     });
 }
 
@@ -126,7 +107,7 @@ function deleteCarBrandById(event, carId) {
     $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
         if (r) {
             $.ajax({
-                url: "car/deleteById.ajax",
+                url: "car/deleteById.json",
                 method: "post",
                 data: {"id": carId},
                 success: function (result) {
@@ -155,7 +136,7 @@ function deleteCarBrands() {
                 ids.push(row.id);
             });
             $.ajax({
-                url: "car/deleteByIds.ajax",
+                url: "car/deleteByIds.json",
                 method: "post",
                 data: {"ids": ids.join(",")},
                 success: function (result) {
@@ -175,7 +156,7 @@ function saveCarBrand() {
     var $editCarDialog = $("#editCarDialog");
     var $editCarFrom = $editCarDialog.find("#editCarFrom");
     $editCarFrom.form("submit", {
-        url: "car/save.ajax",
+        url: "car/save.json",
         onSubmit: function () {
             var number = $editCarFrom.find("input[name='number']").val();
             if (!number || number.length != 11) {
@@ -211,7 +192,7 @@ function editCarBrand(event, carId) {
     clearEditCarForm();
     var $editCarDialog = $("#editCarDialog").dialog({title: "修改号码"});
     $.ajax({
-        url: "car/queryById.ajax",
+        url: "car/queryById.json",
         method: "post",
         data: {id: carId},
         dataType: "json",

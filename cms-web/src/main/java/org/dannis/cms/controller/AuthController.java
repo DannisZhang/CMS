@@ -21,7 +21,7 @@ import java.io.IOException;
 @RequestMapping(value = "/auth")
 public class AuthController {
 
-    @RequestMapping(value = "/login.ajax",method = RequestMethod.POST)
+    @RequestMapping(value = "/login.json",method = RequestMethod.POST)
     @ResponseBody
     public BaseResult login(String username,String password,HttpServletRequest request,HttpServletResponse response)
             throws IOException {

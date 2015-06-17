@@ -56,7 +56,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
-        <url-pattern>*.ajax</url-pattern>
+        <url-pattern>*.json</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

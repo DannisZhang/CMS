@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author deng.zhang
  * @version 1.0.0
@@ -37,7 +40,7 @@ public class CarTypeController {
      * @param carType 车型
      * @return 执行结果
      */
-    @RequestMapping(value = "/save.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/save.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult save(CarType carType) {
         LOGGER.info("保存车型");
@@ -67,7 +70,7 @@ public class CarTypeController {
      * @param queryParams 查询参数
      * @return 查询结果
      */
-    @RequestMapping(value = "/queryByPage.ajax")
+    @RequestMapping(value = "/queryByPage.json")
     @ResponseBody
     public PaginationQueryResult<?> queryByPage(QueryParams queryParams) {
         PaginationQueryResult<CarType> result = new PaginationQueryResult<>();
@@ -80,5 +83,23 @@ public class CarTypeController {
         }
 
         return result;
+    }
+
+    /**
+     * 查询所有车型
+     *
+     * @return 查询结果
+     */
+    @RequestMapping(value = "/queryAll.json")
+    @ResponseBody
+    public List<CarType> queryAll() {
+        List<CarType> carTypes = new ArrayList<>();
+        try {
+            carTypes = carTypeService.queryAll();
+        } catch (Exception e) {
+            LOGGER.error("查询所有车型出错", e);
+        }
+
+        return carTypes;
     }
 }

@@ -23,7 +23,7 @@ function initLoginPageTopMenu() {
 function login() {
     var $loginForm = $("#login-form");
     $loginForm.form("submit", {
-        url: "auth/login.ajax",
+        url: "auth/login.json",
         onSubmit: function () {
             var username = $loginForm.find("input[name='username']").val();
             if (!username) {
@@ -39,7 +39,7 @@ function login() {
         success:function(result) {
             var jsonResult = $.parseJSON(result);
             if (jsonResult.success) {
-                window.location.href = jsonResult.message;
+                window.location = jsonResult.message;
             }
         }
     });
