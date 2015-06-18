@@ -59,8 +59,8 @@ function initCarBrandDatagrid() {
     $("#carBrandDatagrid").datagrid({
         url: "carBrand/queryByPage.json",
         pagination: true,
-        pageSize: 15,
-        pageList: [10, 15, 20],
+        pageSize: 6,
+        pageList: [6, 12, 18],
         loadMsg: '数据加载中...',
         columns: columns,
         fitColumns: true,

@@ -36,11 +36,11 @@ CREATE TABLE `t_cms_car_brand` (
   PRIMARY KEY (`id`)
 )ENGINE = MyISAM DEFAULT CHARSET = utf8 COLLATE = utf8_bin COMMENT '汽车品牌表';
 
--- 汽车类型表
-DROP TABLE IF EXISTS `t_cms_car_type`;
-CREATE TABLE `t_cms_car_type` (
+-- 汽车级别表
+DROP TABLE IF EXISTS `t_cms_car_level`;
+CREATE TABLE `t_cms_car_level` (
   `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `name` VARCHAR(128) NOT NULL COMMENT '车型名称',
+  `name` VARCHAR(128) NOT NULL COMMENT '级别名称',
   `english_name` VARCHAR(128) COMMENT '英文名称',
   `remark` VARCHAR(128) NULL COMMENT '备注',
   `created_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -55,7 +55,7 @@ DROP TABLE IF EXISTS `t_cms_car`;
 CREATE TABLE `t_cms_car` (
   `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `brand_id` INT(11) NOT NULL COMMENT '品牌ID',
-  `type_id` INT(11) NOT NULL COMMENT '车型ID',
+  `level_id` INT(11) NOT NULL COMMENT '级别ID',
   `series` VARCHAR(128) NOT NULL COMMENT '车系',
   `structure` VARCHAR(32) NOT NULL COMMENT '车身结构',
   `displacement` VARCHAR(32) NOT NULL COMMENT '排量',

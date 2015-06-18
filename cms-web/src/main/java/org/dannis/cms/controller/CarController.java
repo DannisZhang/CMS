@@ -3,7 +3,7 @@ package org.dannis.cms.controller;
 import org.apache.commons.io.FileUtils;
 import org.dannis.cms.model.Car;
 import org.dannis.cms.model.CarBrand;
-import org.dannis.cms.model.CarType;
+import org.dannis.cms.model.CarLevel;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
 import org.dannis.cms.query.result.SingleQueryResult;
@@ -229,9 +229,9 @@ public class CarController {
         if (null != vo) {
             car = new Car();
             car.setId(vo.getId());
-            CarType type = new CarType();
-            type.setId(1);
-            car.setType(type);
+            CarLevel level = new CarLevel();
+            level.setId(1);
+            car.setLevel(level);
             CarBrand brand = new CarBrand();
             brand.setId(1);
             car.setBrand(brand);

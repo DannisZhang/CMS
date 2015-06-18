@@ -3,17 +3,19 @@ package org.dannis.cms.model;
 import java.util.Date;
 
 /**
+ * 汽车级别
+ *
  * @author deng.zhang
  * @version 1.0.0
  * @date 2015-06-13 21:35
  */
-public class CarType {
+public class CarLevel {
     /**
      * ID
      */
     private Integer id;
     /**
-     * 车型名称
+     * 级别名称
      */
     private String name;
     /**

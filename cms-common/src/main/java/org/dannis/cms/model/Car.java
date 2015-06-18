@@ -20,9 +20,9 @@ public class Car {
      */
     private CarBrand brand;
     /**
-     * 车型
+     * 级别
      */
-    private CarType type;
+    private CarLevel level;
     /**
      * 车系
      */
@@ -104,12 +104,12 @@ public class Car {
         this.brand = brand;
     }
 
-    public CarType getType() {
-        return type;
+    public CarLevel getLevel() {
+        return level;
     }
 
-    public void setType(CarType type) {
-        this.type = type;
+    public void setLevel(CarLevel level) {
+        this.level = level;
     }
 
     public String getSeries() {

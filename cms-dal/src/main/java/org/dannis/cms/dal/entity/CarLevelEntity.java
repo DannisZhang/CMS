@@ -1,15 +1,15 @@
 package org.dannis.cms.dal.entity;
 
 /**
- * 车型实体
+ * 汽车级别实体
  *
  * @author deng.zhang
  * @version 1.0.0
  * @date 2015-06-13 01:09
  */
-public class CarTypeEntity extends AbstractEntity {
+public class CarLevelEntity extends AbstractEntity {
     /**
-     * 车型名称
+     * 级别名称
      */
     private String name;
     /**

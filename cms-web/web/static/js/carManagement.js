@@ -15,8 +15,8 @@ function initCarDatagrid() {
         [
             {field: 'ck', checkbox: true},
             {
-                field: "type",
-                title: "车型",
+                field: "level",
+                title: "级别",
                 align: "center",
                 width: 100,
                 fixed: true,
@@ -27,14 +27,22 @@ function initCarDatagrid() {
                     return '';
                 }
             },
-            {field: "brand", title: "品牌", align: "center", width: 100, fixed: true},
+            {
+                field: "brand",
+                title: "品牌",
+                align: "center",
+                width: 100,
+                fixed: true,
+                formatter: function (value, row, index) {
+                    if (value) {
+                        return value.name;
+                    }
+                    return '';
+                }
+            },
             {field: "series", title: "车系", align: "center", width: 80, fixed: true},
             {field: "structure", title: "车身结构", align: "center", width: 80, fixed: true},
             {field: "displacement", title: "排量", align: "center", width: 50, fixed: true},
-            {field: "emissionStandard", title: "排放标准", align: "center", width: 80, fixed: true},
-            {field: "gearbox", title: "变速箱", align: "center", width: 80, fixed: true},
-            {field: "mileage", title: "表显里程", align: "center", width: 80, fixed: true},
-            {field: "registrationTime", title: "上牌时间", align: "center", width: 80, fixed: true},
             {
                 field: "price",
                 title: "价格",

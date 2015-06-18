@@ -3,15 +3,15 @@
  * @date 2014/11/19.
  */
 $(function () {
-    initCarTypeDatagrid();
-    initCarTypeDialog();
+    initCarLevelDatagrid();
+    initCarLevelDialog();
 });
 
-function initCarTypeDatagrid() {
+function initCarLevelDatagrid() {
     var columns = [
         [
             {field: 'ck', checkbox: true},
-            {field: "name", title: "车型名称", align: "center", width: 120, fixed: true},
+            {field: "name", title: "级别名称", align: "center", width: 120, fixed: true},
             {field: "englishName", title: "英文名称", align: "center", width: 100, fixed: true},
             {field: "remark", title: "备注", align: "center", width: 200},
             {
@@ -30,21 +30,21 @@ function initCarTypeDatagrid() {
     ];
 
     var toolbar = [{
-        text: '添加车型',
+        text: '添加级别',
         iconCls: 'icon-add',
         handler: function () {
-            addCarType();
+            addCarLevel();
         }
     }, '-', {
-        text: '删除车型',
+        text: '删除级别',
         iconCls: 'icon-remove',
         handler: function () {
             deleteCars();
         }
     }];
 
-    $("#carTypeDatagrid").datagrid({
-        url: "carType/queryByPage.json",
+    $("#carLevelDatagrid").datagrid({
+        url: "carLevel/queryByPage.json",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -66,30 +66,30 @@ function initCarTypeDatagrid() {
     });
 }
 
-function initCarTypeDialog() {
-    $.parser.parse("#carTypeManagementPage");
-    $("#editCarTypeDialog").dialog({
+function initCarLevelDialog() {
+    $.parser.parse("#carLevelManagementPage");
+    $("#editCarLevelDialog").dialog({
         iconCls: "icon-edit",
-        title: "添加车型",
+        title: "添加级别",
         width: 580,
         height: 480,
         closed: true,
         cache: false,
         modal: true,
-        buttons: "#carTypeDialogButtons"
+        buttons: "#carLevelDialogButtons"
     });
 }
 
-function addCarType() {
-    clearEditCarTypeForm();
-    $("#editCarTypeDialog").dialog({title: "添加车型"}).dialog("open");
+function addCarLevel() {
+    clearEditCarLevelForm();
+    $("#editCarLevelDialog").dialog({title: "添加级别"}).dialog("open");
 }
 
-function clearEditCarTypeForm() {
-    $("#editCarTypeDialog").find("#editCarTypeFrom").form("clear");
+function clearEditCarLevelForm() {
+    $("#editCarLevelDialog").find("#editCarLevelFrom").form("clear");
 }
 
-function deleteCarTypeById(event, carId) {
+function deleteCarLevelById(event, carId) {
     event.stopPropagation();
     $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
         if (r) {
@@ -110,7 +110,7 @@ function deleteCarTypeById(event, carId) {
     });
 }
 
-function deleteCarTypes() {
+function deleteCarLevels() {
     var rows = $('#carDatagrid').datagrid('getChecked');
     if (rows.length == 0) {
         $.messager.alert("提示信息", "请勾选将要删除的手机号码", "warning");
@@ -139,11 +139,11 @@ function deleteCarTypes() {
     });
 }
 
-function saveCarType() {
-    var $editCarTypeDialog = $("#editCarTypeDialog");
-    var $editCarTypeFrom = $editCarTypeDialog.find("#editCarTypeFrom");
-    $editCarTypeFrom.form("submit", {
-        url: "carType/save.json",
+function saveCarLevel() {
+    var $editCarLevelDialog = $("#editCarLevelDialog");
+    var $editCarLevelFrom = $editCarLevelDialog.find("#editCarLevelFrom");
+    $editCarLevelFrom.form("submit", {
+        url: "carLevel/save.json",
         onSubmit: function () {
             //check
         },
@@ -151,8 +151,8 @@ function saveCarType() {
             var jsonResult = $.parseJSON(result);
             if (jsonResult.success) {
                 $.messager.alert("添加成功", jsonResult.message);
-                $editCarTypeDialog.dialog('close');
-                $('#carTypeDatagrid').datagrid('reload');
+                $editCarLevelDialog.dialog('close');
+                $('#carLevelDatagrid').datagrid('reload');
             } else {
                 $.messager.alert("添加失败", jsonResult.message, "error");
             }
@@ -160,7 +160,7 @@ function saveCarType() {
     });
 }
 
-function editCarType(event, carId) {
+function editCarLevel(event, carId) {
     event.stopPropagation();
     clearEditCarForm();
     var $editCarDialog = $("#editCarDialog").dialog({title: "修改号码"});
@@ -168,7 +168,7 @@ function editCarType(event, carId) {
         url: "car/queryById.json",
         method: "post",
         data: {id: carId},
-        dataType: "json",
+        dataLevel: "json",
         success: function (result) {
             if (result && result.success && result.data) {
                 var car = result.data;

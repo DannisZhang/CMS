@@ -5,7 +5,7 @@ import org.dannis.cms.dal.db.CarMapper;
 import org.dannis.cms.dal.entity.CarEntity;
 import org.dannis.cms.model.Car;
 import org.dannis.cms.model.CarBrand;
-import org.dannis.cms.model.CarType;
+import org.dannis.cms.model.CarLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -90,8 +90,8 @@ public class CarManager {
             if (car.getBrand() != null) {
                 entity.setBrandId(car.getBrand().getId());
             }
-            if (car.getType() != null) {
-                entity.setTypeId(car.getType().getId());
+            if (car.getLevel() != null) {
+                entity.setLevelId(car.getLevel().getId());
             }
             entity.setSeries(car.getSeries());
             entity.setStructure(car.getStructure());
@@ -135,10 +135,10 @@ public class CarManager {
                 brand.setId(entity.getBrandId());
                 car.setBrand(brand);
             }
-            if (entity.getTypeId() != null) {
-                CarType type = new CarType();
-                type.setId(entity.getTypeId());
-                car.setType(type);
+            if (entity.getLevelId() != null) {
+                CarLevel level = new CarLevel();
+                level.setId(entity.getLevelId());
+                car.setLevel(level);
             }
             car.setSeries(entity.getSeries());
             car.setStructure(entity.getStructure());

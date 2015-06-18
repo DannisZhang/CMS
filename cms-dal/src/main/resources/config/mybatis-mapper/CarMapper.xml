@@ -4,7 +4,7 @@
     <resultMap id="carMap" type="org.dannis.cms.dal.entity.CarEntity">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result property="brandId" column="brand_id" jdbcType="INTEGER"/>
-        <result property="typeId" column="type_id" jdbcType="INTEGER"/>
+        <result property="levelId" column="level_id" jdbcType="INTEGER"/>
         <result property="series" column="series" jdbcType="VARCHAR"/>
         <result property="structure" column="structure" jdbcType="VARCHAR"/>
         <result property="displacement" column="displacement" jdbcType="VARCHAR"/>
@@ -24,14 +24,14 @@
     </resultMap>
 
     <sql id="allColumns">
-		id,brand_id,type_id,series,structure,displacement,emission_standard,gearbox,mileage,registration_time,
+		id,brand_id,level_id,series,structure,displacement,emission_standard,gearbox,mileage,registration_time,
 		price,lowest_price,priority,remark,status,created_on,created_by,last_modified_on,last_modified_by
 	</sql>
 
     <insert id="save" parameterType="org.dannis.cms.dal.entity.CarEntity" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO t_cms_car(brand_id,type_id,series,structure,displacement,emission_standard,gearbox,mileage,
+		INSERT INTO t_cms_car(brand_id,level_id,series,structure,displacement,emission_standard,gearbox,mileage,
 		registration_time,price,lowest_price,priority,remark,status,created_by)
-		VALUES (#{brandId},#{typeId},#{series},#{structure},#{displacement},#{emissionStandard},#{gearbox},#{mileage},
+		VALUES (#{brandId},#{levelId},#{series},#{structure},#{displacement},#{emissionStandard},#{gearbox},#{mileage},
 		#{registrationTime},#{price},#{lowestPrice},#{priority},#{remark},#{status},#{createdBy})
 	</insert>
 
@@ -42,7 +42,7 @@
 
     <update id="update" parameterType="org.dannis.cms.dal.entity.CarEntity">
         UPDATE t_cms_car
-        SET brand_id=#{brandId},type_id=#{typeId},series=#{series},structure=#{structure},displacement=#{displacement},
+        SET brand_id=#{brandId},level_id=#{levelId},series=#{series},structure=#{structure},displacement=#{displacement},
         emission_standard=#{emissionStandard},gearbox=#{gearbox},mileage=#{mileage},registration_time=#{registrationTime},
         price=#{price},lowest_price=#{lowestPrice},priority=#{priority},remark=#{remark},status=#{status},
         last_modified_by=#{lastModifiedBy}
@@ -64,8 +64,8 @@
         <if test="brandId != null and brandId != ''">
             AND brand_id = #{brandId}
         </if>
-        <if test="typeId != null and typeId != ''">
-            AND type_id = #{typeId}
+        <if test="levelId != null and levelId != ''">
+            AND level_id = #{levelId}
         </if>
         <if test="series != null and series != ''">
             AND series = #{series}
@@ -87,8 +87,8 @@
         <if test="brandId != null and brandId != ''">
             AND brand_id = #{brandId}
         </if>
-        <if test="typeId != null and typeId != ''">
-            AND type_id = #{typeId}
+        <if test="levelId != null and levelId != ''">
+            AND level_id = #{levelId}
         </if>
         <if test="series != null and series != ''">
             AND series = #{series}

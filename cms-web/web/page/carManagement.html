@@ -5,7 +5,7 @@
             车型：
             <select class="easyui-combobox" name="type" style="width:120px;"
                     data-options="
-                                    url:'carType/queryAll.json',
+                                    url:'carLevel/queryAll.json',
                                     method:'get',
                                     valueField:'id',
                                     textField:'name',
@@ -13,21 +13,17 @@
                                     prompt:'请选择车型'">
             </select>
             品牌：
-            <select class="easyui-combobox" id="queryCarItemBrand" style="width:120px;"
-                    data-options="prompt:'请选择品牌'">
-                <option value="Das">大众</option>
-                <option value="Audi">奥迪</option>
-                <option value="Honda">本田</option>
-                <option value="Toyota">丰田</option>
+            <select class="easyui-combobox" name="brand" style="width:120px;"
+                    data-options="
+                                    url:'carBrand/queryAll.json',
+                                    method:'get',
+                                    valueField:'id',
+                                    textField:'name',
+                                    panelHeight:'auto',
+                                    prompt:'请选择汽车品牌'">
             </select>
             系列：
-            <select class="easyui-combobox" id="queryCarItemSeries" style="width:120px;"
-                    data-options="prompt:'请选择车系'">
-                <option value="Tiguan">途观</option>
-                <option value="A4L">A4L</option>
-                <option value="A6L">A6L</option>
-                <option value="凯美瑞">凯美瑞</option>
-            </select>
+            <input class="easyui-textbox" placeholder="请输入车系" style="width:120px;" />
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-clear'"
                onclick="$('#queryCarForm').form('clear')">
                 重置
@@ -52,7 +48,7 @@
                         <div>
                             <select class="easyui-combobox" name="type" style="width:120px;"
                                     data-options="
-                                    url:'carType/queryAll.json',
+                                    url:'carLevel/queryAll.json',
                                     method:'get',
                                     valueField:'id',
                                     textField:'name',
@@ -79,13 +75,7 @@
                         <div class="form-item-horizontal">
                             <div style="width:60px;">车系：</div>
                             <div>
-                                <select class="easyui-combobox" name="series" style="width:120px;"
-                                        data-options="panelMaxHeight:90,prompt:'请选择车系'">
-                                    <option value="Tiguan">途观</option>
-                                    <option value="A4L">A4L</option>
-                                    <option value="A6L">A6L</option>
-                                    <option value="凯美瑞">凯美瑞</option>
-                                </select>
+                                <input class="easyui-textbox" name="series" style="width:120px;" placeholder="请输入车系"/>
                             </div>
                         </div>
                     </div>
@@ -95,8 +85,9 @@
                             <div>
                                 <select class="easyui-combobox" name="structure" style="width:120px;"
                                         data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
-                                    <option value="two">两厢</option>
-                                    <option value="three">三厢</option>
+                                    <option value="单厢">单厢</option>
+                                    <option value="两厢">两厢</option>
+                                    <option value="三厢">三厢</option>
                                 </select>
                             </div>
                         </div>
@@ -104,7 +95,7 @@
                             <div style="width:60px;">变速箱：</div>
                             <div>
                                 <select class="easyui-combobox" name="gearbox" style="width:120px;"
-                                        data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
+                                        data-options="panelMaxHeight:90,prompt:'请选择变速箱'">
                                     <option value="手动">手动</option>
                                     <option value="自动">自动</option>
                                 </select>
@@ -116,7 +107,7 @@
                             <div style="width:60px;">排量：</div>
                             <div>
                                 <select class="easyui-combobox" name="displacement" style="width:120px;"
-                                        data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
+                                        data-options="panelMaxHeight:90,prompt:'请选择排量'">
                                     <option value="1.4L">1.4L</option>
                                     <option value="1.6L">1.6L</option>
                                     <option value="1.8L">1.8L</option>
@@ -131,8 +122,10 @@
                             <div>
                                 <select class="easyui-combobox" name="emissionStandard" style="width:120px;"
                                         data-options="panelMaxHeight:90,prompt:'请选择车身结构'">
-                                    <option value="国标1">国标1</option>
-                                    <option value="国标2">国标2</option>
+                                    <option value="国3（含欧3）">国3（含欧3）</option>
+                                    <option value="国4（含欧4）">国4（含欧4）</option>
+                                    <option value="国5（含欧5）">国5（含欧5）</option>
+                                    <option value="其他">其他</option>
                                 </select>
                             </div>
                         </div>

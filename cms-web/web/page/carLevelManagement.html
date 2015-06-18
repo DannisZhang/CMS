@@ -1,15 +1,15 @@
-<div class="easyui-layout" id="carTypeManagementPage" style="overflow: visible" split="true" fit="true">
+<div class="easyui-layout" id="carLevelManagementPage" style="overflow: visible" split="true" fit="true">
     <div region="center" border="false" style="overflow: visible;">
-        <table id="carTypeDatagrid" fit="true">
+        <table id="carLevelDatagrid" fit="true">
         </table>
 
         <!-- Edit car dialog #################### Begin #################### -->
-        <div id="editCarTypeDialog">
-            <form class="form" method="post" id="editCarTypeFrom">
+        <div id="editCarLevelDialog">
+            <form class="form" method="post" id="editCarLevelFrom">
                 <div class="form-title">基本信息</div>
                 <div class="form-content">
                     <div class="form-item">
-                        <div style="width:60px;">车型名称：</div>
+                        <div style="width:60px;">级别名称：</div>
                         <div>
                             <input type="text" class="easyui-textbox" name="name" style="width: 200px;"/>
                         </div>
@@ -31,13 +31,13 @@
                 <input type="hidden" name="id"/>
             </form>
         </div>
-        <div id="carTypeDialogButtons">
+        <div id="carLevelDialogButtons">
             <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" name="save-btn"
-               onclick="saveCarType()" style="width:90px">保存</a>
+               onclick="saveCarLevel()" style="width:90px">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-               onclick="$('#editCarTypeDialog').dialog('close')" style="width:90px">取消</a>
+               onclick="$('#editCarLevelDialog').dialog('close')" style="width:90px">取消</a>
         </div>
         <!-- Edit car dialog #################### End   #################### -->
     </div>
 </div>
-<script type="text/javascript" src="static/js/carTypeManagement.js"></script>
+<script type="text/javascript" src="static/js/carLevelManagement.js"></script>

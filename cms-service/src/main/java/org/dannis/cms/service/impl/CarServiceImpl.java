@@ -3,7 +3,7 @@ package org.dannis.cms.service.impl;
 import org.dannis.cms.manager.CarBrandManager;
 import org.dannis.cms.manager.CarImageManager;
 import org.dannis.cms.manager.CarManager;
-import org.dannis.cms.manager.CarTypeManager;
+import org.dannis.cms.manager.CarLevelManager;
 import org.dannis.cms.model.Car;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
@@ -34,7 +34,7 @@ public class CarServiceImpl implements CarService {
      * 车型管理类
      */
     @Autowired
-    private CarTypeManager carTypeManager;
+    private CarLevelManager carLevelManager;
     /**
      * 汽车图片管理类
      */
@@ -93,8 +93,8 @@ public class CarServiceImpl implements CarService {
             if (null != car.getBrand()) {
                 car.setBrand(carBrandManager.query(car.getBrand().getId()));
             }
-            if (null != car.getType()) {
-                car.setType(carTypeManager.query(car.getType().getId()));
+            if (null != car.getLevel()) {
+                car.setLevel(carLevelManager.query(car.getLevel().getId()));
             }
             car.setImageUrls(carImageManager.queryImages(car.getId()));
         }

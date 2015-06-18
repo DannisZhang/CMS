@@ -15,9 +15,9 @@ public class CarEntity extends AbstractEntity {
      */
     private Integer brandId;
     /**
-     * 车型ID
+     * 级别ID
      */
-    private Integer typeId;
+    private Integer levelId;
     /**
      * 车系
      */
@@ -71,12 +71,12 @@ public class CarEntity extends AbstractEntity {
         this.brandId = brandId;
     }
 
-    public Integer getTypeId() {
-        return typeId;
+    public Integer getLevelId() {
+        return levelId;
     }
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
+    public void setLevelId(Integer levelId) {
+        this.levelId = levelId;
     }
 
     public String getSeries() {

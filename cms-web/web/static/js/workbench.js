@@ -58,9 +58,9 @@ function initWorkbenchLeftMenu() {
                     },
                     {
                         "menuId": 1,
-                        "menuName": "汽车类型",
+                        "menuName": "汽车级别",
                         "iconCls": "icon-custom-car",
-                        "url": "page/carTypeManagement.html"
+                        "url": "page/carLevelManagement.html"
                     },
                     {
                         "menuId": 1,
