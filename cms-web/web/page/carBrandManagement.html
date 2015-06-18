@@ -5,23 +5,23 @@
 
         <!-- Edit car brand dialog #################### Begin #################### -->
         <div id="editCarBrandDialog">
-            <form class="form" method="post" id="editCarBrandFrom">
+            <form class="form" id="editCarBrandFrom" method="post" enctype="multipart/form-data">
                 <div class="form-title">基本信息</div>
                 <div class="form-content">
                     <div class="form-item">
-                        <div style="width:60px;">品牌名称：</div>
+                        <div style="width:80px;">品牌名称：</div>
                         <div>
                             <input type="text" class="easyui-textbox" name="name" style="width: 200px;"/>
                         </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:60px;">英文名称：</div>
+                        <div style="width:80px;">英文名称：</div>
                         <div>
                             <input type="text" class="easyui-textbox" name="englishName" style="width: 200px;"/>
                         </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:60px;">所属国家：</div>
+                        <div style="width:80px;">所属国家：</div>
                         <div>
                             <select class="easyui-combobox" name="country" style="width:120px;"
                                     data-options="panelMaxHeight:90,prompt:'请选择国家'">
@@ -34,13 +34,13 @@
                         </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:60px;">品牌LOGO：</div>
+                        <div style="width:80px;">品牌LOGO：</div>
                         <div>
-                            <input type="text" class="easyui-textbox" name="logoUrl" style="width: 200px;"/>
+                            <input type="text" class="easyui-filebox" name="logoFile" data-options="buttonText:'选择文件'" style="width: 200px;"/>
                         </div>
                     </div>
                     <div class="form-item">
-                        <div style="width:60px;">备注：</div>
+                        <div style="width:80px;">备注：</div>
                         <div>
                             <input type="text" class="easyui-textbox" name="remark"
                                    data-options="multiline:true" style="height: 50px;width: 380px;"/>

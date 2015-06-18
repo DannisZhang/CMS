@@ -67,4 +67,10 @@
             AND country = #{country}
         </if>
 	</select>
+
+    <select id="queryAll" resultMap="carBrandMap">
+        SELECT
+        <include refid="allColumns"/>
+        FROM t_cms_car_brand
+    </select>
 </mapper>

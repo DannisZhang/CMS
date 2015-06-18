@@ -1,22 +1,25 @@
-package org.dannis.cms.dal.db;
+package org.dannis.cms.service;
 
-import org.dannis.cms.dal.entity.CarBrandEntity;
+import org.dannis.cms.model.CarBrand;
+import org.dannis.cms.query.QueryParams;
+import org.dannis.cms.query.result.PaginationQueryResult;
 
 import java.util.List;
-import java.util.Map;
 
 /**
+ * 汽车品牌服务类
+ *
  * @author deng.zhang
  * @version 1.0.0
- * @date 2015-06-13 23:20
+ * @date 2015-06-17 21:18
  */
-public interface CarBrandMapper {
+public interface CarBrandService {
     /**
      * 保存汽车品牌信息
      *
      * @param brand 汽车品牌信息
      */
-    void save(CarBrandEntity brand);
+    void save(CarBrand brand);
 
     /**
      * 根据ID删除汽车品牌信息
@@ -30,7 +33,7 @@ public interface CarBrandMapper {
      *
      * @param brand 汽车品牌信息
      */
-    void update(CarBrandEntity brand);
+    void update(CarBrand brand);
 
     /**
      * 根据ID查询汽车品牌信息
@@ -38,29 +41,19 @@ public interface CarBrandMapper {
      * @param id 汽车品牌ID
      * @return 汽车品牌信息
      */
-    CarBrandEntity query(Integer id);
+    CarBrand query(Integer id);
 
     /**
      * 分页查询汽车品牌信息
      *
-     * @param params 查询参数
+     * @param queryParams 查询参数
      * @return 汽车品牌信息列表
      */
-    List<CarBrandEntity> queryByPage(Map<String,Object> params);
-
-    /**
-     * 根据条件查询汽车品牌信息总数
-     *
-     * @param params 查询条件
-     * @return 符合条件的汽车品牌信息总数
-     */
-    Long queryTotal(Map<String, Object> params);
-
+    PaginationQueryResult<CarBrand> queryByPage(QueryParams queryParams);
 
     /**
      * 查询所有汽车品牌
-     *
      * @return 汽车品牌列表
      */
-    List<CarBrandEntity> queryAll();
+    List<CarBrand> queryAll();
 }

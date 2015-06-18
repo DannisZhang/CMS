@@ -77,6 +77,15 @@ public class CarBrandManager {
         return carBrandMapper.queryTotal(params);
     }
 
+    /**
+     * 查询所有汽车品牌
+     *
+     * @return 汽车品牌列表
+     */
+    public List<CarBrand> queryAll() {
+        return convertToModels(carBrandMapper.queryAll());
+    }
+
     private CarBrandEntity convertToEntity(CarBrand brand) {
         CarBrandEntity entity = null;
         if (brand != null) {
@@ -86,6 +95,8 @@ public class CarBrandManager {
             entity.setEnglishName(brand.getEnglishName());
             entity.setLogoUrl(brand.getLogoUrl());
             entity.setRemark(brand.getRemark());
+            entity.setCreatedBy(brand.getCreatedBy());
+            entity.setLastModifiedBy(brand.getLastModifiedBy());
         }
 
         return entity;
@@ -111,6 +122,10 @@ public class CarBrandManager {
             brand.setEnglishName(entity.getEnglishName());
             brand.setLogoUrl(entity.getLogoUrl());
             brand.setRemark(entity.getRemark());
+            brand.setCreatedBy(entity.getCreatedBy());
+            brand.setCreatedOn(entity.getCreatedOn());
+            brand.setLastModifiedBy(entity.getLastModifiedBy());
+            brand.setLastModifiedOn(entity.getLastModifiedOn());
         }
 
         return brand;

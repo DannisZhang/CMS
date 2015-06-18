@@ -79,6 +79,7 @@ public class CarTypeManager {
 
     /**
      * 查询所有车型
+     *
      * @return 车型列表
      */
     public List<CarType> queryAll() {

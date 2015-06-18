@@ -116,10 +116,10 @@ body {
     vertical-align: top;
 }
 
-.form .form-content .form-item span{
-    font-size: 10px;
-    color: teal;;
-}
+/*.form .form-content .form-item span{*/
+    /*font-size: 10px;*/
+    /*color: teal;;*/
+/*}*/
 
 .form .form-content .form-item .form-item-horizontal {
     display: inline-block;

@@ -58,6 +58,7 @@ public interface CarTypeMapper {
 
     /**
      * 查询所有车型
+     *
      * @return 车型列表
      */
     List<CarTypeEntity> queryAll();

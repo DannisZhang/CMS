@@ -15,13 +15,13 @@ function initCarBrandDatagrid() {
             {field: "englishName", title: "英文名称", align: "center", width: 120, fixed: true},
             {
                 field: "logoUrl",
-                title: "LOGO",
+                title: "品牌LOGO",
                 align: "center",
                 width: 120,
                 fixed: true,
                 formatter: function (value, row, index) {
                     if (value) {
-                        return '<img src="' + value + '/>';
+                        return '<img style="width:60px;height:60px;" src="' + value + '"/>';
                     }
                     return '';
                 }
@@ -57,7 +57,7 @@ function initCarBrandDatagrid() {
     }];
 
     $("#carBrandDatagrid").datagrid({
-        url: "car/queryByPage.json",
+        url: "carBrand/queryByPage.json",
         pagination: true,
         pageSize: 15,
         pageList: [10, 15, 20],
@@ -153,24 +153,13 @@ function deleteCarBrands() {
 }
 
 function saveCarBrand() {
-    var $editCarDialog = $("#editCarDialog");
-    var $editCarFrom = $editCarDialog.find("#editCarFrom");
-    $editCarFrom.form("submit", {
-        url: "car/save.json",
+    var $editCarBrandDialog = $("#editCarBrandDialog");
+    var $editCarBrandFrom = $editCarBrandDialog.find("#editCarBrandFrom");
+    $editCarBrandFrom.form("submit", {
+        url: "carBrand/save.json",
         onSubmit: function () {
-            var number = $editCarFrom.find("input[name='number']").val();
-            if (!number || number.length != 11) {
-                $.messager.alert("错误提示", "请填写11位手机号码", "warning");
-                return false;
-            }
-            var operator = $editCarFrom.find("input[name='operator']").val();
-            if (!operator) {
-                $.messager.alert("错误提示", "请选择运营商", "warning");
-                return false;
-            }
-            var attribution = $editCarFrom.find("input[name='attribution']").val();
-            if (!attribution) {
-                $.messager.alert("错误提示", "请填写手机号码归属地" + attribution, "warning");
+            if (!$editCarBrandFrom.find("input[name='name']").val()) {
+                $.messager.alert("错误提示", "请填写品牌名称", "warning");
                 return false;
             }
         },
@@ -178,8 +167,8 @@ function saveCarBrand() {
             var jsonResult = $.parseJSON(result);
             if (jsonResult.success) {
                 $.messager.alert("添加成功", jsonResult.message);
-                $editCarDialog.dialog('close');
-                $('#carDatagrid').datagrid('reload');
+                $editCarBrandDialog.dialog('close');
+                $('#carBrandDatagrid').datagrid('reload');
             } else {
                 $.messager.alert("添加失败", jsonResult.message, "error");
             }

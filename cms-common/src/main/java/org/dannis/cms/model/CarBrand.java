@@ -1,5 +1,7 @@
 package org.dannis.cms.model;
 
+import java.util.Date;
+
 /**
  * 汽车品牌模型
  *
@@ -32,6 +34,22 @@ public class CarBrand {
      * 备注
      */
     private String remark;
+    /**
+     * 创建时间
+     */
+    private Date createdOn;
+    /**
+     * 创建人
+     */
+    private Integer createdBy;
+    /**
+     * 最近修改时间
+     */
+    private Date lastModifiedOn;
+    /**
+     * 最近修改人
+     */
+    private Integer lastModifiedBy;
 
     public Integer getId() {
         return id;
@@ -79,5 +97,37 @@ public class CarBrand {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getLastModifiedOn() {
+        return lastModifiedOn;
+    }
+
+    public void setLastModifiedOn(Date lastModifiedOn) {
+        this.lastModifiedOn = lastModifiedOn;
+    }
+
+    public Integer getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(Integer lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 }

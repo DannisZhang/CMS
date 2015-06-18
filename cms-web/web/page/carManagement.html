@@ -66,11 +66,13 @@
                             <div style="width:60px;">汽车品牌：</div>
                             <div>
                                 <select class="easyui-combobox" name="brand" style="width:120px;"
-                                        data-options="panelMaxHeight:90,prompt:'请选择品牌'">
-                                    <option value="Das">大众</option>
-                                    <option value="Audi">奥迪</option>
-                                    <option value="Honda">本田</option>
-                                    <option value="Toyota">丰田</option>
+                                        data-options="
+                                    url:'carBrand/queryAll.json',
+                                    method:'get',
+                                    valueField:'id',
+                                    textField:'name',
+                                    panelHeight:'auto',
+                                    prompt:'请选择汽车品牌'">
                                 </select>
                             </div>
                         </div>

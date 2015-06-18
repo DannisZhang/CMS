@@ -17,9 +17,9 @@ public interface CarTypeService {
     /**
      * 保存车型信息
      *
-     * @param brand 车型信息
+     * @param type 车型信息
      */
-    void save(CarType brand);
+    void save(CarType type);
 
     /**
      * 根据ID删除车型信息
@@ -31,9 +31,9 @@ public interface CarTypeService {
     /**
      * 修改车型信息
      *
-     * @param brand 车型信息
+     * @param type 车型信息
      */
-    void update(CarType brand);
+    void update(CarType type);
 
     /**
      * 根据ID查询车型信息
