@@ -42,8 +42,17 @@ public class CarImageManager {
      *
      * @param carId 汽车ID
      */
-    public void deleteImages(Integer carId) {
+    public void deleteImagesByCarId(Integer carId) {
         carImageMapper.deleteImages(carId);
+    }
+
+    /**
+     * 批量删除汽车图片
+     *
+     * @param carIds 汽车ID列表
+     */
+    public void deleteImagesByCarIds(Integer[] carIds) {
+        carImageMapper.deleteImagesByCarIds(carIds);
     }
 
     /**

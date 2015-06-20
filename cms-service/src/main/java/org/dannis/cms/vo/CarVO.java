@@ -47,7 +47,7 @@ public class CarVO {
     /**
      * 里程数，单位公里
      */
-    private Integer mileage;
+    private Double mileage;
     /**
      * 价格
      */
@@ -157,11 +157,11 @@ public class CarVO {
         this.registrationTime = registrationTime;
     }
 
-    public Integer getMileage() {
+    public Double getMileage() {
         return mileage;
     }
 
-    public void setMileage(Integer mileage) {
+    public void setMileage(Double mileage) {
         this.mileage = mileage;
     }
 

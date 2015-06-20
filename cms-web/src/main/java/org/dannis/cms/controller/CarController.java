@@ -103,6 +103,31 @@ public class CarController {
     }
 
     /**
+     * 根据ID批量删除汽车信息
+     *
+     * @param ids ID列表
+     * @return 删除操作执行结果
+     */
+    @RequestMapping(value = "deleteByIds.json", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteByIds(Integer[] ids) {
+        LOGGER.info("批量删除汽车信息，汽车信息ID列表： " + Arrays.toString(ids));
+        BaseResult result = new BaseResult();
+        try {
+            carService.deleteByIds(ids);
+            result.setSuccess(true);
+            result.setMessage("删除汽车信息成功");
+            LOGGER.info("批量删除汽车信息成功");
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage("删除汽车信息失败");
+            LOGGER.error("批量删除汽车信息失败", e);
+        }
+
+        return result;
+    }
+
+    /**
      * 根据ID查询汽车信息
      *
      * @param id ID

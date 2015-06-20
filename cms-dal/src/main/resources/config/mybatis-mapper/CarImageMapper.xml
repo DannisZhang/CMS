@@ -19,6 +19,14 @@
 		WHERE car_id = #{carId}
 	</delete>
 
+    <delete id="deleteImagesByCarIds">
+        DELETE FROM t_cms_car_image
+        WHERE car_id IN
+        <foreach collection="array" item="carId" open="(" separator="," close=")">
+            #{carId}
+        </foreach>
+    </delete>
+
     <select id="queryImages" parameterType="java.lang.Integer" resultType="java.lang.String">
         SELECT image_url
         FROM t_cms_car_image

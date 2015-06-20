@@ -59,7 +59,13 @@ public class CarServiceImpl implements CarService {
     @Override
     public void delete(Integer id) {
         carManager.delete(id);
-        carImageManager.deleteImages(id);
+        carImageManager.deleteImagesByCarId(id);
+    }
+
+    @Override
+    public void deleteByIds(Integer[] ids) {
+        carManager.deleteByIds(ids);
+        carImageManager.deleteImagesByCarIds(ids);
     }
 
     @Override

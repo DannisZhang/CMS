@@ -13,6 +13,7 @@ function initCarBrandDatagrid() {
             {field: 'ck', checkbox: true},
             {field: "name", title: "品牌名称", align: "center", width: 120, fixed: true},
             {field: "englishName", title: "英文名称", align: "center", width: 120, fixed: true},
+            {field: "country", title: "所属国家", align: "center", width: 120, fixed: true},
             {
                 field: "logoUrl",
                 title: "品牌LOGO",
@@ -30,13 +31,11 @@ function initCarBrandDatagrid() {
             {
                 field: "id", title: "操作", align: "center", width: 150, fixed: true,
                 formatter: function (value, row, index) {
-                    var detail = '<a class="datagrid-detail-button" onclick="viewCarDetail(event,' + row.id + ')"'
-                        + ' style="height:20px;width:34px;text-align: center" href="javascript:void(0);">详情</a>';
-                    var edit = '<a class="datagrid-edit-button" onclick="editCar(event,' + row.id + ')"'
+                    var edit = '<a class="datagrid-edit-button" onclick="editCarBrand(event,' + row.id + ')"'
                         + ' style="height:20px;width:34px;text-align: center;margin-left:5px" href="javascript:void(0);">修改</a>';
-                    var del = '<a class="datagrid-delete-button" onclick="deleteCarById(event,' + row.id + ')"'
+                    var del = '<a class="datagrid-delete-button" onclick="deleteCarBrandById(event,' + row.id + ')"'
                         + ' style="height:20px;width:34px;text-align: center;margin-left:5px;" href="javascript:void(0);">删除</a>';
-                    return detail + edit + del;
+                    return edit + del;
                 }
             }
         ]
@@ -52,7 +51,7 @@ function initCarBrandDatagrid() {
         text: '删除品牌',
         iconCls: 'icon-remove',
         handler: function () {
-            deleteCars();
+            deleteCarBrands();
         }
     }];
 
@@ -66,9 +65,6 @@ function initCarBrandDatagrid() {
         fitColumns: true,
         toolbar: toolbar,
         onLoadSuccess: function () {
-            var $detailButton = $('.datagrid-detail-button');
-            $detailButton.linkbutton({plain: false});
-            $detailButton.addClass("c1");
             var $editButton = $('.datagrid-edit-button');
             $editButton.linkbutton({plain: false});
             $editButton.addClass("c8");
@@ -102,18 +98,18 @@ function clearEditCarBrandForm() {
     $("#editCarBrandDialog").find("#editCarBrandFrom").form("clear");
 }
 
-function deleteCarBrandById(event, carId) {
+function deleteCarBrandById(event, carBrandId) {
     event.stopPropagation();
-    $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
+    $.messager.confirm("确认删除", "请确认是否该汽车品牌？", function (r) {
         if (r) {
             $.ajax({
-                url: "car/deleteById.json",
+                url: "carBrand/deleteById.json",
                 method: "post",
-                data: {"id": carId},
+                data: {"id": carBrandId},
                 success: function (result) {
                     if (result.success) {
                         $.messager.alert("删除成功", result.message);
-                        $('#carDatagrid').datagrid('reload');
+                        $('#carBrandDatagrid').datagrid('reload');
                     } else {
                         $.messager.alert("删除失败", result.message, "error");
                     }
@@ -124,25 +120,25 @@ function deleteCarBrandById(event, carId) {
 }
 
 function deleteCarBrands() {
-    var rows = $('#carDatagrid').datagrid('getChecked');
+    var rows = $('#carBrandDatagrid').datagrid('getChecked');
     if (rows.length == 0) {
-        $.messager.alert("提示信息", "请勾选将要删除的手机号码", "warning");
+        $.messager.alert("提示信息", "请勾选将要删除的汽车品牌", "warning");
         return;
     }
-    $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
+    $.messager.confirm("确认删除", "请确认是否删除汽车品牌？", function (r) {
         if (r) {
             var ids = [];
             $.each(rows, function (i, row) {
                 ids.push(row.id);
             });
             $.ajax({
-                url: "car/deleteByIds.json",
+                url: "carBrand/deleteByIds.json",
                 method: "post",
                 data: {"ids": ids.join(",")},
                 success: function (result) {
                     if (result.success) {
                         $.messager.alert("删除成功", result.message);
-                        $('#carDatagrid').datagrid('reload');
+                        $('#carBrandDatagrid').datagrid('reload');
                     } else {
                         $.messager.alert("删除失败", result.message, "error");
                     }
@@ -176,31 +172,28 @@ function saveCarBrand() {
     });
 }
 
-function editCarBrand(event, carId) {
+function editCarBrand(event, carBrandId) {
     event.stopPropagation();
-    clearEditCarForm();
-    var $editCarDialog = $("#editCarDialog").dialog({title: "修改号码"});
+    clearEditCarBrandForm();
+    var $editCarBrandDialog = $("#editCarBrandDialog").dialog({title: "修改汽车品牌"});
     $.ajax({
-        url: "car/queryById.json",
+        url: "carBrand/queryById.json",
         method: "post",
-        data: {id: carId},
+        data: {id: carBrandId},
         dataType: "json",
         success: function (result) {
             if (result && result.success && result.data) {
-                var car = result.data;
-                $editCarDialog.find("#editCarFrom").form('load', {
-                    number: car.number,
-                    operator: car.operator,
-                    attribution: car.attribution,
-                    wholesalePrice: car.wholesalePrice,
-                    floorPrice: car.floorPrice,
-                    balance: car.balance,
-                    priority: car.priority,
-                    remark: car.remark,
-                    id: car.id
+                var carBrand = result.data;
+                $editCarBrandDialog.find("#editCarBrandFrom").form('load', {
+                    name: carBrand.name,
+                    englishName: carBrand.englishName,
+                    country: carBrand.country,
+                    remark: carBrand.remark,
+                    logoUrl: carBrand.logoUrl,
+                    id: carBrand.id
                 });
             }
         }
     });
-    $editCarDialog.dialog("open");
+    $editCarBrandDialog.dialog("open");
 }

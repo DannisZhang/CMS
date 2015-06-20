@@ -39,19 +39,19 @@ public class CarEntity extends AbstractEntity {
      */
     private String gearbox;
     /**
-     * 表显里程，单位公里
+     * 表显里程，单位万公里
      */
-    private Integer mileage;
+    private Double mileage;
     /**
      * 上牌时间
      */
     private Date registrationTime;
     /**
-     * 价格
+     * 价格，单位万元
      */
     private Double price;
     /**
-     * 最低价格
+     * 最低价格，单位万元
      */
     private Double lowestPrice;
     /**
@@ -119,11 +119,11 @@ public class CarEntity extends AbstractEntity {
         this.gearbox = gearbox;
     }
 
-    public Integer getMileage() {
+    public Double getMileage() {
         return mileage;
     }
 
-    public void setMileage(Integer mileage) {
+    public void setMileage(Double mileage) {
         this.mileage = mileage;
     }
 

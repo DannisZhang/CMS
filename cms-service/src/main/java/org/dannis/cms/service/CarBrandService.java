@@ -29,6 +29,13 @@ public interface CarBrandService {
     void delete(Integer id);
 
     /**
+     * 根据ID批量删除汽车品牌
+     *
+     * @param ids ID列表
+     */
+    void deleteByIds(Integer[] ids);
+
+    /**
      * 修改汽车品牌信息
      *
      * @param brand 汽车品牌信息

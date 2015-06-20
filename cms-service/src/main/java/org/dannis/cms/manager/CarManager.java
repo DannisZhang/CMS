@@ -44,6 +44,15 @@ public class CarManager {
     }
 
     /**
+     * 根据ID批量删除汽车信息
+     *
+     * @param ids ID列表
+     */
+    public void deleteByIds(Integer[] ids) {
+        carMapper.deleteByIds(ids);
+    }
+
+    /**
      * 修改汽车信息
      *
      * @param car 汽车信息

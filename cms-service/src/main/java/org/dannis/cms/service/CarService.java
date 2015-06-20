@@ -27,6 +27,13 @@ public interface CarService {
     void delete(Integer id);
 
     /**
+     * 根据ID批量删除汽车信息
+     *
+     * @param ids ID列表
+     */
+    void deleteByIds(Integer[] ids);
+
+    /**
      * 根据ID查询汽车信息
      *
      * @param id 汽车ID

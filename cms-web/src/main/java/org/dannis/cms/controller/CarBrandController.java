@@ -1,11 +1,12 @@
 package org.dannis.cms.controller;
 
-import org.apache.commons.io.FileUtils;
 import org.dannis.cms.model.CarBrand;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
+import org.dannis.cms.query.result.SingleQueryResult;
 import org.dannis.cms.result.BaseResult;
 import org.dannis.cms.service.CarBrandService;
+import org.dannis.cms.service.CarImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,6 +37,11 @@ public class CarBrandController {
      */
     @Autowired
     private CarBrandService carBrandService;
+    /**
+     * 汽车图片服务类
+     */
+    @Autowired
+    private CarImageService carImageService;
 
     /**
      * 保存汽车品牌
@@ -49,41 +53,118 @@ public class CarBrandController {
     @RequestMapping(value = "/save.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult save(MultipartFile logoFile, CarBrand carBrand) {
-        LOGGER.info("保存汽车品牌");
         BaseResult result = new BaseResult();
-        if (!logoFile.isEmpty()) {
-            String dir = "/data/web/images/car";    //设定文件保存的目录
-
-            String filename = logoFile.getOriginalFilename();    //得到上传时的文件名
-            filename = generateImageFileName(filename);
-            try {
-                FileUtils.writeByteArrayToFile(new File(dir, filename), logoFile.getBytes());
-
-                String imageUrl = "http://localhost/images/car/" + filename;
-                carBrand.setLogoUrl(imageUrl);
+        try {
+            if (carBrand.getId() != null && carBrand.getId() > 0) {
+                LOGGER.info("修改汽车品牌");
+                if (!logoFile.isEmpty()) {
+                    String imageUrl = carImageService.saveImage(logoFile.getOriginalFilename(), logoFile.getBytes());
+                    if (imageUrl != null) {
+                        carBrand.setLogoUrl(imageUrl);
+                    }
+                }
+                carBrand.setLastModifiedBy(1);
+                carBrandService.update(carBrand);
+                result.setSuccess(true);
+                result.setMessage("修改汽车品牌成功");
+                LOGGER.info("修改汽车品牌成功");
+            } else {
+                LOGGER.info("添加汽车品牌");
+                if (!logoFile.isEmpty()) {
+                    String imageUrl = carImageService.saveImage(logoFile.getOriginalFilename(), logoFile.getBytes());
+                    if (imageUrl != null) {
+                        carBrand.setLogoUrl(imageUrl);
+                    }
+                }
                 carBrand.setCreatedBy(1);
                 carBrandService.save(carBrand);
                 result.setSuccess(true);
-                result.setMessage("保存汽车品牌成功");
-                LOGGER.info("保存汽车品牌成功");
-            } catch (IOException e) {
-                result.setSuccess(false);
-                result.setMessage("上传汽车品牌LOGO失败");
-                LOGGER.error("上传汽车品牌LOGO失败", e);
-            } catch (Exception e) {
-                result.setSuccess(false);
-                String errorMessage = e.getMessage();
-                if (errorMessage != null && errorMessage.contains("Duplicate entry")) {
-                    result.setMessage("汽车品牌已存在！");
-                } else {
-                    result.setMessage("服务器异常！");
-                }
-                LOGGER.error("保存汽车品牌失败", e);
+                result.setMessage("添加汽车品牌成功");
+                LOGGER.info("添加汽车品牌成功");
             }
-        } else {
+        } catch (Exception e) {
             result.setSuccess(false);
-            result.setMessage("未上传汽车品牌LOGO");
-            LOGGER.error("上传失败,未上传汽车品牌LOGO");
+            String errorMessage = e.getMessage();
+            if (errorMessage != null && errorMessage.contains("Duplicate entry")) {
+                result.setMessage("汽车品牌已存在！");
+            } else {
+                result.setMessage("服务器异常！");
+            }
+            LOGGER.error("保存汽车品牌失败", e);
+        }
+        return result;
+    }
+
+    /**
+     * 根据ID删除汽车品牌
+     *
+     * @param id 汽车品牌ID
+     * @return 删除操作执行结果
+     */
+    @RequestMapping(value = "/deleteById.json", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteById(Integer id) {
+        LOGGER.info("删除汽车品牌，汽车品牌ID： " + id);
+        BaseResult result = new BaseResult();
+        try {
+            if (null != id) {
+                carBrandService.delete(id);
+                result.setSuccess(true);
+                result.setMessage("删除汽车品牌成功");
+            } else {
+                result.setSuccess(false);
+                result.setMessage("未指定汽车品牌ID");
+            }
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage("删除汽车品牌失败");
+            LOGGER.error("删除汽车品牌失败", e);
+        }
+        return result;
+    }
+
+    /**
+     * 根据ID批量删除汽车品牌
+     *
+     * @param ids ID列表
+     * @return 删除操作执行结果
+     */
+    @RequestMapping(value = "deleteByIds.json", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteByIds(Integer[] ids) {
+        LOGGER.info("批量删除汽车品牌，汽车品牌ID列表： " + Arrays.toString(ids));
+        BaseResult result = new BaseResult();
+        try {
+            carBrandService.deleteByIds(ids);
+            result.setSuccess(true);
+            result.setMessage("删除汽车品牌成功");
+            LOGGER.info("批量删除汽车品牌成功");
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage("删除汽车品牌失败");
+            LOGGER.error("批量删除汽车品牌失败", e);
+        }
+
+        return result;
+    }
+
+    /**
+     * 根据ID查询汽车品牌
+     *
+     * @param id ID
+     * @return 汽车品牌
+     */
+    @RequestMapping(value = "queryById.json", method = RequestMethod.POST)
+    @ResponseBody
+    public SingleQueryResult<?> queryById(Integer id) {
+        SingleQueryResult<CarBrand> result = new SingleQueryResult<>();
+        try {
+            CarBrand carBrand = carBrandService.query(id);
+            result.setData(carBrand);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            LOGGER.error("根据ID查找汽车品牌失败", e);
         }
         return result;
     }
@@ -125,18 +206,5 @@ public class CarBrandController {
         }
 
         return carBrands;
-    }
-
-    private String generateImageFileName(String fileName) {
-        Calendar calendar = Calendar.getInstance();
-        return "car_"
-                + calendar.get(Calendar.YEAR)
-                + calendar.get(Calendar.MONTH)
-                + calendar.get(Calendar.DAY_OF_MONTH) + 1
-                + calendar.get(Calendar.HOUR)
-                + calendar.get(Calendar.MINUTE)
-                + calendar.get(Calendar.SECOND)
-                + calendar.get(Calendar.MILLISECOND)
-                + fileName.substring(fileName.lastIndexOf("."));
     }
 }

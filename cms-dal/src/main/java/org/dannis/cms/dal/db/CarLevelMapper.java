@@ -26,6 +26,13 @@ public interface CarLevelMapper {
     void delete(Integer id);
 
     /**
+     * 根据ID批量删除汽车级别
+     *
+     * @param ids ID列表
+     */
+    void deleteByIds(Integer[] ids);
+
+    /**
      * 修改汽车级别信息
      *
      * @param level 汽车级别信息

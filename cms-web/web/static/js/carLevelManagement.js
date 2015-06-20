@@ -17,13 +17,11 @@ function initCarLevelDatagrid() {
             {
                 field: "id", title: "操作", align: "center", width: 150, fixed: true,
                 formatter: function (value, row, index) {
-                    var detail = '<a class="datagrid-detail-button" onclick="viewCarDetail(event,' + row.id + ')"'
-                        + ' style="height:20px;width:34px;text-align: center" href="javascript:void(0);">详情</a>';
-                    var edit = '<a class="datagrid-edit-button" onclick="editCar(event,' + row.id + ')"'
+                    var edit = '<a class="datagrid-edit-button" onclick="editCarLevel(event,' + row.id + ')"'
                         + ' style="height:20px;width:34px;text-align: center;margin-left:5px" href="javascript:void(0);">修改</a>';
-                    var del = '<a class="datagrid-delete-button" onclick="deleteCarById(event,' + row.id + ')"'
+                    var del = '<a class="datagrid-delete-button" onclick="deleteCarLevelById(event,' + row.id + ')"'
                         + ' style="height:20px;width:34px;text-align: center;margin-left:5px;" href="javascript:void(0);">删除</a>';
-                    return detail + edit + del;
+                    return edit + del;
                 }
             }
         ]
@@ -39,7 +37,7 @@ function initCarLevelDatagrid() {
         text: '删除级别',
         iconCls: 'icon-remove',
         handler: function () {
-            deleteCars();
+            deleteCarLevels();
         }
     }];
 
@@ -53,9 +51,6 @@ function initCarLevelDatagrid() {
         fitColumns: true,
         toolbar: toolbar,
         onLoadSuccess: function () {
-            var $detailButton = $('.datagrid-detail-button');
-            $detailButton.linkbutton({plain: false});
-            $detailButton.addClass("c1");
             var $editButton = $('.datagrid-edit-button');
             $editButton.linkbutton({plain: false});
             $editButton.addClass("c8");
@@ -70,7 +65,7 @@ function initCarLevelDialog() {
     $.parser.parse("#carLevelManagementPage");
     $("#editCarLevelDialog").dialog({
         iconCls: "icon-edit",
-        title: "添加级别",
+        title: "添加汽车级别",
         width: 580,
         height: 480,
         closed: true,
@@ -89,18 +84,18 @@ function clearEditCarLevelForm() {
     $("#editCarLevelDialog").find("#editCarLevelFrom").form("clear");
 }
 
-function deleteCarLevelById(event, carId) {
+function deleteCarLevelById(event, carLevelId) {
     event.stopPropagation();
-    $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
+    $.messager.confirm("确认删除", "请确认是否删除该级别？", function (r) {
         if (r) {
             $.ajax({
-                url: "car/deleteById.json",
+                url: "carLevel/deleteById.json",
                 method: "post",
-                data: {"id": carId},
+                data: {"id": carLevelId},
                 success: function (result) {
                     if (result.success) {
                         $.messager.alert("删除成功", result.message);
-                        $('#carDatagrid').datagrid('reload');
+                        $('#carLevelDatagrid').datagrid('reload');
                     } else {
                         $.messager.alert("删除失败", result.message, "error");
                     }
@@ -111,25 +106,25 @@ function deleteCarLevelById(event, carId) {
 }
 
 function deleteCarLevels() {
-    var rows = $('#carDatagrid').datagrid('getChecked');
+    var rows = $('#carLevelDatagrid').datagrid('getChecked');
     if (rows.length == 0) {
-        $.messager.alert("提示信息", "请勾选将要删除的手机号码", "warning");
+        $.messager.alert("提示信息", "请勾选将要删除的汽车级别", "warning");
         return;
     }
-    $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
+    $.messager.confirm("确认删除", "请确认是否删除汽车级别？", function (r) {
         if (r) {
             var ids = [];
             $.each(rows, function (i, row) {
                 ids.push(row.id);
             });
             $.ajax({
-                url: "car/deleteByIds.json",
+                url: "carLevel/deleteByIds.json",
                 method: "post",
                 data: {"ids": ids.join(",")},
                 success: function (result) {
                     if (result.success) {
                         $.messager.alert("删除成功", result.message);
-                        $('#carDatagrid').datagrid('reload');
+                        $('#carLevelDatagrid').datagrid('reload');
                     } else {
                         $.messager.alert("删除失败", result.message, "error");
                     }
@@ -160,31 +155,26 @@ function saveCarLevel() {
     });
 }
 
-function editCarLevel(event, carId) {
+function editCarLevel(event, carLevelId) {
     event.stopPropagation();
-    clearEditCarForm();
-    var $editCarDialog = $("#editCarDialog").dialog({title: "修改号码"});
+    clearEditCarLevelForm();
+    var $editCarLevelDialog = $("#editCarLevelDialog").dialog({title: "修改汽车级别"});
     $.ajax({
-        url: "car/queryById.json",
+        url: "carLevel/queryById.json",
         method: "post",
-        data: {id: carId},
+        data: {id: carLevelId},
         dataLevel: "json",
         success: function (result) {
             if (result && result.success && result.data) {
-                var car = result.data;
-                $editCarDialog.find("#editCarFrom").form('load', {
-                    number: car.number,
-                    operator: car.operator,
-                    attribution: car.attribution,
-                    wholesalePrice: car.wholesalePrice,
-                    floorPrice: car.floorPrice,
-                    balance: car.balance,
-                    priority: car.priority,
-                    remark: car.remark,
-                    id: car.id
+                var carLevel = result.data;
+                $editCarLevelDialog.find("#editCarLevelFrom").form('load', {
+                    name: carLevel.name,
+                    englishName: carLevel.englishName,
+                    remark: carLevel.remark,
+                    id: carLevel.id
                 });
             }
         }
     });
-    $editCarDialog.dialog("open");
+    $editCarLevelDialog.dialog("open");
 }

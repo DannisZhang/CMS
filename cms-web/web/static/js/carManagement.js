@@ -68,13 +68,11 @@ function initCarDatagrid() {
             {
                 field: "id", title: "操作", align: "center", width: 150, fixed: true,
                 formatter: function (value, row, index) {
-                    var detail = '<a class="datagrid-detail-button" onclick="viewCarDetail(event,' + row.id + ')"'
-                        + ' style="height:20px;width:34px;text-align: center" href="javascript:void(0);">详情</a>';
                     var edit = '<a class="datagrid-edit-button" onclick="editCar(event,' + row.id + ')"'
                         + ' style="height:20px;width:34px;text-align: center;margin-left:5px" href="javascript:void(0);">修改</a>';
                     var del = '<a class="datagrid-delete-button" onclick="deleteCarById(event,' + row.id + ')"'
                         + ' style="height:20px;width:34px;text-align: center;margin-left:5px;" href="javascript:void(0);">删除</a>';
-                    return detail + edit + del;
+                    return edit + del;
                 }
             }
         ]
@@ -104,9 +102,6 @@ function initCarDatagrid() {
         fitColumns: true,
         toolbar: toolbar,
         onLoadSuccess: function () {
-            var $detailButton = $('.datagrid-detail-button');
-            $detailButton.linkbutton({plain: false});
-            $detailButton.addClass("c1");
             var $editButton = $('.datagrid-edit-button');
             $editButton.linkbutton({plain: false});
             $editButton.addClass("c8");
@@ -137,7 +132,32 @@ function addCar() {
 }
 
 function clearEditCarForm() {
-    var $editCarFrom = $("#editCarDialog").find("#editCarFrom");
+    var $editCarFrom = $('#editCarDialog').find('#editCarFrom');
+    $editCarFrom.form("clear");
+    $editCarFrom.find('#addCarImagePanel').find('.uploaded-image').remove();
+}
+
+function closeEditCarDialog() {
+    var $editCarDialog = $('#editCarDialog');
+    var $editCarFrom = $editCarDialog.find('#editCarFrom');
+    var carId = $editCarFrom.find('input[type="hidden"][name="id"]').val();
+    if (!carId) {
+        var imageUrls = [];
+        $.each($editCarFrom.find('#addCarImagePanel').find('.uploaded-image').find('img'), function () {
+            imageUrls.push($(this).attr('src'));
+        });
+        if (imageUrls.length > 0) {
+            $.ajax({
+                url: "car/deleteImages.json",
+                method: "post",
+                data: {"imageUrls": imageUrls.join(",")}
+            });
+
+            $editCarFrom.find('#addCarImagePanel').find('.uploaded-image').remove();
+        }
+    }
+    $editCarFrom.form("clear");
+    $editCarDialog.dialog('close');
 }
 
 function deleteCarById(event, carId) {
@@ -164,10 +184,10 @@ function deleteCarById(event, carId) {
 function deleteCars() {
     var rows = $('#carDatagrid').datagrid('getChecked');
     if (rows.length == 0) {
-        $.messager.alert("提示信息", "请勾选将要删除的手机号码", "warning");
+        $.messager.alert("提示信息", "请勾选将要删除的汽车信息", "warning");
         return;
     }
-    $.messager.confirm("确认删除", "请确认是否删除手机号码？", function (r) {
+    $.messager.confirm("确认删除", "请确认是否删除汽车信息？", function (r) {
         if (r) {
             var ids = [];
             $.each(rows, function (i, row) {
@@ -201,7 +221,6 @@ function saveCar() {
                 imageUrls.push($(this).attr('src'));
             });
             param.imageUrls = imageUrls.join(',');
-            console.log(param);
             //check code
         },
         success: function (result) {
@@ -217,60 +236,10 @@ function saveCar() {
     });
 }
 
-function exitEditCar() {
-    var $editCarDialog = $('#editCarDialog');
-    var $editCarFrom = $editCarDialog.find('#editCarFrom');
-    $editCarFrom.form("clear");
-    var imageUrls = [];
-    $.each($editCarFrom.find('#addCarImagePanel').find('.uploaded-image').find('img'), function () {
-        imageUrls.push($(this).attr('src'));
-    });
-    if (imageUrls.length > 0) {
-        $.ajax({
-            url: "car/deleteImages.json",
-            method: "post",
-            data: {"imageUrls": imageUrls.join(",")}
-        });
-
-        $editCarFrom.find('#addCarImagePanel').find('.uploaded-image').remove();
-    }
-    $editCarDialog.dialog('close');
-}
-
-function viewCarDetail(event, carId) {
-    event.stopPropagation();
-    clearEditCarForm();
-    var $editCarDialog = $("#editCarDialog").dialog({title: "查看号码"});
-    $.ajax({
-        url: "car/queryById.json",
-        method: "post",
-        data: {id: carId},
-        dataType: "json",
-        success: function (result) {
-            if (result && result.success && result.data) {
-                $("#carDialogButtons").find("a[name='save-btn']").linkbutton("disable");
-                var car = result.data;
-                $editCarDialog.find("#editCarFrom").form('load', {
-                    number: car.number,
-                    operator: car.operator,
-                    attribution: car.attribution,
-                    wholesalePrice: car.wholesalePrice,
-                    floorPrice: car.floorPrice,
-                    balance: car.balance,
-                    priority: car.priority,
-                    remark: car.remark,
-                    id: car.id
-                });
-            }
-        }
-    });
-    $editCarDialog.dialog("open");
-}
-
 function editCar(event, carId) {
     event.stopPropagation();
     clearEditCarForm();
-    var $editCarDialog = $("#editCarDialog").dialog({title: "修改号码"});
+    var $editCarDialog = $("#editCarDialog").dialog({title: "修改汽车信息"});
     $.ajax({
         url: "car/queryById.json",
         method: "post",
@@ -280,16 +249,22 @@ function editCar(event, carId) {
             if (result && result.success && result.data) {
                 var car = result.data;
                 $editCarDialog.find("#editCarFrom").form('load', {
-                    number: car.number,
-                    operator: car.operator,
-                    attribution: car.attribution,
-                    wholesalePrice: car.wholesalePrice,
-                    floorPrice: car.floorPrice,
-                    balance: car.balance,
+                    type: car.type,
+                    brand: car.brand,
+                    series: car.series,
+                    structure: car.structure,
+                    displacement: car.displacement,
+                    emissionStandard: car.emissionStandard,
+                    gearbox: car.gearbox,
+                    mileage: car.mileage,
+                    price: car.price,
+                    lowestPrice: car.lowestPrice,
                     priority: car.priority,
                     remark: car.remark,
                     id: car.id
                 });
+
+                showCarImages(car.imageUrls);
             }
         }
     });
@@ -326,27 +301,40 @@ function uploadCarImage() {
                 uploadedImageDivHtml += '</div>';
                 $('#addCarImage').before(uploadedImageDivHtml);
                 $('.uploaded-image').find('span').on('click', function (e) {
-                    var $uploadedImageDiv = $(this).parent();
-                    $.ajax({
-                        url: "car/deleteImage.json",
-                        method: "post",
-                        data: {imageUrl: $uploadedImageDiv.find('img').attr('src')},
-                        success: function (result) {
-                            if (result && result.success) {
-                                $uploadedImageDiv.remove();
+                    if (!$('#editCarForm').find('input[type="hidden"][name="id"]').val()) {
+                        var $uploadedImageDiv = $(this).parent();
+                        $.ajax({
+                            url: "car/deleteImage.json",
+                            method: "post",
+                            data: {imageUrl: $uploadedImageDiv.find('img').attr('src')},
+                            success: function (result) {
+                                if (result && result.success) {
+                                    $uploadedImageDiv.remove();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 });
             }
         }
     });
 }
 
-function previewCarImage(e, imageUrl) {
-    var pointX = e.pageX;
-    var pointY = e.pageY;
-    var $previewCarImageDiv = $('#previewCarImageDiv');
-    $previewCarImageDiv.css('top', pointY);
-    $previewCarImageDiv.css('left', pointX);
+function showCarImages(imageUrls) {
+    if (imageUrls) {
+        var uploadedImageDivs = '';
+        $.each(imageUrls, function () {
+            var uploadedImageDiv = '<div class="uploaded-image">';
+            uploadedImageDiv += '<img src="' + this + '" />';
+            uploadedImageDiv += '<span>×</span>';
+            uploadedImageDiv += '</div>';
+
+            uploadedImageDivs += uploadedImageDiv;
+        });
+
+        $('#addCarImage').before(uploadedImageDivs);
+        $('.uploaded-image').find('span').on('click', function (e) {
+            $(this).parent().remove();
+        });
+    }
 }

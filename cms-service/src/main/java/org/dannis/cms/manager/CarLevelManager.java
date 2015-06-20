@@ -39,6 +39,15 @@ public class CarLevelManager {
     }
 
     /**
+     * 根据ID批量删除汽车级别
+     *
+     * @param ids ID列表
+     */
+    public void deleteByIds(Integer[] ids) {
+        carLevelMapper.deleteByIds(ids);
+    }
+
+    /**
      * 修改汽车级别信息
      *
      * @param level 汽车级别信息

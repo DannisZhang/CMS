@@ -34,6 +34,11 @@ public class CarLevelServiceImpl implements CarLevelService {
     }
 
     @Override
+    public void deleteByIds(Integer[] ids) {
+        carLevelManager.deleteByIds(ids);
+    }
+
+    @Override
     public void update(CarLevel level) {
         carLevelManager.update(level);
     }

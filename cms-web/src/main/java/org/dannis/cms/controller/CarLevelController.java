@@ -3,6 +3,7 @@ package org.dannis.cms.controller;
 import org.dannis.cms.model.CarLevel;
 import org.dannis.cms.query.QueryParams;
 import org.dannis.cms.query.result.PaginationQueryResult;
+import org.dannis.cms.query.result.SingleQueryResult;
 import org.dannis.cms.result.BaseResult;
 import org.dannis.cms.service.CarLevelService;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -43,14 +45,23 @@ public class CarLevelController {
     @RequestMapping(value = "/save.json", method = RequestMethod.POST)
     @ResponseBody
     public BaseResult save(CarLevel carLevel) {
-        LOGGER.info("保存汽车级别");
         BaseResult result = new BaseResult();
         try {
-            carLevel.setCreatedBy(1);
-            carLevelService.save(carLevel);
-            result.setSuccess(true);
-            result.setMessage("保存汽车级别成功");
-            LOGGER.info("保存汽车级别成功");
+            if (carLevel.getId() != null && carLevel.getId() > 0) {
+                LOGGER.info("修改汽车级别");
+                carLevel.setLastModifiedBy(1);
+                carLevelService.update(carLevel);
+                result.setSuccess(true);
+                result.setMessage("修改汽车级别成功");
+                LOGGER.info("修改汽车级别成功");
+            } else {
+                LOGGER.info("添加汽车级别");
+                carLevel.setCreatedBy(1);
+                carLevelService.save(carLevel);
+                result.setSuccess(true);
+                result.setMessage("添加汽车级别成功");
+                LOGGER.info("添加汽车级别成功");
+            }
         } catch (Exception e) {
             result.setSuccess(false);
             String errorMessage = e.getMessage();
@@ -60,6 +71,80 @@ public class CarLevelController {
                 result.setMessage("服务器异常！");
             }
             LOGGER.error("保存汽车级别失败", e);
+        }
+        return result;
+    }
+
+    /**
+     * 根据ID删除汽车级别
+     *
+     * @param id 汽车级别ID
+     * @return 删除操作执行结果
+     */
+    @RequestMapping(value = "/deleteById.json", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteById(Integer id) {
+        LOGGER.info("删除汽车级别，汽车级别ID： " + id);
+        BaseResult result = new BaseResult();
+        try {
+            if (null != id) {
+                carLevelService.delete(id);
+                result.setSuccess(true);
+                result.setMessage("删除汽车级别成功");
+            } else {
+                result.setSuccess(false);
+                result.setMessage("未指定汽车级别ID");
+            }
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage("删除汽车级别失败");
+            LOGGER.error("删除汽车级别失败", e);
+        }
+        return result;
+    }
+
+    /**
+     * 根据ID批量删除汽车级别
+     *
+     * @param ids ID列表
+     * @return 删除操作执行结果
+     */
+    @RequestMapping(value = "deleteByIds.json", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResult deleteByIds(Integer[] ids) {
+        LOGGER.info("批量删除汽车级别，汽车级别ID列表： " + Arrays.toString(ids));
+        BaseResult result = new BaseResult();
+        try {
+            carLevelService.deleteByIds(ids);
+            result.setSuccess(true);
+            result.setMessage("删除汽车级别成功");
+            LOGGER.info("批量删除汽车级别成功");
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setMessage("删除汽车级别失败");
+            LOGGER.error("批量删除汽车级别失败", e);
+        }
+
+        return result;
+    }
+
+    /**
+     * 根据ID查询汽车级别
+     *
+     * @param id ID
+     * @return 汽车级别
+     */
+    @RequestMapping(value = "queryById.json", method = RequestMethod.POST)
+    @ResponseBody
+    public SingleQueryResult<?> queryById(Integer id) {
+        SingleQueryResult<CarLevel> result = new SingleQueryResult<>();
+        try {
+            CarLevel carLevel = carLevelService.query(id);
+            result.setData(carLevel);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            LOGGER.error("根据ID查找汽车级别失败", e);
         }
         return result;
     }

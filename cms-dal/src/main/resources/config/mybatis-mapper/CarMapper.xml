@@ -10,7 +10,7 @@
         <result property="displacement" column="displacement" jdbcType="VARCHAR"/>
         <result property="emissionStandard" column="emission_standard" jdbcType="VARCHAR"/>
         <result property="gearbox" column="gearbox" jdbcType="VARCHAR"/>
-        <result property="mileage" column="mileage" jdbcType="INTEGER"/>
+        <result property="mileage" column="mileage" jdbcType="DOUBLE"/>
         <result property="registrationTime" column="registration_time" jdbcType="INTEGER"/>
         <result property="price" column="price" jdbcType="DOUBLE"/>
         <result property="lowestPrice" column="lowest_price" jdbcType="DOUBLE"/>
@@ -39,6 +39,14 @@
 		DELETE FROM t_cms_car
 		WHERE id = #{id}
 	</delete>
+
+    <delete id="deleteByIds">
+        DELETE FROM t_cms_car
+        WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
     <update id="update" parameterType="org.dannis.cms.dal.entity.CarEntity">
         UPDATE t_cms_car

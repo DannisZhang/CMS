@@ -34,6 +34,11 @@ public class CarBrandServiceImpl implements CarBrandService {
     }
 
     @Override
+    public void deleteByIds(Integer[] ids) {
+        carBrandManager.deleteByIds(ids);
+    }
+
+    @Override
     public void update(CarBrand brand) {
         carBrandManager.update(brand);
     }

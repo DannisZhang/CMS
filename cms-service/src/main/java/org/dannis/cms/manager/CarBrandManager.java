@@ -39,6 +39,15 @@ public class CarBrandManager {
     }
 
     /**
+     * 根据ID批量删除汽车品牌
+     *
+     * @param ids ID列表
+     */
+    public void deleteByIds(Integer[] ids) {
+        carBrandMapper.deleteByIds(ids);
+    }
+
+    /**
      * 修改汽车品牌信息
      *
      * @param brand 汽车品牌信息
@@ -93,6 +102,7 @@ public class CarBrandManager {
             entity.setId(brand.getId());
             entity.setName(brand.getName());
             entity.setEnglishName(brand.getEnglishName());
+            entity.setCountry(brand.getCountry());
             entity.setLogoUrl(brand.getLogoUrl());
             entity.setRemark(brand.getRemark());
             entity.setCreatedBy(brand.getCreatedBy());
@@ -120,6 +130,7 @@ public class CarBrandManager {
             brand.setId(entity.getId());
             brand.setName(entity.getName());
             brand.setEnglishName(entity.getEnglishName());
+            brand.setCountry(entity.getCountry());
             brand.setLogoUrl(entity.getLogoUrl());
             brand.setRemark(entity.getRemark());
             brand.setCreatedBy(entity.getCreatedBy());

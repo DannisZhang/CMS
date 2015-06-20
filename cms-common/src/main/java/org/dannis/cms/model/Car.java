@@ -48,15 +48,15 @@ public class Car {
      */
     private Date registrationTime;
     /**
-     * 里程数，单位公里
+     * 里程数，单位万公里
      */
-    private Integer mileage;
+    private Double mileage;
     /**
-     * 价格
+     * 价格，单位万元
      */
     private Double price;
     /**
-     * 最低价格
+     * 最低价格，单位万元
      */
     private Double lowestPrice;
     /**
@@ -160,11 +160,11 @@ public class Car {
         this.registrationTime = registrationTime;
     }
 
-    public Integer getMileage() {
+    public Double getMileage() {
         return mileage;
     }
 
-    public void setMileage(Integer mileage) {
+    public void setMileage(Double mileage) {
         this.mileage = mileage;
     }
 

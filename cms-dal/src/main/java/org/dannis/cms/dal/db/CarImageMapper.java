@@ -25,6 +25,13 @@ public interface CarImageMapper {
     void deleteImages(Integer carId);
 
     /**
+     * 批量删除汽车图片
+     *
+     * @param carIds 汽车ID列表
+     */
+    void deleteImagesByCarIds(Integer[] carIds);
+
+    /**
      * 根据汽车ID查询汽车图片
      *
      * @param carId 汽车ID
