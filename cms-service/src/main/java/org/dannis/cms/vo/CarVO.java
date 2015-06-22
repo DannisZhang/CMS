@@ -15,11 +15,11 @@ public class CarVO {
     /**
      * 品牌
      */
-    private String brand;
+    private Integer brand;
     /**
-     * 车型
+     * 汽车级别
      */
-    private String type;
+    private Integer level;
     /**
      * 车系
      */
@@ -93,20 +93,20 @@ public class CarVO {
         this.id = id;
     }
 
-    public String getBrand() {
+    public Integer getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Integer brand) {
         this.brand = brand;
     }
 
-    public String getType() {
-        return type;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public String getSeries() {

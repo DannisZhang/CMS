@@ -2,18 +2,18 @@
 <div class="easyui-layout" id="carManagementPage" style="overflow: visible" split="true" fit="true">
     <div region="north" border="true" style="margin:2px 0 2px 0;height:60px;padding: 16px 0 0 20px;">
         <form id="queryCarForm">
-            车型：
-            <select class="easyui-combobox" name="type" style="width:120px;"
+            级别：
+            <select class="easyui-combobox" id="queryCarItemLevel" name="level" style="width:120px;"
                     data-options="
                                     url:'carLevel/queryAll.json',
                                     method:'get',
                                     valueField:'id',
                                     textField:'name',
                                     panelHeight:'auto',
-                                    prompt:'请选择车型'">
+                                    prompt:'请选择级别'">
             </select>
             品牌：
-            <select class="easyui-combobox" name="brand" style="width:120px;"
+            <select class="easyui-combobox" id="queryCarItemBrand" name="brand" style="width:120px;"
                     data-options="
                                     url:'carBrand/queryAll.json',
                                     method:'get',
@@ -22,8 +22,8 @@
                                     panelHeight:'auto',
                                     prompt:'请选择汽车品牌'">
             </select>
-            系列：
-            <input class="easyui-textbox" placeholder="请输入车系" style="width:120px;" />
+            车系：
+            <input name="series" id="queryCarItemSeries" class="easyui-textbox" data-options="prompt:'请输入车系'" style="width:120px;" />
             <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-clear'"
                onclick="$('#queryCarForm').form('clear')">
                 重置
@@ -44,16 +44,16 @@
                 <div class="form-title">基本信息</div>
                 <div class="form-content">
                     <div class="form-item">
-                        <div style="width:60px;">汽车型号：</div>
+                        <div style="width:60px;">汽车级别：</div>
                         <div>
-                            <select class="easyui-combobox" name="type" style="width:120px;"
+                            <select class="easyui-combobox" name="level" style="width:120px;"
                                     data-options="
                                     url:'carLevel/queryAll.json',
                                     method:'get',
                                     valueField:'id',
                                     textField:'name',
                                     panelHeight:'auto',
-                                    prompt:'请选择车型'">
+                                    prompt:'请选择级别'">
                             </select>
                         </div>
                     </div>

@@ -249,12 +249,13 @@ function editCar(event, carId) {
             if (result && result.success && result.data) {
                 var car = result.data;
                 $editCarDialog.find("#editCarFrom").form('load', {
-                    type: car.type,
+                    level: car.level,
                     brand: car.brand,
                     series: car.series,
                     structure: car.structure,
                     displacement: car.displacement,
                     emissionStandard: car.emissionStandard,
+                    registrationTime: car.registrationTime,
                     gearbox: car.gearbox,
                     mileage: car.mileage,
                     price: car.price,
@@ -272,12 +273,11 @@ function editCar(event, carId) {
 }
 
 function queryCars() {
-    var $queryCarDiv = $("#queryCarDiv");
     $('#carDatagrid').datagrid('reload', {
         params: {
-            number: $queryCarDiv.find("#queryCarItemNumber").textbox('getValue'),
-            operator: $queryCarDiv.find("#queryCarItemOperator").combobox('getValue'),
-            attribution: $queryCarDiv.find("#queryCarItemAttribution").textbox('getValue')
+            levelId: $('#queryCarItemLevel').combobox('getValue'),
+            brandId: $('#queryCarItemBrand').combobox('getValue'),
+            series: $('#queryCarItemSeries').textbox('getValue')
         }
     });
 }
@@ -323,7 +323,7 @@ function uploadCarImage() {
 function showCarImages(imageUrls) {
     if (imageUrls) {
         var uploadedImageDivs = '';
-        $.each(imageUrls, function () {
+        $.each(imageUrls.split(','), function () {
             var uploadedImageDiv = '<div class="uploaded-image">';
             uploadedImageDiv += '<img src="' + this + '" />';
             uploadedImageDiv += '<span>×</span>';

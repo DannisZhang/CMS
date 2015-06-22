@@ -9,6 +9,7 @@ import org.dannis.cms.query.result.PaginationQueryResult;
 import org.dannis.cms.query.result.SingleQueryResult;
 import org.dannis.cms.result.BaseResult;
 import org.dannis.cms.service.CarService;
+import org.dannis.cms.util.DateUtil;
 import org.dannis.cms.vo.CarVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,7 @@ public class CarController {
         try {
             Car car = convertToModel(vo);
             car.setCreatedBy(1);
+            carService.save(car);
             carService.save(car);
             result.setSuccess(true);
             result.setMessage("保存汽车信息成功");
@@ -136,11 +138,11 @@ public class CarController {
     @RequestMapping(value = "/queryById.json", method = RequestMethod.POST)
     @ResponseBody
     public SingleQueryResult<?> queryById(Integer id) {
-        SingleQueryResult<Car> result = new SingleQueryResult<>();
+        SingleQueryResult<CarVO> result = new SingleQueryResult<>();
         try {
-            Car car = carService.query(id);
-            result.setData(car);
-            if (null == car) {
+            CarVO vo = convertToVo(carService.query(id));
+            result.setData(vo);
+            if (null == vo) {
                 result.setSuccess(false);
             }
         } catch (Exception e) {
@@ -255,26 +257,60 @@ public class CarController {
             car = new Car();
             car.setId(vo.getId());
             CarLevel level = new CarLevel();
-            level.setId(1);
+            level.setId(vo.getLevel());
             car.setLevel(level);
             CarBrand brand = new CarBrand();
-            brand.setId(1);
+            brand.setId(vo.getBrand());
             car.setBrand(brand);
             car.setSeries(vo.getSeries());
             car.setStructure(vo.getStructure());
             car.setDisplacement(vo.getDisplacement());
             car.setEmissionStandard(vo.getEmissionStandard());
             car.setGearbox(vo.getGearbox());
-//            car.setRegistrationTime(vo.getRegistrationTime());
+            car.setRegistrationTime(DateUtil.strToDate(vo.getRegistrationTime()));
             car.setMileage(vo.getMileage());
             car.setPrice(vo.getPrice());
             car.setLowestPrice(vo.getLowestPrice());
             if (null != vo.getImageUrls() && !"".equals(vo.getImageUrls().trim())) {
                 car.setImageUrls(Arrays.asList(vo.getImageUrls().split(",")));
             }
+            car.setPriority(vo.getPriority());
             car.setRemark(vo.getRemark());
         }
         return car;
+    }
+
+    private CarVO convertToVo(Car car) {
+        CarVO vo = null;
+        if (null != car) {
+            vo = new CarVO();
+            vo.setId(car.getId());
+            if (null != car.getLevel()) {
+                vo.setLevel(car.getLevel().getId());
+            }
+            if (null != car.getBrand()) {
+                vo.setBrand(car.getBrand().getId());
+            }
+            vo.setSeries(car.getSeries());
+            vo.setStructure(car.getStructure());
+            vo.setDisplacement(car.getDisplacement());
+            vo.setEmissionStandard(car.getEmissionStandard());
+            vo.setGearbox(car.getGearbox());
+            vo.setRegistrationTime(DateUtil.dateToStr(car.getRegistrationTime()));
+            vo.setMileage(car.getMileage());
+            vo.setPrice(car.getPrice());
+            vo.setLowestPrice(car.getLowestPrice());
+            if (null != car.getImageUrls() && car.getImageUrls().size() > 0) {
+                String imageUrls = "";
+                for (String imageUrl : car.getImageUrls()) {
+                    imageUrls += imageUrl + ",";
+                }
+                vo.setImageUrls(imageUrls.substring(0,imageUrls.lastIndexOf(",")));
+            }
+            vo.setPriority(car.getPriority());
+            vo.setRemark(car.getRemark());
+        }
+        return vo;
     }
 
     private String generateImageFileName(String fileName) {
