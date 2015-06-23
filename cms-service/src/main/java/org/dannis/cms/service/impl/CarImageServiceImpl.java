@@ -28,7 +28,7 @@ public class CarImageServiceImpl implements CarImageService {
     /**
      * 图片URL前缀
      */
-    private static final String IMAGE_URL_PREFIX = "http://localhost/images/car/";
+    private static final String IMAGE_URL_PREFIX = "http://che0593.com/images/car/";
 
     @Override
     public String saveImage(String fileName, byte[] imageBytes) {

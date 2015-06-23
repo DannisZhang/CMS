@@ -189,7 +189,7 @@ public class CarController {
 
             String filename = file.getOriginalFilename();    //得到上传时的文件名
             filename = generateImageFileName(filename);
-            String imageUrl = "http://localhost/images/car/" + filename;
+            String imageUrl = "http://che0593.com/images/car/" + filename;
             try {
                 FileUtils.writeByteArrayToFile(new File(dir, filename), file.getBytes());
                 result.setSuccess(true);
@@ -305,7 +305,7 @@ public class CarController {
                 for (String imageUrl : car.getImageUrls()) {
                     imageUrls += imageUrl + ",";
                 }
-                vo.setImageUrls(imageUrls.substring(0,imageUrls.lastIndexOf(",")));
+                vo.setImageUrls(imageUrls.substring(0, imageUrls.lastIndexOf(",")));
             }
             vo.setPriority(car.getPriority());
             vo.setRemark(car.getRemark());
